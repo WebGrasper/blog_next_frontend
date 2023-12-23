@@ -72,6 +72,7 @@ export default function Home(props) {
         {/* Google Analytics (Optional)  */}
         {/* Add your Google Analytics tracking code here */}
         <link rel="icon" href="/favicon.ico" />
+	<meta name="google-site-verification" content="W-J-mNMNzVPU3Qr3WfClrmnijPs3Ajn-j3pcUgOV16k" />
       </Head>
       <Navbar />
       <div className={styles.homePageSupremeContainer}>
