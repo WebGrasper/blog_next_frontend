@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Nova+Square&family=Source+Sans+3&display=swap');
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html{
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  text-rendering: optimizeLegibility;
+  scrollbar-width: none;
+}
+
+/* Optional: For WebKit (Chrome, Safari) */
+body::-webkit-scrollbar {
+  display: none;
+}
+
+
+body {
+  background-repeat: no-repeat;
+  /* background-image: linear-gradient(to right top, #014b70, #004167, #00385e, #002f55, #00264c, #262a59, #452c62, #642b65, #a93668, #df5456, #fb8737, #f6c514); */
+  /* background: linear-gradient(112.1deg, rgb(32, 38, 57) 11.4%, rgb(63, 76, 119) 70.2%); */
+  background-color: rgb(242, 239, 235);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}

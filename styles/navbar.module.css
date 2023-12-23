@@ -1,0 +1,137 @@
+.navbarSupremeContainer{
+  width: 100%;
+  padding: 1.5rem 1rem;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  background-color: rgba(242, 239, 235, 0); /* Initial background color */
+  transition: all 0.3s ease; /* Smooth transition effect */
+}
+
+/* Sticky state */
+.isSticky {
+  padding: 0.25rem;
+  /* background-color: rgb(242, 239, 235); */
+  background-color: #D7CEC1;
+}
+
+.navbar {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  height: 4rem;
+  max-width: 70rem;
+  margin: 0 auto;
+}
+
+.container1 {
+  display: flex;
+  align-items: center;
+}
+
+.container1H1 {
+  display: flex;
+  align-items: center;
+  color: #0e043a;
+  font-weight: normal;
+  /* padding-left: 1rem; */
+}
+.container1H1 > span{
+  font-weight: bold;
+}
+
+.container1H1 > img{
+  width: 25px;
+  height: 25px;
+  margin-right: 8px;
+}
+
+.container2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.container2Span {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.container2SearchBox {
+  width: 25vw;
+  height: 2.8rem;
+  border-radius: 9999px;
+  background-color: rgba(255, 255, 255, 0.4);
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 400;
+  color: rgba(50, 49, 48, 0.6);
+  border: 0px rgb(255, 255, 255);
+  margin: 0 auto;
+  cursor: pointer;
+  text-indent: 1.5rem;
+  transition: 0.4s ease;
+}
+
+.container2SearchBox::placeholder {
+  color: rgba(50, 49, 48, 0.6);
+}
+
+.container2SearchBox:focus {
+  outline: none;
+  /* border: none; */
+}
+
+.container2SearchBox::-webkit-search-cancel-button {
+  display: none;
+}
+
+.menuButton,
+.closeButton,
+.container2SearchButton {
+  font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 0, "opsz" 48;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.checkBox,
+.menuButton,
+.closeButton {
+  display: none;
+}
+
+.closeButton,
+.menuButton {
+  color: white;
+  position: absolute;
+  font-size: 3rem;
+  transition: all 0.4s ease;
+}
+
+.containerButton {
+  display: grid;
+}
+
+.container3 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* padding-right: 1rem; */
+}
+
+.container3Navbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.link {
+  color: rgb(50, 49, 48);
+  font-size: small;
+}
