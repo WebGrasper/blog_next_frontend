@@ -204,6 +204,7 @@
 
 @media only screen and (max-width:1025px) {
   .homePageSideBar {
+    background: url("/sideMenuBackground.avif");
     left: calc(50vw + 9rem);
     width: 20rem;
     padding: 2rem;
@@ -212,6 +213,7 @@
 
 @media only screen and (max-width: 769px){
   .homePageSideBar {
+    background: url("/sideMenuBackground.avif");
     left: calc(50vw + 5rem);
     width: 18rem;
     padding: 1.25rem;
@@ -220,6 +222,7 @@
 
 @media only screen and (max-width: 426px){
   .homePageSideBar{
+    background: url("/sideMenuBackground.avif");
     position: static;
     width: 100%;
     padding: 3rem;
@@ -254,6 +257,7 @@
     font-size: 1rem;
   }
   .homePageSideBar{
+    background: url("/sideMenuBackground.avif");
     padding: 1.5rem;
   }
   .sideBarTitle{
