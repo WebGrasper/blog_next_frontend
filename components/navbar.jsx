@@ -8,12 +8,13 @@ function Navbar() {
 
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
+  const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
 
-        if (offset > 10) {
+        if (offset > 5) {
           setIsSticky(true);
         } else {
           setIsSticky(false);
@@ -26,14 +27,10 @@ function Navbar() {
     };
   }, []);
 
-  const handleMenuToggle = () => {
-    setMenuOpen(!isMenuOpen);
-  };
-
-  const handleClickLink = () => {
-    setMenuOpen(false);
-  };
-
+  // const handleToggleMenu = () => {
+  //   setMenuOpen(!isMenuOpen);
+  //   setIsCheckboxChecked(!isMenuOpen);
+  // };
   //search bar functionality(Started)
 
   const handleSearchBlogs = debounce(async (title) => {
@@ -58,7 +55,7 @@ function Navbar() {
         <div className={styles.container1}>
           <h1 className={styles.container1H1}>
             <img src="/logo.png" alt="stashify logo" />
-            Stash<span>ify</span>
+            new<span>stash</span>
           </h1>
         </div>
         <div className={styles.container2}>
@@ -75,21 +72,21 @@ function Navbar() {
           </form>
         </div>
         <div className={styles.containerButton}>
-          <input
+        <input
             type="checkbox"
             className={styles.checkBox}
-            name="check"
-            id="check"
-            checked={isMenuOpen}
-            onChange={handleMenuToggle}
           />
-          <button className={`${styles.menuButton} material-symbols-outlined`}>
-            menu
-          </button>
-          <button className={`${styles.closeButton} material-symbols-outlined`}>
-            close
-          </button>
-          <div className={styles.container3}>
+            <img
+              className={styles.closeButton}
+              src="/closeButton.svg"
+              alt="close button"
+            />
+            <img
+              className={styles.menuButton}
+              src="/menuButton.svg"
+              alt="menu button"
+            />
+
             <div className={styles.container3Navbar}>
               <Link href="/dailypicks" passHref>
                 <span className={styles.link}>Daily Picks</span>
@@ -107,7 +104,6 @@ function Navbar() {
                 <span className={styles.link}>Contact us</span>
               </Link>
             </div>
-          </div>
         </div>
       </nav>
     </div>

@@ -30,7 +30,7 @@ export default function Home(props) {
       const handleScroll = () => {
         const offset = window.scrollY;
   
-          if (offset > 1) {
+          if (offset > 5) {
             setStickyHomePageSideBar(true);
           } else {
             setStickyHomePageSideBar(false);
@@ -47,27 +47,28 @@ export default function Home(props) {
   return (
     <>
       <Head>
-        <title>Stashify: Stay Informed, Stay Stashed with Stashify</title>
+        <title>newstash: Stay Informed with newstash</title>
         <meta
           name="description"
-          content="Explore insightful articles and engaging content on a variety of topics with our Blog app. Discover the latest trends, expert opinions, and valuable information to stay informed and entertained. Join our community and share your thoughts by reading and commenting on thought-provoking blog posts. Whether you're interested in technology, lifestyle, or creative arts, our blog has something for everyone. Dive into a world of captivating stories and enrich your knowledge with our diverse range of blog articles."
+          content="Explore insightful articles on tech, lifestyle, and more. Stay informed, share thoughts, and enrich your knowledge. Join our community now for engaging content!"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         {/* SEO Meta Tags */}
         <meta
           property="og:title"
-          content="Stashify: Stay Informed, Stay Stashed with Stashify"
+          content="newstash: Stay Informed with Stashify"
         />
         <meta
           property="og:description"
-          content="Explore insightful articles and engaging content on a variety of topics with our Blog app. Discover the latest trends, expert opinions, and valuable information to stay informed and entertained. Join our community and share your thoughts by reading and commenting on thought-provoking blog posts. Whether you're interested in technology, lifestyle, or creative arts, our blog has something for everyone. Dive into a world of captivating stories and enrich your knowledge with our diverse range of blog articles."
+          content="Explore insightful articles on tech, lifestyle, and more. Stay informed, share thoughts, and enrich your knowledge. Join our community now for engaging content!"
         />
         <meta property="og:image" content="https://picsum.photos/1200/630" />
         <meta name="twitter:card" content="summary_large_image" />
 
         {/* Favicon  */}
         <link rel="icon" href="./logo.png" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
         {/* Google Analytics (Optional)  */}
         {/* Add your Google Analytics tracking code here */}

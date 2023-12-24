@@ -6,7 +6,6 @@
   max-width: 70rem;
   margin: 10px auto;
   display: flex;
-  column-gap: 1rem;
   padding: 0 1rem;
 }
 
@@ -17,19 +16,19 @@
   row-gap: 1rem;
 }
 
-.dailyArticlesMainContainer > p{
+.dailyArticlesMainContainer > p {
   text-overflow: unset;
-    overflow: unset;
-    font-family: "Source Sans Pro", sans-serif;
-    text-transform: uppercase;
-    display: block;
-    -webkit-box-orient: unset;
-    font-size: 1rem;
-    line-height: 1.5rem;
-    font-weight: 700;
-    color: rgb(50, 49, 48);
-    opacity: 0.6;
-    height: 2rem;
+  overflow: unset;
+  font-family: "Source Sans Pro", sans-serif;
+  text-transform: uppercase;
+  display: block;
+  -webkit-box-orient: unset;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 700;
+  color: rgb(50, 49, 48);
+  opacity: 0.6;
+  height: 2rem;
 }
 
 .dailyArticlesContainer {
@@ -116,26 +115,26 @@
 
 .homePageSideBar {
   position: absolute;
-  top: 6rem;
+  top: 7rem;
   left: calc(50vw + 9rem);
   display: flex;
   flex-direction: column;
   width: 25rem;
   min-height: fit-content;
   padding: 3rem;
-  background: url('/sideMenuBackground.avif');
+  background: url("/sideMenuBackground.avif");
   color: black;
   text-align: justify;
   border-radius: 10px;
-  background-size: 100%;
+  background-size: 100% 100%;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 6px 16px;
   background-repeat: no-repeat;
 }
 
-.stickHomePageSideBar{
+.stickHomePageSideBar {
   width: 25rem; /* Set width explicitly to avoid expanding */
   position: fixed;
-  top: 6rem;
+  top: 7rem;
   left: calc(50vw + 9rem);
 }
 
@@ -160,7 +159,7 @@
   color: rgba(50, 49, 48, 0.861);
 }
 
-.sideBarNotePoints > p > span{
+.sideBarNotePoints > p > span {
   font-weight: bold;
 }
 
@@ -200,4 +199,64 @@
   font-weight: 500;
   letter-spacing: 1px;
   background-color: rgb(50, 49, 48);
+  cursor: pointer;
+}
+
+@media only screen and (max-width:1025px) {
+  .homePageSideBar {
+    left: calc(50vw + 9rem);
+    width: 20rem;
+    padding: 2rem;
+  }
+}
+
+@media only screen and (max-width: 769px){
+  .homePageSideBar {
+    left: calc(50vw + 5rem);
+    width: 18rem;
+    padding: 1.25rem;
+  }
+}
+
+@media only screen and (max-width: 426px){
+  .homePageSideBar{
+    position: static;
+    width: 100%;
+    padding: 3rem;
+  }
+  .homePageMainContainer{
+    flex-direction: column;
+    max-width: 100%;
+  }
+  .dailyArticlesMainContainer{
+    width: 100%;
+  }
+  .dailyArticlesContainer{
+    padding: 0;
+  }
+  .dailyArticleTitleContainer{
+    padding-right: 0;
+  }
+}
+
+@media only screen and (max-width: 321px){
+  .dailyArticlesMainContainer{
+    row-gap: 0.25rem;
+  }
+  .dailyArticlesContainer{
+    height: 10rem;
+  }
+  .dailyArticleImage{
+    width: 8rem;
+    height: 8rem;
+  }
+  .dailyArticleTitle{
+    font-size: 1rem;
+  }
+  .homePageSideBar{
+    padding: 1.5rem;
+  }
+  .sideBarTitle{
+    font-size: 2rem;
+  }
 }

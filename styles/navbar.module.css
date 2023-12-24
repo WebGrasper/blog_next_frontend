@@ -1,19 +1,17 @@
-.navbarSupremeContainer{
+.navbarSupremeContainer {
   width: 100%;
   padding: 1.5rem 1rem;
   position: -webkit-sticky;
   position: sticky;
   top: 0;
   z-index: 9999;
-  background-color: rgba(242, 239, 235, 0); /* Initial background color */
   transition: all 0.3s ease; /* Smooth transition effect */
 }
 
 /* Sticky state */
 .isSticky {
   padding: 0.25rem;
-  /* background-color: rgb(242, 239, 235); */
-  background-color: #D7CEC1;
+  background-color: rgb(231, 225, 218);
 }
 
 .navbar {
@@ -36,11 +34,11 @@
   font-weight: normal;
   /* padding-left: 1rem; */
 }
-.container1H1 > span{
+.container1H1 > span {
   font-weight: bold;
 }
 
-.container1H1 > img{
+.container1H1 > img {
   width: 25px;
   height: 25px;
   margin-right: 8px;
@@ -90,31 +88,9 @@
   display: none;
 }
 
-.menuButton,
-.closeButton,
-.container2SearchButton {
-  font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 0, "opsz" 48;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-}
-
-.checkBox,
-.menuButton,
-.closeButton {
-  display: none;
-}
-
-.closeButton,
-.menuButton {
-  color: white;
-  position: absolute;
-  font-size: 3rem;
-  transition: all 0.4s ease;
-}
-
 .containerButton {
   display: grid;
+  position: relative;
 }
 
 .container3 {
@@ -122,6 +98,12 @@
   justify-content: center;
   align-items: center;
   /* padding-right: 1rem; */
+}
+
+.menuButton,
+.closeButton,
+.checkBox {
+  display: none;
 }
 
 .container3Navbar {
@@ -134,4 +116,108 @@
 .link {
   color: rgb(50, 49, 48);
   font-size: small;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 769px) {
+  .navbarSupremeContainer {
+    padding: 1.25rem 1rem;
+  }
+  .navbar {
+    height: 3rem;
+  }
+  .container2SearchBox {
+    width: 60vw;
+  }
+  .containerButton {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+  .menuButton,
+  .checkBox {
+    display: block;
+    position: absolute;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  .checkBox {
+    opacity: 0;
+    z-index: 999;
+  }
+  .checkBox:checked ~ .container3Navbar {
+    transform: translateX(0);
+  }
+  .checkBox:checked ~ .menuButton {
+    opacity: 0;
+    transition: all 0.4s ease;
+  }
+
+  .checkBox:checked ~ .closeButton {
+    display: block;
+    position: absolute;
+    width: 2.5rem;
+    height: 2.5rem;
+    opacity: 100%;
+    transition: all 0.4s ease;
+  }
+
+  .container3Navbar {
+    display: flex;
+    flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        top: 5rem;
+        left: 0;
+        position: fixed;
+        z-index: 99999;
+        background: #e7e1da;
+        height: 84%;
+        width: 100vw;
+        transition: all 0.4s ease;
+        transform: translateX(100%);
+        /* overflow-x: hidden; */
+  }
+  .link {
+    font-size: large;
+  }
+  .link::after {
+    content: "";
+    border-bottom: 1px solid black;
+  }
+}
+
+@media only screen and (max-width: 426px){
+  .navbar{
+    grid-template-columns: 8rem auto 2.5rem;
+  }
+  .container2SearchBox {
+    width: 46vw;
+    height: 2.5rem;
+  }
+}
+
+@media only screen and (max-width: 376px) {
+  .container2SearchBox {
+    width: 42vw;
+    text-indent: 1rem;
+  }
+  .container2SearchBox::placeholder{
+    font-size: small;
+    text-indent: 1rem;
+  }
+}
+
+@media only screen and (max-width: 321px) {
+  .navbar{
+    grid-template-columns: 8rem auto 2rem;
+  }
+  .container2SearchBox {
+    width: 34vw;
+    text-indent: 1rem;
+  }
+  .container2SearchBox::placeholder{
+    font-size: small;
+    text-indent: 1rem;
+  }
 }
