@@ -198,6 +198,7 @@
   font-size: medium;
   font-weight: 500;
   letter-spacing: 1px;
+  color: white;
   background-color: rgb(50, 49, 48);
   cursor: pointer;
 }
@@ -219,13 +220,6 @@
     left: calc(50vw + 5rem);
     width: 18rem;
     padding: 1.25rem;
-  }
-  .subscribeForm > button {
-  font-size: medium;
-  font-weight: 500;
-  letter-spacing: 1px;
-  background-color: rgb(50, 49, 48);
-  cursor: pointer;
   }
 }
 
@@ -250,13 +244,6 @@
   .dailyArticleTitleContainer{
     padding-right: 0;
   }
-  .subscribeForm > button {
-  font-size: medium;
-  font-weight: 500;
-  letter-spacing: 1px;
-  background-color: rgb(50, 49, 48);
-  cursor: pointer;
-  }
 }
 
 @media only screen and (max-width: 321px){
@@ -280,12 +267,5 @@
   }
   .sideBarTitle{
     font-size: 2rem;
-  }
-  .subscribeForm > button {
-  font-size: medium;
-  font-weight: 500;
-  letter-spacing: 1px;
-  background-color: rgb(50, 49, 48);
-  cursor: pointer;
   }
 }
