@@ -46,20 +46,37 @@
 
 .container2 {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  justify-content: end;
+  padding: 0 0.5rem;
+  align-items: center; /* Add this line */
 }
+
 
 .container2Span {
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
 }
 
+.searchCheckBoxContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+}
+
+.searchButton,
+.searchCloseButton,
+.searchCheckBox {
+  display: none;
+}
+.searchCheckBox{
+  z-index: 9999;
+}
+
 .container2SearchBox {
-  width: 25vw;
+  width: 30vw;
   height: 2.8rem;
   border-radius: 9999px;
   background-color: rgba(255, 255, 255, 0.4);
@@ -124,10 +141,40 @@
     padding: 1.25rem 1rem;
   }
   .navbar {
+    grid-template-columns: auto auto 3rem;
     height: 3rem;
+  }
+  .container2SeachCheckBox{
+    justify-content: space-between;
+    padding: 0 0.5rem;
+  }
+  .container2Span{
+    display: none;
+  }
+  .container2Span.show{
+    display: block;
+  }
+  .searchButton,.searchCheckBox{
+    display: block;
+    position: absolute;
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+  .searchCheckBox:checked ~ .searchButton{
+    opacity: 0;
+    transition: all 0.4s ease;
+  }
+  .searchCheckBox:checked ~ .searchCloseButton{
+    display: block;
+    position: absolute;
+    width: 2rem;
+    height: 2rem;
+    opacity: 100%;
+    transition: all 0.4s ease;
   }
   .container2SearchBox {
     width: 60vw;
+    height: 2.5rem;
   }
   .containerButton {
     align-items: center;
@@ -141,7 +188,7 @@
     width: 2.5rem;
     height: 2.5rem;
   }
-  .checkBox {
+  .checkBox, .searchCheckBox {
     opacity: 0;
     z-index: 999;
   }
@@ -188,23 +235,31 @@
 }
 
 @media only screen and (max-width: 426px){
+  .navbarSupremeContainer{
+    padding: 1.5rem 0.5rem;
+  }
   .navbar{
     grid-template-columns: 8rem auto 2.5rem;
   }
   .container2SearchBox {
-    width: 46vw;
+    width: 44vw;
+    font-size: small;
+    text-indent: 1rem;
     height: 2.5rem;
+  }
+  .container2SearchBox::placeholder{
+    font-size: small;
+    text-indent: 1rem;
   }
 }
 
 @media only screen and (max-width: 376px) {
   .container2SearchBox {
-    width: 42vw;
-    text-indent: 1rem;
+    width: 38vw;
+    text-indent: 0.5rem;
   }
   .container2SearchBox::placeholder{
-    font-size: small;
-    text-indent: 1rem;
+    text-indent: 0.5rem;
   }
 }
 
@@ -213,11 +268,14 @@
     grid-template-columns: 8rem auto 2rem;
   }
   .container2SearchBox {
-    width: 34vw;
-    text-indent: 1rem;
+    width: 30vw;
   }
-  .container2SearchBox::placeholder{
-    font-size: small;
-    text-indent: 1rem;
+  .searchButton, .searchCheckBox, .searchCloseButton{
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  .menuButton, .closeButton, .checkBox{
+    width: 2rem;
+    height: 2rem;
   }
 }
