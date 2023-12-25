@@ -50,8 +50,8 @@ function Navbar() {
         isSticky ? styles.isSticky : ""
       }`}
     >
-      <nav className={`${styles.navbar}`}>
-        <div className={styles.container1}>
+      <nav className={`${styles.navbar} ${isSeachChechBoxChecked ? styles.short : ""}`}>
+        <div className={`${styles.container1} ${isSeachChechBoxChecked ? styles.hide : ""}`}>
           <h1 className={styles.container1H1}>
             <img src="/logo.png" alt="stashify logo" />
             new<span>stash</span>

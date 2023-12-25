@@ -217,19 +217,10 @@
   .homePageSideBar {
     background: url("/sideMenuBackground.avif");
     background-size: 100% 100%;
-    left: calc(50vw + 5rem);
+    position: static;
+    display: none;
     width: 18rem;
     padding: 1.25rem;
-  }
-}
-
-@media only screen and (max-width: 426px){
-  .homePageSideBar{
-    background: url("/sideMenuBackground.avif");
-    background-size: 100% 100%;
-    position: static;
-    width: 100%;
-    padding: 3rem;
   }
   .homePageMainContainer{
     flex-direction: column;
@@ -243,6 +234,16 @@
   }
   .dailyArticleTitleContainer{
     padding-right: 0;
+  }
+}
+
+@media only screen and (max-width: 426px){
+  .homePageSideBar{
+    background: url("/sideMenuBackground.avif");
+    background-size: 100% 100%;
+    display: block;
+    width: 100%;
+    padding: 3rem;
   }
 }
 

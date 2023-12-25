@@ -51,14 +51,13 @@
   align-items: center; /* Add this line */
 }
 
-
 .container2Span {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.searchCheckBoxContainer{
+.searchCheckBoxContainer {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -71,7 +70,7 @@
 .searchCheckBox {
   display: none;
 }
-.searchCheckBox{
+.searchCheckBox {
   z-index: 9999;
 }
 
@@ -144,27 +143,34 @@
     grid-template-columns: auto auto 3rem;
     height: 3rem;
   }
-  .container2SeachCheckBox{
+  .navbar.short {
+    grid-template-columns: auto auto 3rem;
+  }
+  .container1.hide {
+    display: none;
+  }
+  .container2SeachCheckBox {
     justify-content: space-between;
     padding: 0 0.5rem;
   }
-  .container2Span{
+  .container2Span {
     display: none;
   }
-  .container2Span.show{
+  .container2Span.show {
     display: block;
   }
-  .searchButton,.searchCheckBox{
+  .searchButton,
+  .searchCheckBox {
     display: block;
     position: absolute;
     width: 1.75rem;
     height: 1.75rem;
   }
-  .searchCheckBox:checked ~ .searchButton{
+  .searchCheckBox:checked ~ .searchButton {
     opacity: 0;
     transition: all 0.4s ease;
   }
-  .searchCheckBox:checked ~ .searchCloseButton{
+  .searchCheckBox:checked ~ .searchCloseButton {
     display: block;
     position: absolute;
     width: 2rem;
@@ -173,13 +179,14 @@
     transition: all 0.4s ease;
   }
   .container2SearchBox {
-    width: 60vw;
+    width: 83.3vw;
     height: 2.5rem;
   }
   .containerButton {
     align-items: center;
     display: flex;
     justify-content: center;
+    width: 2rem;
   }
   .menuButton,
   .checkBox {
@@ -188,7 +195,8 @@
     width: 2.5rem;
     height: 2.5rem;
   }
-  .checkBox, .searchCheckBox {
+  .checkBox,
+  .searchCheckBox {
     opacity: 0;
     z-index: 999;
   }
@@ -212,69 +220,63 @@
   .container3Navbar {
     display: flex;
     flex-direction: column;
-        justify-content: space-evenly;
-        align-items: center;
-        top: 5rem;
-        left: 0;
-        position: fixed;
-        z-index: 99999;
-        background: #e7e1da;
-        height: 84%;
-        width: 100vw;
-        transition: all 0.4s ease;
-        transform: translateX(100%);
-        /* overflow-x: hidden; */
+    justify-content: space-evenly;
+    align-items: center;
+    top: 5rem;
+    left: 0;
+    position: fixed;
+    z-index: 99999;
+    background: #e7e1da;
+    height: 84%;
+    width: 100vw;
+    transition: all 0.4s ease;
+    transform: translateX(100%);
+    /* overflow-x: hidden; */
   }
   .link {
     font-size: large;
   }
-  .link::after {
-    content: "";
-    border-bottom: 1px solid black;
-  }
 }
 
-@media only screen and (max-width: 426px){
-  .navbarSupremeContainer{
+@media only screen and (max-width: 426px) {
+  .navbarSupremeContainer {
     padding: 1.5rem 0.5rem;
   }
-  .navbar{
+  .navbar {
     grid-template-columns: 8rem auto 2.5rem;
   }
   .container2SearchBox {
-    width: 44vw;
+    width: 75.5vw;
     font-size: small;
-    text-indent: 1rem;
     height: 2.5rem;
   }
-  .container2SearchBox::placeholder{
+  .container2SearchBox::placeholder {
     font-size: small;
-    text-indent: 1rem;
   }
 }
 
 @media only screen and (max-width: 376px) {
   .container2SearchBox {
-    width: 38vw;
-    text-indent: 0.5rem;
-  }
-  .container2SearchBox::placeholder{
-    text-indent: 0.5rem;
+    width: 72.5vw;
   }
 }
 
 @media only screen and (max-width: 321px) {
-  .navbar{
+  .navbar {
     grid-template-columns: 8rem auto 2rem;
   }
   .container2SearchBox {
-    width: 30vw;
+    width: 70vw;
   }
-  .searchButton, .searchCheckBox, .searchCloseButton{
+  .searchButton,
+  .searchCheckBox,
+  .searchCloseButton {
     width: 1.25rem;
     height: 1.25rem;
   }
-  .menuButton, .closeButton, .checkBox{
+  .menuButton,
+  .closeButton,
+  .checkBox {
     width: 2rem;
     height: 2rem;
   }
