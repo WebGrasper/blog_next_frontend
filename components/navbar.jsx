@@ -50,15 +50,16 @@ function Navbar() {
         isSticky ? styles.isSticky : ""
       }`}
     >
-      <nav className={`${styles.navbar} ${isSeachChechBoxChecked ? styles.short : ""}`}>
-        <div className={`${styles.container1} ${isSeachChechBoxChecked ? styles.hide : ""}`}>
-          <h1 className={styles.container1H1}>
-            <img src="/logo.png" alt="stashify logo" />
-            new<span>stash</span>
-          </h1>
-        </div>
-        <div className={`${styles.container2}  ${isSeachChechBoxChecked ? styles.container2SeachCheckBox : ""}`}>
-            <form className={`${styles.container2Span} ${isSeachChechBoxChecked ? styles.show : ""}`} method="GET">
+      <div>
+        <nav className={`${styles.navbar}`}>
+          <div className={`${styles.container1}`}>
+            <h1 className={styles.container1H1}>
+              <img src="/logo.png" alt="stashify logo" />
+              new<span>stash</span>
+            </h1>
+          </div>
+          <div className={`${styles.container2}`}>
+            <form className={`${styles.container2Span}`} method="GET">
               <input
                 type="search"
                 className={styles.container2SearchBox}
@@ -69,55 +70,67 @@ function Navbar() {
                 }}
               />
             </form>
-          <div className={`${styles.searchCheckBoxContainer}`}>
-            <input
-              type="checkbox"
-              className={styles.searchCheckBox}
-              onClick={handleSearchCheckBox}
-            />
+            <div className={`${styles.searchCheckBoxContainer}`}>
+              <input
+                type="checkbox"
+                className={styles.searchCheckBox}
+                onClick={handleSearchCheckBox}
+              />
+              <img
+                className={styles.searchButton}
+                src="/searchIcon.svg"
+                alt="search icon"
+              />
+              <img
+                className={styles.searchCloseButton}
+                src="/closeButton.svg"
+                alt="close button"
+              />
+            </div>
+          </div>
+          <div className={`${styles.containerButton}`}>
+            <input type="checkbox" className={styles.checkBox} />
             <img
-              className={styles.searchButton}
-              src="/searchIcon.svg"
-              alt="search icon"
-            />
-            <img
-              className={styles.searchCloseButton}
+              className={styles.closeButton}
               src="/closeButton.svg"
               alt="close button"
             />
+            <img
+              className={styles.menuButton}
+              src="/menuButton.svg"
+              alt="menu button"
+            />
+            <div className={styles.container3Navbar}>
+              <Link href="/dailypicks" passHref>
+                <span className={styles.link}>Daily Picks</span>
+              </Link>
+              <Link href="/recommanded" passHref>
+                <span className={styles.link}>Recommended</span>
+              </Link>
+              <Link href="/collections" passHref>
+                <span className={styles.link}>Collections</span>
+              </Link>
+              <Link href="/portfolio" passHref>
+                <span className={styles.link}>Portfolio</span>
+              </Link>
+              <Link href="/contact-us" passHref>
+                <span className={styles.link}>Contact us</span>
+              </Link>
+            </div>
           </div>
-        </div>
-        <div className={`${styles.containerButton}`}>
-          <input type="checkbox" className={styles.checkBox} />
-          <img
-            className={styles.closeButton}
-            src="/closeButton.svg"
-            alt="close button"
-          />
-          <img
-            className={styles.menuButton}
-            src="/menuButton.svg"
-            alt="menu button"
-          />
-          <div className={styles.container3Navbar}>
-            <Link href="/dailypicks" passHref>
-              <span className={styles.link}>Daily Picks</span>
-            </Link>
-            <Link href="/recommanded" passHref>
-              <span className={styles.link}>Recommended</span>
-            </Link>
-            <Link href="/collections" passHref>
-              <span className={styles.link}>Collections</span>
-            </Link>
-            <Link href="/portfolio" passHref>
-              <span className={styles.link}>Portfolio</span>
-            </Link>
-            <Link href="/contact-us" passHref>
-              <span className={styles.link}>Contact us</span>
-            </Link>
-          </div>
-        </div>
-      </nav>
+        </nav>
+      </div>
+      <form className={`${styles.buttomSearchBarContainer} ${isSeachChechBoxChecked ? styles.show : ""}`} method="GET">
+        <input
+          type="search"
+          className={styles.buttomSearchBar}
+          id="container2SearchBox"
+          placeholder="Ideas, topics & more..."
+          onChange={(e) => {
+            handleSearchBlogs(e.target.value || null);
+          }}
+        />
+      </form>
     </div>
   );
 }

@@ -10,7 +10,7 @@
 
 /* Sticky state */
 .isSticky {
-  padding: 0.25rem;
+  padding: 1rem 1rem;
   background-color: rgb(231, 225, 218);
 }
 
@@ -48,13 +48,18 @@
   display: flex;
   justify-content: end;
   padding: 0 0.5rem;
-  align-items: center; /* Add this line */
+  align-items: center; 
 }
 
-.container2Span {
+.container2Span, .buttomSearchBarContainer {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.buttomSearchBarContainer{
+  display: none;
+  transition: all 0.4s ease;
 }
 
 .searchCheckBoxContainer {
@@ -74,7 +79,7 @@
   z-index: 9999;
 }
 
-.container2SearchBox {
+.container2SearchBox, .buttomSearchBar {
   width: 30vw;
   height: 2.8rem;
   border-radius: 9999px;
@@ -91,11 +96,11 @@
   transition: 0.4s ease;
 }
 
-.container2SearchBox::placeholder {
+.container2SearchBox::placeholder, .buttomSearchBar::placeholder {
   color: rgba(50, 49, 48, 0.6);
 }
 
-.container2SearchBox:focus {
+.container2SearchBox:focus, .buttomSearchBar:focus {
   outline: none;
   /* border: none; */
 }
@@ -137,17 +142,11 @@
 
 @media only screen and (max-width: 769px) {
   .navbarSupremeContainer {
-    padding: 1.25rem 1rem;
+    padding: 1rem 1rem;
   }
   .navbar {
     grid-template-columns: auto auto 3rem;
     height: 3rem;
-  }
-  .navbar.short {
-    grid-template-columns: auto auto 3rem;
-  }
-  .container1.hide {
-    display: none;
   }
   .container2SeachCheckBox {
     justify-content: space-between;
@@ -156,8 +155,13 @@
   .container2Span {
     display: none;
   }
-  .container2Span.show {
-    display: block;
+  .buttomSearchBarContainer.show {
+    display: flex;
+    margin-top: 0.5rem;
+    transition: all 0.4s ease;
+  }
+  .buttomSearchBar{
+    width: 92vw;
   }
   .searchButton,
   .searchCheckBox {
@@ -165,6 +169,7 @@
     position: absolute;
     width: 1.75rem;
     height: 1.75rem;
+    transition: all 0.4s ease;
   }
   .searchCheckBox:checked ~ .searchButton {
     opacity: 0;
@@ -240,7 +245,7 @@
 
 @media only screen and (max-width: 426px) {
   .navbarSupremeContainer {
-    padding: 1.5rem 0.5rem;
+    padding: 1rem 0.5rem;
   }
   .navbar {
     grid-template-columns: 8rem auto 2.5rem;
