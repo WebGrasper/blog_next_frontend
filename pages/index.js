@@ -1,17 +1,10 @@
-import Head from "next/head";
-import { Inter } from "next/font/google";
-import Navbar from "@/components/navbar";
-import Footer from "@/components/footer";
+import Link from "next/link";
 import styles from "@/styles/Home.module.css";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-
-const inter = Inter({ subsets: ["latin"] });
+import Head from "next/head";
 
 export async function getServerSideProps(context) {
-  const response = await fetch(
-    "https://blog-zo8s.vercel.app/app/v2/getArticles"
-  );
+  const response = await fetch("https://blog-zo8s.vercel.app/app/v2/getArticles");
   const state = await response.json();
   return {
     props: {
@@ -20,32 +13,12 @@ export async function getServerSideProps(context) {
   };
 }
 
-export default function Home(props) {
+export default function Main(props) {
   const blogs = props?.state?.article;
   console.log(blogs[0]);
-
-  const [isStickyHomePageSideBar, setStickyHomePageSideBar] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const offset = window.scrollY;
-
-      if (offset > 5) {
-        setStickyHomePageSideBar(true);
-      } else {
-        setStickyHomePageSideBar(false);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
     <>
-      <Head>
+    <Head>
         <title>newstash: Stay Informed with newstash</title>
         <meta
           name="description"
@@ -80,14 +53,18 @@ export default function Home(props) {
           content="W-J-mNMNzVPU3Qr3WfClrmnijPs3Ajn-j3pcUgOV16k"
         />
       </Head>
-      <Navbar />
       <div className={styles.homePageSupremeContainer}>
         <div className={styles.homePageMainContainer}>
           <div className={styles.dailyArticlesMainContainer}>
             <p>Daily Picks</p>
             {blogs &&
               blogs.map((blog, index) => (
-                <div className={styles.dailyArticlesContainer} key={index}>
+                <Link
+                  href="/article/[title]"
+                  as={`/article/${encodeURIComponent(blog.title)}`}
+                  className={styles.dailyArticlesContainer}
+                  key={index}
+                >
                   <div className={styles.dailyArticleImageContainer}>
                     <Image
                       className={styles.dailyArticleImage}
@@ -111,7 +88,7 @@ export default function Home(props) {
                       Category &#8226; {blog.category}
                     </p>
                   </div>
-                </div>
+                </Link>
               ))}
           </div>
           <div className={styles.homePageSideBarContainer}>
@@ -147,7 +124,6 @@ export default function Home(props) {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

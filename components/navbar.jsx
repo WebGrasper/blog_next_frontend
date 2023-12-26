@@ -53,10 +53,12 @@ function Navbar() {
       <div>
         <nav className={`${styles.navbar}`}>
           <div className={`${styles.container1}`}>
-            <h1 className={styles.container1H1}>
-              <img src="/logo.png" alt="stashify logo" />
-              new<span>stash</span>
-            </h1>
+            <Link href={"/"}>
+              <h1 className={styles.container1H1}>
+                <img src="/logo.png" alt="stashify logo" />
+                new<span>stash</span>
+              </h1>
+            </Link>
           </div>
           <div className={`${styles.container2}`}>
             <form className={`${styles.container2Span}`} method="GET">
@@ -120,7 +122,12 @@ function Navbar() {
           </div>
         </nav>
       </div>
-      <form className={`${styles.buttomSearchBarContainer} ${isSeachChechBoxChecked ? styles.show : ""}`} method="GET">
+      <form
+        className={`${styles.buttomSearchBarContainer} ${
+          isSeachChechBoxChecked ? styles.show : ""
+        }`}
+        method="GET"
+      >
         <input
           type="search"
           className={styles.buttomSearchBar}

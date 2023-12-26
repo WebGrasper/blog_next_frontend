@@ -6,12 +6,14 @@ function Footer() {
     <div className={styles.footerSupremeContainer}>
       <div className={styles.footerMainContainer}>
         <div className={styles.container1}>
-          <div className={styles.footerLogo}>
-            <img src="/logo.png" alt="stashify logo" />
-            <span>
-              new<span>stash</span>
-            </span>
-          </div>
+          <Link href={"/"}>
+            <div className={styles.footerLogo}>
+              <img src="/logo.png" alt="stashify logo" />
+              <span>
+                new<span>stash</span>
+              </span>
+            </div>
+          </Link>
           <p className={styles.footerDescription}>
             Explore insightful articles on tech, lifestyle, and more. Stay
             informed, share thoughts, and enrich your knowledge. Join our
