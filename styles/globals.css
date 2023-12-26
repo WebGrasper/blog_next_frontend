@@ -6,12 +6,12 @@
   margin: 0;
 }
 
-html{
+html, body{
   scroll-behavior: smooth;
 }
 
 body {
-  font-family: 'Source Sans 3', sans-serif;
+  font-family: "Source Sans Pro", sans-serif; 
   text-rendering: optimizeLegibility;
   scrollbar-width: none;
 }

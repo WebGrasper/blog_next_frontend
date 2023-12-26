@@ -113,15 +113,16 @@
   font-size: 0.8rem;
 }
 
+.homePageSideBarContainer{
+  display: flex;
+  justify-content: center;
+}
+
 .homePageSideBar {
-  position: absolute;
-  top: 7rem;
-  left: calc(50vw + 9rem);
   display: flex;
   flex-direction: column;
-  width: 25rem;
-  min-height: fit-content;
-  padding: 3rem;
+  height: fit-content;
+  padding: 2rem;
   background: url("/sideMenuBackground.avif");
   color: black;
   text-align: justify;
@@ -131,20 +132,13 @@
   background-repeat: no-repeat;
 }
 
-.stickHomePageSideBar {
-  width: 25rem; /* Set width explicitly to avoid expanding */
-  position: fixed;
-  top: 7rem;
-  left: calc(50vw + 9rem);
-}
-
 .sideBarTitle {
   text-overflow: unset;
   overflow: unset;
   display: block;
   -webkit-box-orient: unset;
-  font-size: 2.5rem;
-  line-height: 3rem;
+  font-size: 2.25rem;
+  line-height: 2.25rem;
   font-weight: 800;
   text-align: left;
   color: rgb(50, 49, 48);
@@ -166,15 +160,14 @@
 .subscribeForm {
   display: flex;
   flex-direction: column;
-  row-gap: 0.5rem;
 }
 
 .subscribeForm > input,
 .subscribeForm > button {
   width: 100%;
-  height: 2.75rem;
+  height: 3rem;
   border: none;
-  margin-top: 1rem;
+  margin-top: 1.25rem;
   border-radius: 9999px;
   letter-spacing: 1px;
 }
@@ -195,7 +188,7 @@
 }
 
 .subscribeForm > button {
-  font-size: medium;
+  font-size: small;
   font-weight: 500;
   letter-spacing: 1px;
   color: white;
@@ -203,24 +196,9 @@
   cursor: pointer;
 }
 
-@media only screen and (max-width:1025px) {
-  .homePageSideBar {
-    background: url("/sideMenuBackground.avif");
-    background-size: 100% 100%;
-    left: calc(50vw + 9rem);
-    width: 20rem;
-    padding: 2rem;
-  }
-}
-
 @media only screen and (max-width: 769px){
   .homePageSideBar {
-    background: url("/sideMenuBackground.avif");
-    background-size: 100% 100%;
-    position: static;
     display: none;
-    width: 18rem;
-    padding: 1.25rem;
   }
   .homePageMainContainer{
     flex-direction: column;
@@ -242,8 +220,7 @@
     background: url("/sideMenuBackground.avif");
     background-size: 100% 100%;
     display: block;
-    width: 100%;
-    padding: 3rem;
+    /* padding: 2.5rem; */
   }
 }
 
@@ -264,7 +241,7 @@
   .homePageSideBar{
     background: url("/sideMenuBackground.avif");
     background-size: 100% 100%;
-    padding: 1.5rem;
+    padding: 1.25rem;
   }
   .sideBarTitle{
     font-size: 2rem;

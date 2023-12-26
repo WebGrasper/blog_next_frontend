@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
 import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
 import styles from "@/styles/Home.module.css";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -19,30 +20,28 @@ export async function getServerSideProps(context) {
   };
 }
 
-
 export default function Home(props) {
   const blogs = props?.state?.article;
   console.log(blogs[0]);
 
   const [isStickyHomePageSideBar, setStickyHomePageSideBar] = useState(false);
-  
-    useEffect(() => {
-      const handleScroll = () => {
-        const offset = window.scrollY;
-  
-          if (offset > 5) {
-            setStickyHomePageSideBar(true);
-          } else {
-            setStickyHomePageSideBar(false);
-          }
-        }
-      window.addEventListener("scroll", handleScroll);
-  
-      return () => {
-        window.removeEventListener("scroll", handleScroll);
-      };
-    }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const offset = window.scrollY;
+
+      if (offset > 5) {
+        setStickyHomePageSideBar(true);
+      } else {
+        setStickyHomePageSideBar(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <>
@@ -68,12 +67,18 @@ export default function Home(props) {
 
         {/* Favicon  */}
         <link rel="icon" href="./logo.png" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+        />
 
         {/* Google Analytics (Optional)  */}
         {/* Add your Google Analytics tracking code here */}
         <link rel="icon" href="/favicon.ico" />
-	<meta name="google-site-verification" content="W-J-mNMNzVPU3Qr3WfClrmnijPs3Ajn-j3pcUgOV16k" />
+        <meta
+          name="google-site-verification"
+          content="W-J-mNMNzVPU3Qr3WfClrmnijPs3Ajn-j3pcUgOV16k"
+        />
       </Head>
       <Navbar />
       <div className={styles.homePageSupremeContainer}>
@@ -109,33 +114,40 @@ export default function Home(props) {
                 </div>
               ))}
           </div>
-          <div className={`${styles.homePageSideBar} ${isStickyHomePageSideBar ? styles.stickHomePageSideBar : ""}`}>
-            <p className={styles.sideBarTitle}>Read like a Pro</p>
-            <div className={styles.sideBarNotePoints}>
-              <Image
-                src="/connectedIcon.svg"
-                width={18}
-                height={18}
-                alt="connect icon"
-              />
-              <p>Stay <span>connected</span></p>
+          <div className={styles.homePageSideBarContainer}>
+            <div className={`${styles.homePageSideBar}`}>
+              <p className={styles.sideBarTitle}>Read like a Pro</p>
+              <div className={styles.sideBarNotePoints}>
+                <Image
+                  src="/connectedIcon.svg"
+                  width={18}
+                  height={18}
+                  alt="connect icon"
+                />
+                <p>
+                  Stay <span>connected</span>
+                </p>
+              </div>
+              <div className={styles.sideBarNotePoints}>
+                <Image
+                  src="/updateIcon.svg"
+                  width={18}
+                  height={18}
+                  alt="update icon"
+                />
+                <p>
+                  Stay <span>updated</span>
+                </p>
+              </div>
+              <form action="#" method="post" className={styles.subscribeForm}>
+                <input type="text" placeholder="email address..." />
+                <button type="submit">Subscribe</button>
+              </form>
             </div>
-            <div className={styles.sideBarNotePoints}>
-              <Image
-                src="/updateIcon.svg"
-                width={18}
-                height={18}
-                alt="update icon"
-              />
-              <p>Stay <span>updated</span></p>
-            </div>
-            <form action="#" method="post" className={styles.subscribeForm}>
-              <input type="text" placeholder="email address..." />
-              <button type="submit">Subscribe</button>
-            </form>
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }
