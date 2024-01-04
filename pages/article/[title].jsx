@@ -4,7 +4,6 @@ import styles from "../../styles/article.module.css";
 import Image from "next/image";
 import { wrapper } from "@/store/store";
 import { fetchSingleArticle } from "@/store/singleArticleSlice";
-import { useEffect } from "react";
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async (context) => {
