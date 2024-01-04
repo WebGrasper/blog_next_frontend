@@ -29,29 +29,29 @@
   }
     /* Remove these to get rid of the spinner */
     #nprogress .spinner {
-    display: block;
-    position: fixed;
-    z-index: 1031;
-    top: 15px;
-    right: 15px;
-  }
-  #nprogress .spinner-icon {
-    width: 18px;
-    height: 18px;
-    box-sizing: border-box;
-    border: solid 2px transparent;
-    border-top-color: var(--primary-color);
-    border-left-color: var(--primary-color);
-    border-radius: 50%;
-    -webkit-animation: nprogress-spinner 400ms linear infinite;
-            animation: nprogress-spinner 400ms linear infinite;
-  }
-  .nprogress-custom-parent {
-    overflow: hidden;
-    position: relative;
-  }
-  .nprogress-custom-parent #nprogress .spinner,
-  .nprogress-custom-parent #nprogress .bar {
+      display: block;
+      position: fixed;
+      z-index: 1031;
+      top: 15px;
+      right: 15px;
+    }
+    #nprogress .spinner-icon {
+      width: 18px;
+      height: 18px;
+      box-sizing: border-box;
+      border: solid 2px transparent;
+      border-top-color: var(--primary-color);
+      border-left-color: var(--primary-color);
+      border-radius: 50%;
+      -webkit-animation: nprogress-spinner 400ms linear infinite;
+      animation: nprogress-spinner 400ms linear infinite;
+    }
+    .nprogress-custom-parent {
+      overflow: hidden;
+      position: relative;
+    }
+    .nprogress-custom-parent #nprogress .spinner,
+    .nprogress-custom-parent #nprogress .bar {
     position: absolute;
   }
   @-webkit-keyframes nprogress-spinner {
@@ -61,4 +61,7 @@
   @keyframes nprogress-spinner {
     0%   { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+  }
+  .spinner, .spinner-icon{
+    display: none;
   }
