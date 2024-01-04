@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.0.1",
+    "react-redux": "^7.2.5",
     "lodash": "^4.17.21",
     "next": "14.0.4",
     "next-redux-wrapper": "^8.1.0",
