@@ -3,20 +3,24 @@ import styles from "@/styles/Home.module.css";
 import Image from "next/image";
 import Head from "next/head";
 import SideBar from "@/components/sidebar";
+import { wrapper } from "@/store/store";
+import { fetchArticles } from "@/store/articlesSlice";
 
-export async function getServerSideProps(context) {
-  const response = await fetch("https://blog-zo8s.vercel.app/app/v2/getArticles");
-  const state = await response.json();
-  return {
-    props: {
-      state,
-    },
+export const getServerSideProps = wrapper.getServerSideProps((store)=> async(context) =>{
+  await store.dispatch(fetchArticles());
+  const state = store.getState();
+  // console.log(state);
+  const {isLoading, data, isError} = state?.articles;
+  const {success, article} = data;
+  return{
+    props:{
+      article,
+    }
   };
-}
+});
 
 export default function Main(props) {
-  const articles = props?.state?.article;
-
+  const articles = props?.article;
   return (
     <>
     <Head>
