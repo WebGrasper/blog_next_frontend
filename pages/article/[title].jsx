@@ -59,10 +59,6 @@ function Article(props) {
 
         {/* Google Analytics (Optional)  */}
         {/* Add your Google Analytics tracking code here */}
-        <meta
-          name="google-site-verification"
-          content="W-J-mNMNzVPU3Qr3WfClrmnijPs3Ajn-j3pcUgOV16k"
-        />
       </Head>
       <div className={styles.articlePageSupremeContainer}>
         <div className={styles.articlePageMainContainer}>
