@@ -52,7 +52,7 @@ export default function Main(props) {
       <div className={styles.homePageSupremeContainer}>
         <div className={styles.homePageMainContainer}>
           <div className={styles.dailyArticlesMainContainer}>
-            <p>Daily Picks</p>
+            <h1>Daily Picks</h1>
             {articles &&
               articles.map((article, index) => (
                 <Link

@@ -1,7 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 import Head from "next/head";
 import SideBar from "@/components/sidebar";
 import styles from "../../styles/article.module.css";
-import Image from "next/image";
 import { wrapper } from "@/store/store";
 import { fetchSingleArticle } from "@/store/singleArticleSlice";
 
@@ -69,15 +69,9 @@ function Article(props) {
                 <h1>{article.title}</h1>
               </div>
 
-              <div className={styles.articleImageContainer}>
-                <Image
-                  className={styles.articleImage}
-                  src={article.articleImage?.[0]}
-                  alt={article.title}
-                  width={150}
-                  height={120}
-                />
-              </div>
+              {/* <div className={styles.articleImageContainer}> */}
+                <img className={styles.articleImage} src={article.articleImage?.[0]} alt={article.title} />
+              {/* </div> */}
               <div className={styles.descriptionContainer}>
                 <h2>Description</h2>
                 <p>{article?.description}</p>

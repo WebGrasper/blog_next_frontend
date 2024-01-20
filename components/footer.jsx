@@ -9,9 +9,7 @@ function Footer() {
           <Link href={"/"}>
             <div className={styles.footerLogo}>
               <img src="/logo.png" alt="stashify logo" />
-              <span>
-                new<span>stash</span>
-              </span>
+              <span>tech<span>amaan</span></span>
             </div>
           </Link>
           <p className={styles.footerDescription}>

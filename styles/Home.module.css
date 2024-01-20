@@ -6,14 +6,20 @@
   max-width: 70rem;
   margin: 10px auto;
   display: flex;
-  column-gap: 6px;
-  padding: 0 1rem;
+  column-gap: 1rem;
+  /* padding: 0 1rem; */
 }
 
 .dailyArticlesMainContainer {
   display: flex;
   flex-direction: column;
   width: 70%;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.01);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+  border-radius: 10px;
+  border: 1px solid rgba(254, 254, 254, 0.1);
   height: 100vh;
   row-gap: 1rem;
   overflow-x: hidden;
@@ -24,15 +30,15 @@
 }
 
 .dailyArticlesMainContainer::-webkit-scrollbar-thumb {
-  background-color: rgb(231, 225, 218);
-  border-radius: 9999px; /* Radius of the scrollbar thumb */
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px; /* Radius of the scrollbar thumb */
 }
 
 .dailyArticlesMainContainer::-webkit-scrollbar-track {
   background-color: transparent;
 }
 
-.dailyArticlesMainContainer > p {
+.dailyArticlesMainContainer > h1 {
   text-overflow: unset;
   overflow: unset;
   font-family: "Source Sans Pro", sans-serif;
@@ -42,8 +48,10 @@
   font-size: 1rem;
   line-height: 1.5rem;
   font-weight: 700;
-  color: rgb(50, 49, 48);
-  opacity: 0.6;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-image: linear-gradient(to right,#7abef6, #4670e3, #1c57fc);
   height: 2rem;
 }
 
@@ -51,14 +59,12 @@
   display: flex;
   height: 12rem;
   column-gap: 16px;
-  /* background-color: rgba(255, 255, 255, 0.4); */
   color: black;
   border-radius: 10px;
   padding: 12px 16px 12px 0;
   cursor: pointer;
   transform: scale(1);
-  /* animation: fadeInUp 0.5s ease-out; */
-  transition: transform 0.4s ease-in-out;
+  transition: transform 0.4s ease;
 }
 
 .dailyArticlesContainer:hover {
@@ -92,7 +98,7 @@
   font-size: 1.25rem;
   line-height: 1.255em;
   font-weight: bolder;
-  color: rgb(50, 49, 48);
+  color: rgba(255, 255, 255, 0.8);
   -webkit-line-clamp: 2;
   z-index: 1;
   width: 100%;
@@ -101,46 +107,49 @@
 
 .dailyArticleDate,
 .dailyCategory {
-  color: rgba(96, 94, 92, 0.721);
+  color: rgba(255, 255, 255, 0.4);
   margin-top: 0.5rem;
-  font-size: 0.8rem;
+  font-size: 0.6rem;
 }
 
-.homePageSideBarContainer{
+.homePageSideBarContainer {
   display: flex;
   justify-content: center;
 }
 
-
-@media only screen and (max-width: 769px){
-  .homePageMainContainer{
+@media only screen and (max-width: 769px) {
+  .homePageMainContainer {
     flex-direction: column;
-    max-width: 100%;
+    align-items: center;
+    max-width: 98%;
   }
-  .dailyArticlesMainContainer{
+  .dailyArticlesMainContainer {
     margin-bottom: 1rem;
     width: 100%;
   }
-  .dailyArticlesContainer{
+  .dailyArticlesContainer {
     padding: 0;
   }
-  .dailyArticleTitleContainer{
+  .dailyArticleTitleContainer {
     padding-right: 0;
   }
 }
 
-@media only screen and (max-width: 321px){
-  .dailyArticlesMainContainer{
-    row-gap: 0.25rem;
+@media only screen and (max-width:426px){
+  .dailyArticleTitle{
+    font-size: 1rem;
   }
-  .dailyArticlesContainer{
+}
+
+@media only screen and (max-width: 321px) {
+  .dailyArticlesContainer {
     height: 10rem;
   }
-  .dailyArticleImage{
+  .dailyArticleImage {
     width: 8rem;
     height: 8rem;
   }
-  .dailyArticleTitle{
-    font-size: 1rem;
+  .dailyArticleTitle {
+    font-size: 0.75rem;
   }
 }

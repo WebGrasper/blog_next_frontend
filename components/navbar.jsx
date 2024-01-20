@@ -4,27 +4,8 @@ import Link from "next/link";
 import { debounce } from "lodash";
 
 function Navbar() {
-  //Functioning for Logout(Ended)
 
-  const [isSticky, setIsSticky] = useState(false);
   const [isSeachChechBoxChecked, setSeachChechBoxChecked] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const offset = window.scrollY;
-
-      if (offset > 5) {
-        setIsSticky(true);
-      } else {
-        setIsSticky(false);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   const handleSearchCheckBox = () => {
     setSeachChechBoxChecked(!isSeachChechBoxChecked);
@@ -46,18 +27,16 @@ function Navbar() {
 
   return (
     <div
-      className={`${styles.navbarSupremeContainer} ${
-        isSticky ? styles.isSticky : ""
-      }`}
+      className={styles.navbarSupremeContainer}
     >
       <div>
         <nav className={`${styles.navbar}`}>
           <div className={`${styles.container1}`}>
             <Link href={"/"}>
-              <h1 className={styles.container1H1}>
+              <div className={styles.container1H1}>
                 <img src="/logo.png" alt="stashify logo" />
-                new<span>stash</span>
-              </h1>
+                <span>tech<span>amaan</span></span>
+              </div>
             </Link>
           </div>
           <div className={`${styles.container2}`}>
@@ -80,7 +59,7 @@ function Navbar() {
               />
               <img
                 className={styles.searchButton}
-                src="/searchIcon.svg"
+                src="/searchIcon.png"
                 alt="search icon"
               />
               <img
@@ -115,9 +94,9 @@ function Navbar() {
               <Link href="/portfolio" passHref>
                 <span className={styles.link}>Portfolio</span>
               </Link>
-              <Link href="/contact-us" passHref>
+              {/* <Link href="/contact-us" passHref>
                 <span className={styles.link}>Contact us</span>
-              </Link>
+              </Link> */}
             </div>
           </div>
         </nav>

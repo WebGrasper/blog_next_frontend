@@ -1,4 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato&family=Nova+Square&family=Source+Sans+3&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lato&family=Nova+Square&family=Source+Sans+3&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato&family=Nova+Square&family=Roboto+Mono&family=Source+Sans+3&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Orbitron&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Orbitron&family=Pixelify+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Tektur&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Euclid+Circular&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
 * {
   box-sizing: border-box;
@@ -6,12 +12,13 @@
   margin: 0;
 }
 
-html, body{
+html,
+body {
   scroll-behavior: smooth;
 }
 
 body {
-  font-family: "Source Sans Pro", sans-serif; 
+  font-family: 'Roboto Mono';
   text-rendering: optimizeLegibility;
   scrollbar-width: none;
 }
@@ -21,12 +28,13 @@ body::-webkit-scrollbar {
   display: none;
 }
 
-
 body {
   background-repeat: no-repeat;
   /* background-image: linear-gradient(to right top, #014b70, #004167, #00385e, #002f55, #00264c, #262a59, #452c62, #642b65, #a93668, #df5456, #fb8737, #f6c514); */
   /* background: linear-gradient(112.1deg, rgb(32, 38, 57) 11.4%, rgb(63, 76, 119) 70.2%); */
-  background-color: rgb(242, 239, 235);
+  /* background-color: rgb(242, 239, 235); */
+  /* background: url('/background.svg'); */
+  background-color: #0f0f0f;
 }
 
 a {

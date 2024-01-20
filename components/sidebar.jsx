@@ -7,7 +7,7 @@ function SideBar(){
               <p className={styles.sideBarTitle}>Read like a Pro</p>
               <div className={styles.sideBarNotePoints}>
                 <Image
-                  src="/connectedIcon.svg"
+                  src="/connectedIcon.png"
                   width={18}
                   height={18}
                   alt="connect icon"
@@ -18,7 +18,7 @@ function SideBar(){
               </div>
               <div className={styles.sideBarNotePoints}>
                 <Image
-                  src="/updateIcon.svg"
+                  src="/updateIcon.png"
                   width={18}
                   height={18}
                   alt="update icon"
@@ -28,7 +28,7 @@ function SideBar(){
                 </p>
               </div>
               <form action="#" method="post" className={styles.subscribeForm}>
-                <input type="text" placeholder="email address..." />
+                <input type="text" placeholder="Email address..." />
                 <button type="submit">Subscribe</button>
               </form>
             </div>

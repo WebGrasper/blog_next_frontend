@@ -3,13 +3,12 @@
   flex-direction: column;
   height: fit-content;
   padding: 2rem;
-  background: url("/sideMenuBackground.avif");
-  color: black;
-  text-align: justify;
+  background: rgba(255, 255, 255, 0.01);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
   border-radius: 10px;
-  background-size: 100% 100%;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 6px 16px;
-  background-repeat: no-repeat;
+  border: 1px solid rgba(254, 254, 254, 0.1);
+  text-align: left;
 }
 
 .sideBarTitle {
@@ -21,7 +20,10 @@
   line-height: 2.25rem;
   font-weight: 800;
   text-align: left;
-  color: rgb(50, 49, 48);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-image: linear-gradient(to right,#b1dcff, #4670e3, #3d71ff);
   margin-bottom: 2rem;
 }
 
@@ -30,7 +32,7 @@
   align-items: center;
   column-gap: 1rem;
   margin-bottom: 0.5rem;
-  color: rgba(50, 49, 48, 0.861);
+  color: rgba(255, 255, 255, 1);
 }
 
 .sideBarNotePoints > p > span {
@@ -53,9 +55,13 @@
 }
 
 .subscribeForm > input {
-  background: white;
+  background: rgba(255, 255, 255, 0.01);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+  border-radius: 9999px;
+  border: 1px solid rgba(254, 254, 254, 0.1);
   text-indent: 1.5rem;
-  color: black;
+  color: rgba(255, 255, 255, 0.8);
   letter-spacing: 1px;
 }
 
@@ -72,8 +78,19 @@
   font-weight: 500;
   letter-spacing: 1px;
   color: white;
-  background-color: rgb(50, 49, 48);
+  background: #0a4bff; 
+  /* background: rgba(255, 255, 255); */
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+  border-radius: 9999px;
+  font-family: 'Roboto Mono';
+  border: 1px solid rgba(254, 254, 254, 0.1);
   cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+.subscribeForm > button:hover{
+  background: #0037cb;
 }
 
 @media only screen and (max-width: 769px) {
@@ -84,16 +101,14 @@
 
 @media only screen and (max-width: 426px) {
   .homePageSideBar {
-    background: url("/sideMenuBackground.avif");
-    background-size: 100% 100%;
     display: block;
+    max-width: 98%;
+    margin-top: 1rem;
   }
 }
 
 @media only screen and (max-width: 321px) {
   .homePageSideBar {
-    background: url("/sideMenuBackground.avif");
-    background-size: 100% 100%;
     padding: 1.25rem;
   }
   .sideBarTitle {
