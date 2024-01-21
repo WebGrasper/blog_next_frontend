@@ -37,7 +37,7 @@ function Article(props) {
     console.log(article?.description);
   },[article])
   return (
-    <>
+    <div>
       <Head>
         <title>{article.title}</title>
         <meta name="description" content={article?.description?.slice(0, 150)} />
@@ -70,7 +70,7 @@ function Article(props) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

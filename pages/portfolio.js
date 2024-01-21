@@ -78,7 +78,7 @@ export default function Home({ data }) {
   // (End) State to track the expanded project
 
   return (
-    <>
+    <div>
       <Head>
         <title>Mohammad Amaan | Full Stack Developer</title>
         <meta name="description" content="Meet Mohammad Amaan, a tech enthusiast pursuing undergrad studies. Aspiring Full Stack Developer, exploring innovation and programming. #TechPassion" />
@@ -162,7 +162,7 @@ export default function Home({ data }) {
           </section>
         </div>
       </main>
-    </>
+    </div>
   );
 }
 

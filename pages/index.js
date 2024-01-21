@@ -23,7 +23,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 export default function Main(props) {
   const articles = props?.article;
   return (
-    <>
+    <div>
       <Head>
         <title>Tech Amaan: Discover insights, tips, gadgets – your hub!</title>
         <meta name="description" content="Explore trending tech insights, programming tips, and top gadgets. Stay informed on comparisons, details, and discover the latest in technology." />
@@ -81,6 +81,6 @@ export default function Main(props) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
