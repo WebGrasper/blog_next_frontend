@@ -25,12 +25,14 @@ export default function Main(props) {
   return (
     <>
       <Head>
-        <title>Tech Amaan: Discover tech insights, programming tips, and gadget reviews. Stay informed on the latest trends in technology.</title>
+        <title>Tech Amaan: Discover insights, tips, gadgets – your hub!</title>
         <meta name="description" content="Explore trending tech insights, programming tips, and top gadgets. Stay informed on comparisons, details, and discover the latest in technology." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <meta property="og:title" content="Tech Amaan: Discover tech insights, programming tips, and gadget reviews. Stay informed on the latest trends in technology." />
+        <meta property="og:title" content="Tech Amaan: Discover insights, tips, gadgets – your hub!" />
         <meta property="og:description" content="Explore trending tech insights, programming tips, and top gadgets. Stay informed on comparisons, details, and discover the latest in technology." />
+        <link rel="canonical" href="https://www.techamaan.com/" />
+
         <meta property="og:image" content="https://techamaan.com/logo.png" />
         <meta name="twitter:card" content="summary_large_image" />
         <link rel="icon" href="./logo.png" />
@@ -44,7 +46,7 @@ export default function Main(props) {
               articles.map((article, index) => (
                 <Link
                   href="/article/[title]"
-                  as={`/article/${encodeURIComponent(article.title)}`}
+                  as={`/article/${encodeURIComponent(article.title.replace(/\s+/g, '-'))}`}
                   className={styles.dailyArticlesContainer}
                   key={index}
                 >
@@ -52,24 +54,24 @@ export default function Main(props) {
                     <Image
                       className={styles.dailyArticleImage}
                       src={article.articleImage[0]}
-                      width={210}
-                      height={140}
+                      width={160}
+                      height={160}
                       alt={article.title}
                     />
                   </div>
                   <div className={styles.dailyArticleTitleContainer}>
-                    <p className={styles.dailyArticleTitle}>{article.title}</p>
-                    <p className={styles.dailyArticleDate}>
+                    <h2 className={styles.dailyArticleTitle}>{article.title}</h2>
+                    <h3 className={styles.dailyArticleDate}>
                       Updated &#8226;{" "}
                       {article.createdAt
                         .slice(0, 10)
                         .split("-")
                         .reverse()
                         .join("-")}
-                    </p>
-                    <p className={styles.dailyCategory}>
+                    </h3>
+                    <h4 className={styles.dailyCategory}>
                       Category &#8226; {article.category}
-                    </p>
+                    </h4>
                   </div>
                 </Link>
               ))}

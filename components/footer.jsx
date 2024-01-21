@@ -19,16 +19,30 @@ function Footer() {
           </p>
         </div>
         <div className={styles.container2}>
-          <p className={styles.container2Heading}>Content</p>
+          <p className={styles.container2Heading}>Gadgets</p>
           <div className={styles.container2Links}>
-            <Link href={"#"} className={styles.links}>
-              Ideas
+            <Link href="#" className={styles.links}>
+              Reviews
             </Link>
-            <Link href={"#"} className={styles.links}>
-              Collections
+            <Link href="#" className={styles.links}>
+              Comparison
             </Link>
-            <Link href={"#"} className={styles.links}>
-              Stories
+            <Link href="#" className={styles.links}>
+              Insights
+            </Link>
+          </div>
+        </div>
+        <div className={styles.container2}>
+          <p className={styles.container2Heading}>Coding</p>
+          <div className={styles.container2Links}>
+            <Link href="#" className={styles.links}>
+              Algorithms
+            </Link>
+            <Link href="#" className={styles.links}>
+              Frontend
+            </Link>
+            <Link href="#" className={styles.links}>
+              Backend
             </Link>
           </div>
         </div>

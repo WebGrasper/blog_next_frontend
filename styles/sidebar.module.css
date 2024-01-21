@@ -32,11 +32,16 @@
   align-items: center;
   column-gap: 1rem;
   margin-bottom: 0.5rem;
+  font-size: 0.8rem;
   color: rgba(255, 255, 255, 1);
 }
 
-.sideBarNotePoints > p > span {
-  font-weight: bold;
+.sideBarNotePoints > h3{
+  font-weight: normal;
+}
+
+.sideBarNotePoints > h3 > span {
+  font-weight: 600;
 }
 
 .subscribeForm {

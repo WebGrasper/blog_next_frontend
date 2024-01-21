@@ -4,7 +4,7 @@ import styles from '../styles/sidebar.module.css';
 function SideBar(){
     return(
         <div className={`${styles.homePageSideBar}`}>
-              <p className={styles.sideBarTitle}>Read like a Pro</p>
+              <h2 className={styles.sideBarTitle}>Read like a Pro</h2>
               <div className={styles.sideBarNotePoints}>
                 <Image
                   src="/connectedIcon.png"
@@ -12,9 +12,9 @@ function SideBar(){
                   height={18}
                   alt="connect icon"
                 />
-                <p>
+                <h3>
                   Stay <span>connected</span>
-                </p>
+                </h3>
               </div>
               <div className={styles.sideBarNotePoints}>
                 <Image
@@ -23,9 +23,9 @@ function SideBar(){
                   height={18}
                   alt="update icon"
                 />
-                <p>
+                <h3>
                   Stay <span>updated</span>
-                </p>
+                </h3>
               </div>
               <form action="#" method="post" className={styles.subscribeForm}>
                 <input type="text" placeholder="Email address..." />

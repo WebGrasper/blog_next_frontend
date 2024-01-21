@@ -83,21 +83,15 @@ function Navbar() {
               alt="menu button"
             />
             <div className={styles.container3Navbar}>
-              <Link href="/dailypicks" passHref>
-                <span className={styles.link}>Daily Picks</span>
+              <Link href="/gadgets-insights" passHref>
+                <span className={styles.link}>Gadgets insights</span>
               </Link>
-              <Link href="/recommanded" passHref>
-                <span className={styles.link}>Recommended</span>
-              </Link>
-              <Link href="/collections" passHref>
-                <span className={styles.link}>Collections</span>
+              <Link href="/stack-craft" passHref>
+                <span className={styles.link}>Coding tutorials</span>
               </Link>
               <Link href="/portfolio" passHref>
                 <span className={styles.link}>Portfolio</span>
               </Link>
-              {/* <Link href="/contact-us" passHref>
-                <span className={styles.link}>Contact us</span>
-              </Link> */}
             </div>
           </div>
         </nav>

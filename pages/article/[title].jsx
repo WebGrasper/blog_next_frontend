@@ -1,5 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
 import Head from "next/head";
+import Image from "next/image";
 import SideBar from "@/components/sidebar";
 import styles from "../../styles/article.module.css";
 import { wrapper } from "@/store/store";
@@ -44,6 +44,8 @@ function Article(props) {
 
         <meta property="og:image" content={article?.articleImage?.[0] || "https://picsum.photos/1200/630"} />
 
+        <link rel="canonical" href={`https://www.techamaan.com/${article.title.replace(/\s+/g, '-')}`} />
+
         <meta property="og:image" content="https://techamaan.com/logo.png" />
         <meta name="twitter:card" content="summary_large_image" />
         <link rel="icon" href="./logo.png" />
@@ -54,13 +56,10 @@ function Article(props) {
           <div className={styles.articleMainContainer}>
             <div className={styles.articleContainer}>
               <div className={styles.titleHeadingContainer}>
-                <p>Title</p>
+                <h2>Title</h2>
                 <h1>{article.title}</h1>
               </div>
-
-              {/* <div className={styles.articleImageContainer}> */}
-                <img className={styles.articleImage} src={article.articleImage?.[0]} alt={article.title} />
-              {/* </div> */}
+              <Image className={styles.articleImage} src={article.articleImage?.[0]} alt={article.title} width={800} height={600} quality={80} layout="responsive" objectFit="cover"/>
               <div className={styles.descriptionContainer}>
                 <h2>Description</h2>
                 <p>{article?.description}</p>
