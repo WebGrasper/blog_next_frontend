@@ -39,26 +39,15 @@ function Article(props) {
         <title>{article.title}</title>
         <meta name="description" content={article?.description?.slice(0, 150)} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-        {/* SEO Meta Tags */}
         <meta property="og:title" content={article.title} />
-        <meta
-          property="og:description"
-          content={article?.description?.slice(0, 150)}
-        />
-        {/* Use a dynamic og:image based on the blog post content or a default image */}
-        <meta
-          property="og:image"
-          content={article?.articleImage?.[0] || "https://picsum.photos/1200/630"}
-        />
+        <meta property="og:description" content={article?.description?.slice(0, 150)} />
 
+        <meta property="og:image" content={article?.articleImage?.[0] || "https://picsum.photos/1200/630"} />
+
+        <meta property="og:image" content="https://techamaan.com/logo.png" />
         <meta name="twitter:card" content="summary_large_image" />
+        <link rel="icon" href="./logo.png" />
 
-        {/* Favicon  */}
-        <link rel="icon" href="/logo.png" />
-
-        {/* Google Analytics (Optional)  */}
-        {/* Add your Google Analytics tracking code here */}
       </Head>
       <div className={styles.articlePageSupremeContainer}>
         <div className={styles.articlePageMainContainer}>

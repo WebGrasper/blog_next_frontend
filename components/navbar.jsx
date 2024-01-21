@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from "react";
 import styles from "../styles/navbar.module.css";
 import Link from "next/link";
@@ -64,7 +65,7 @@ function Navbar() {
               />
               <img
                 className={styles.searchCloseButton}
-                src="/closeButton.svg"
+                src="/closeButton.png"
                 alt="close button"
               />
             </div>
@@ -73,12 +74,12 @@ function Navbar() {
             <input type="checkbox" className={styles.checkBox} />
             <img
               className={styles.closeButton}
-              src="/closeButton.svg"
+              src="/closeButton.png"
               alt="close button"
             />
             <img
               className={styles.menuButton}
-              src="/menuButton.svg"
+              src="/menuButton.png"
               alt="menu button"
             />
             <div className={styles.container3Navbar}>

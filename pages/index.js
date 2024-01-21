@@ -6,49 +6,36 @@ import SideBar from "@/components/sidebar";
 import { wrapper } from "@/store/store";
 import { fetchArticles } from "@/store/articlesSlice";
 
-export const getServerSideProps = wrapper.getServerSideProps((store)=> async(context) =>{
-  await store.dispatch(fetchArticles());
-  const state = store.getState();
-  // console.log(state);
-  const {isLoading, data, isError} = state?.articles;
-  const {success, article} = data;
-  return{
-    props:{
-      article,
-    }
-  };
-});
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) => async (context) => {
+    await store.dispatch(fetchArticles());
+    const state = store.getState();
+    const { isLoading, data, isError } = state?.articles;
+    const { success, article } = data;
+    return {
+      props: {
+        article,
+      },
+    };
+  }
+);
 
 export default function Main(props) {
   const articles = props?.article;
   return (
     <>
-    <Head>
-        <title>newstash: Stay Informed with newstash</title>
-        <meta
-          name="description"
-          content="Explore insightful articles on tech, lifestyle, and more. Stay informed, share thoughts, and enrich your knowledge. Join our community now for engaging content!"
-        />
+      <Head>
+        <title>Tech Amaan: Discover tech insights, programming tips, and gadget reviews. Stay informed on the latest trends in technology.</title>
+        <meta name="description" content="Explore trending tech insights, programming tips, and top gadgets. Stay informed on comparisons, details, and discover the latest in technology." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        {/* SEO Meta Tags */}
-        <meta
-          property="og:title"
-          content="newstash: Stay Informed with Stashify"
-        />
-        <meta
-          property="og:description"
-          content="Explore insightful articles on tech, lifestyle, and more. Stay informed, share thoughts, and enrich your knowledge. Join our community now for engaging content!"
-        />
-        <meta property="og:image" content="https://picsum.photos/1200/630" />
+        <meta property="og:title" content="Tech Amaan: Discover tech insights, programming tips, and gadget reviews. Stay informed on the latest trends in technology." />
+        <meta property="og:description" content="Explore trending tech insights, programming tips, and top gadgets. Stay informed on comparisons, details, and discover the latest in technology." />
+        <meta property="og:image" content="https://techamaan.com/logo.png" />
         <meta name="twitter:card" content="summary_large_image" />
-
-        {/* Favicon  */}
         <link rel="icon" href="./logo.png" />
-
-        {/* Google Analytics (Optional)  */}
-        {/* Add your Google Analytics tracking code here */}
       </Head>
+
       <div className={styles.homePageSupremeContainer}>
         <div className={styles.homePageMainContainer}>
           <div className={styles.dailyArticlesMainContainer}>

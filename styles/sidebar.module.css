@@ -79,11 +79,10 @@
   letter-spacing: 1px;
   color: white;
   background: #0a4bff; 
-  /* background: rgba(255, 255, 255); */
   backdrop-filter: blur(1px);
   -webkit-backdrop-filter: blur(1px);
   border-radius: 9999px;
-  font-family: 'Roboto Mono';
+  font-family: 'Open Sans';
   border: 1px solid rgba(254, 254, 254, 0.1);
   cursor: pointer;
   transition: all 0.4s ease;
