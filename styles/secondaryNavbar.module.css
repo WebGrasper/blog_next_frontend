@@ -1,0 +1,39 @@
+.secondaryNavbarSupremeContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+    background: #0f0f0f;
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+}
+
+.secondaryNavbarContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70rem;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.secondaryNavbarContainer::-webkit-scrollbar{
+    width: 0px;
+}
+
+.secondaryNavbarContainer::-webkit-scrollbar-thumb{
+    background: transparent;
+}
+
+.secondaryNavbarLink {
+    padding: 0 0.5rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+@media only screen and (max-width:350px){
+    .secondaryNavbarContainer{
+        justify-content: flex-start;
+    }
+}

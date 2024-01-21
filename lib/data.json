@@ -1,0 +1,64 @@
+{
+  "experience": [
+      {
+        "role": "Software Developer Engineer Intern",
+        "companyName": "Sklepon AI Services Private Limited",
+        "period": "1/oct/2023 - 30/nov/2023"
+      },
+      {
+        "role": "React Developer Intern",
+        "companyName": "CodeClause",
+        "period": "1/may/2023 - 1/june/2023"
+      },
+      {
+        "role": "Frontend Designer Intern",
+        "companyName": "VlsiMaster",
+        "period": "18/Aug/2022 - 18/oct/2022"
+      }
+    ],
+  "technology": [
+    { "imgSrc": "/iconpack/c.svg", "alt": "c logo" },
+    { "imgSrc": "/iconpack/css3-plain.svg", "alt": "css logo" },
+    { "imgSrc": "/iconpack/express.svg", "alt": "expressjs logo" },
+    { "imgSrc": "/iconpack/git-plain.svg", "alt": "git logo" },
+    { "imgSrc": "/iconpack/html5-original.svg", "alt": "html5 logo" },
+    { "imgSrc": "/iconpack/javascript-original.svg", "alt": "javasript logo" },
+    { "imgSrc": "/iconpack/mongodb-plain.svg", "alt": "mongodb logo" },
+    { "imgSrc": "/iconpack/nextjs-icon-svgrepo-com.svg", "alt": "nextjs logo" },
+    { "imgSrc": "/iconpack/nodejs.svg", "alt": "nodejs logo" },
+    { "imgSrc": "/iconpack/postman.svg", "alt": "postman logo" },
+    { "imgSrc": "/iconpack/react-original-wordmark.svg", "alt": "reactjs logo" }
+  ],
+  "projects": [
+    {
+      "name": "Sarte Living",
+      "description": "Exporter of handmade metal furniture: coffee, console, side tables, and lifestyle accessories. Blend international aesthetics with Indian craftsmanship at Sarte Living.",
+      "link": "https://sarteliving.com/"
+    },
+    {
+      "name": "New Stash",
+      "description": "Explore insightful articles on tech, lifestyle, and more. Stay informed, share thoughts, and enrich your knowledge. Join our community now for engaging content!",
+      "link": "https://newstash.vercel.app/"
+    },
+    {
+      "name": "Stashify",
+      "description": "Discover diverse, concise blog articles. Stay informed on trends, opinions, lifestyle, and tech. Join our community, read, and share your thoughts.",
+      "link": "https://seeblogs.vercel.app/"
+    },
+    {
+      "name": "Compressify",
+      "description": "Optimize your images effortlessly with ImageCompressify. A seamless web app for efficient image compression and fast loading.",
+      "link": "https://image-compression-one.vercel.app/"
+    },
+    {
+      "name": "Code Classico",
+      "description": "Elevate your coding with our React-based online editor. Seamless, collaborative, and feature-rich for efficient development. Join us now!",
+      "link": "https://code-editor-murex.vercel.app/"
+    },
+    {
+      "name": "Self Care [Desktop only]",
+      "description": "A platform where one can search for mental health-related conditions and access corresponding remedies. Your well-being, our priority!",
+      "link": "https://mohdamaan570.github.io/Self-Care/"
+    }
+  ]
+}

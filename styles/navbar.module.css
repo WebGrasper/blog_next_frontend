@@ -1,6 +1,6 @@
 .navbarSupremeContainer {
   width: 100%;
-  padding: 1rem 1rem;
+  padding: 1rem;
   position: -webkit-sticky;
   position: sticky;
   top: 0;
@@ -8,6 +8,14 @@
   z-index: 9999;
   transition: all 0.3s ease; /* Smooth transition effect */
 }
+
+.nonSticky{
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background-color: #0f0f0f;
+  transition: all 0.3s ease; /* Smooth transition effect */
+}
+
 .navbar {
   display: grid;
   grid-template-columns: auto auto auto;

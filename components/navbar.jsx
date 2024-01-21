@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import styles from "../styles/navbar.module.css";
 import Link from "next/link";
 import { debounce } from "lodash";
+import { usePathname } from "next/navigation";
 
 function Navbar() {
 
@@ -11,6 +12,13 @@ function Navbar() {
   const handleSearchCheckBox = () => {
     setSeachChechBoxChecked(!isSeachChechBoxChecked);
   };
+
+  // New state for menu visibility
+  const [isMenuOpen, setMenuOpen] = useState(false); 
+  const handleLinkClick = () => {
+    setMenuOpen(false); 
+  };
+  // Close the menu when a link is clicked
 
   //search bar functionality(Started)
 
@@ -26,9 +34,23 @@ function Navbar() {
 
   //search bar functionality(Ended)
 
+  const [isAtPortfolio, setAtPortfolio] = useState(false);
+
+  const pathname = usePathname();
+
+  useEffect(()=>{
+    console.log(typeof pathname)
+    if (pathname == '/portfolio') {
+      setAtPortfolio(true);
+    } else {
+      setAtPortfolio(false);
+    }
+  },[pathname]);
+  
+styles
   return (
     <div
-      className={styles.navbarSupremeContainer}
+      className={`${!isAtPortfolio ? styles.navbarSupremeContainer : styles.nonSticky }`}
     >
       <div>
         <nav className={`${styles.navbar}`}>
@@ -71,7 +93,7 @@ function Navbar() {
             </div>
           </div>
           <div className={`${styles.containerButton}`}>
-            <input type="checkbox" className={styles.checkBox} />
+            <input type="checkbox" className={styles.checkBox} checked={isMenuOpen} onChange={() => setMenuOpen(!isMenuOpen)}/>
             <img
               className={styles.closeButton}
               src="/closeButton.png"
@@ -83,13 +105,13 @@ function Navbar() {
               alt="menu button"
             />
             <div className={styles.container3Navbar}>
-              <Link href="/gadgets-insights" passHref>
+              <Link href="/gadgets-insights" passHref onClick={handleLinkClick}>
                 <span className={styles.link}>Gadgets insights</span>
               </Link>
-              <Link href="/stack-craft" passHref>
+              <Link href="/stack-craft" passHref onClick={handleLinkClick}>
                 <span className={styles.link}>Coding tutorials</span>
               </Link>
-              <Link href="/portfolio" passHref>
+              <Link href="/portfolio" passHref onClick={handleLinkClick}>
                 <span className={styles.link}>Portfolio</span>
               </Link>
             </div>

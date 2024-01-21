@@ -108,6 +108,15 @@
   transform: scaleX(1);
 }
 
+.section5 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  font-size: smaller;
+  color: white;
+}
+
 @media only screen and (max-width: 769px) {
   .footerMainContainer {
     padding: 3rem 1rem;
@@ -127,4 +136,19 @@
   .container3 {
     width: 100%;
   }
+.section5 {
+    font-size: 0.65rem;
+}
+}
+
+@media only screen and (max-width: 363px) {
+  .section5 {
+      font-size: 0.5rem;
+  }
+}
+
+@media only screen and (max-width:310px){
+  .section5 {
+    font-size: 0.4rem;
+}
 }

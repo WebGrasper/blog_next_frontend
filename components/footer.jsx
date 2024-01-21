@@ -13,7 +13,7 @@ function Footer() {
             </div>
           </Link>
           <p className={styles.footerDescription}>
-          Explore trending tech insights, programming tips, and top gadgets. Stay informed on comparisons, details, and discover the latest in technology.
+            Explore trending tech insights, programming tips, and top gadgets. Stay informed on comparisons, details, and discover the latest in technology.
           </p>
         </div>
         <div className={styles.container2}>
@@ -62,6 +62,9 @@ function Footer() {
           </div>
         </div>
       </div>
+      <section className={styles.section5}>
+        <p>Copyright © 2024 MOHAMMAD AMAAN. All Rights Reserved.</p>
+      </section>
     </div>
   );
 }
