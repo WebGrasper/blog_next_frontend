@@ -46,7 +46,7 @@ function Navbar() {
                 type="search"
                 className={styles.container2SearchBox}
                 id="container2SearchBox"
-                placeholder="Ideas, topics & more..."
+                placeholder="Insights, reviews & more..."
                 onChange={(e) => {
                   handleSearchBlogs(e.target.value || null);
                 }}

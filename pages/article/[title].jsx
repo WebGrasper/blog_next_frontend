@@ -4,6 +4,7 @@ import SideBar from "@/components/sidebar";
 import styles from "../../styles/article.module.css";
 import { wrapper } from "@/store/store";
 import { fetchSingleArticle } from "@/store/singleArticleSlice";
+import { useEffect } from "react";
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async (context) => {
@@ -32,7 +33,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
 function Article(props) {
     const article = props.article || props?.warning;
-
+  useEffect(()=>{
+    console.log(article?.description);
+  },[article])
   return (
     <>
       <Head>
@@ -55,15 +58,11 @@ function Article(props) {
         <div className={styles.articlePageMainContainer}>
           <div className={styles.articleMainContainer}>
             <div className={styles.articleContainer}>
-              <div className={styles.titleHeadingContainer}>
                 <h2>Title</h2>
                 <h1>{article.title}</h1>
-              </div>
-              <Image className={styles.articleImage} src={article.articleImage?.[0]} alt={article.title} width={800} height={600} quality={80} layout="responsive" objectFit="cover"/>
-              <div className={styles.descriptionContainer}>
+                <Image className={styles.articleImage} src={article.articleImage?.[0]} alt={article.title} width={800} height={600} quality={80} layout="responsive" objectFit="cover"/>
                 <h2>Description</h2>
-                <p>{article?.description}</p>
-              </div>
+                <div className={styles.dynamicHtmlContent} dangerouslySetInnerHTML={{ __html: article?.description }}></div>
             </div>
           </div>
           <div className={styles.articlePageSideBarContainer}>

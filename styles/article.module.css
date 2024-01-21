@@ -24,40 +24,30 @@
   flex-direction: column;
 }
 
-.titleHeadingContainer, .descriptionContainer {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  color: black;
-  margin-bottom: 1rem;
-}
 
-
-.titleHeadingContainer > h2, .descriptionContainer > h2 {
-  margin: 0px;
-  text-overflow: unset;
-  overflow: unset;
-  -webkit-box-orient: unset;
+.articleContainer h2{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
   font-size: 1rem;
   line-height: 1.5rem;
+  height: 2rem;
   font-weight: 700;
   color: transparent;
   background-clip: text;
   -webkit-background-clip: text;
   background-image: linear-gradient(to right,#7abef6, #4670e3, #1c57fc);
-  opacity: 0.6;
   text-transform: uppercase;
-  height: 2rem;
 }
 
-.titleHeadingContainer > h1 {
-  margin: 0px 0px 0.5rem;
+.articleContainer h1 {
+  margin-bottom: 1rem;
   text-overflow: ellipsis;
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   font-size: 1.25rem;
-  line-height: 1.255em;
+  line-height: 1.25em;
   text-align: left;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.8);
@@ -70,8 +60,35 @@
   margin-bottom: 1rem;
 }
 
-.descriptionContainer > p{
-  margin: 0px;
+.articleContainer p{
+  margin-bottom: 1rem;
+  text-overflow: unset;
+  overflow: unset;
+  -webkit-box-orient: unset;
+  font-size: 0.8rem;
+  line-height: 1.5rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: left;
+}
+
+.dynamicHtmlContent h2{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  height: 2rem;
+  font-weight: 700;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-image: linear-gradient(to right,#7abef6, #4670e3, #1c57fc);
+  text-transform: uppercase;
+} 
+
+.dynamicHtmlContent p{
+  margin-bottom: 1rem;
   text-overflow: unset;
   overflow: unset;
   -webkit-box-orient: unset;

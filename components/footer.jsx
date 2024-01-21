@@ -13,9 +13,7 @@ function Footer() {
             </div>
           </Link>
           <p className={styles.footerDescription}>
-            Explore insightful articles on tech, lifestyle, and more. Stay
-            informed, share thoughts, and enrich your knowledge. Join our
-            community now for engaging content!
+          Explore trending tech insights, programming tips, and top gadgets. Stay informed on comparisons, details, and discover the latest in technology.
           </p>
         </div>
         <div className={styles.container2}>
