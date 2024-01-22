@@ -123,19 +123,22 @@
   }
 }
 
-@media only screen and (max-width: 426px) {
+@media only screen and (max-width: 688px) {
   .footerMainContainer {
     flex-direction: column;
     column-gap: 0;
     row-gap: 2rem;
     padding: 2rem 1rem;
   }
-
+  
   .container1,
   .container2,
   .container3 {
     width: 100%;
   }
+}
+
+@media only screen and (max-width: 426px) {
 .section5 {
     font-size: 0.65rem;
 }

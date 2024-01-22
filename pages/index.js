@@ -61,6 +61,8 @@ export default function Main(props) {
                   </div>
                   <div className={styles.dailyArticleTitleContainer}>
                     <h2 className={styles.dailyArticleTitle}>{article.title}</h2>
+                    <p className={styles.dailyArticleDescription} dangerouslySetInnerHTML={{ __html: `${article?.description.slice(0, 250)}&hellip;` }}></p>
+                    <div className={styles.dailyArticleDateContainer}>
                     <h3 className={styles.dailyArticleDate}>
                       Updated &#8226;{" "}
                       {article.createdAt
@@ -72,6 +74,7 @@ export default function Main(props) {
                     <h4 className={styles.dailyCategory}>
                       Category &#8226; {article.category}
                     </h4>
+                    </div>
                   </div>
                 </Link>
               ))}
