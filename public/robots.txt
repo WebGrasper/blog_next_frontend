@@ -1,0 +1,13 @@
+# Allow crawling of all content
+User-agent: *
+Disallow:
+
+# Exclude some directories from crawling
+Disallow: /api/
+Disallow: /_next/
+Disallow: /public/
+Disallow: /static/
+Disallow: /images/
+
+# Set a reference to the sitemap
+Sitemap: https://www.techamaan.com/sitemap.xml

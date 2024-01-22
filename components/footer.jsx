@@ -48,13 +48,10 @@ function Footer() {
           <p className={styles.container3Heading}>Resources</p>
           <div className={styles.container3Links}>
             <Link href={"#"} className={styles.links}>
-              Terms
+              Terms and conditions
             </Link>
             <Link href={"#"} className={styles.links}>
-              Privacy
-            </Link>
-            <Link href={"#"} className={styles.links}>
-              About
+              About us
             </Link>
             <Link href={"#"} className={styles.links}>
               Contact us
