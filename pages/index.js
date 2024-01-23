@@ -3,25 +3,39 @@ import styles from "@/styles/Home.module.css";
 import Image from "next/image";
 import Head from "next/head";
 import SideBar from "@/components/sidebar";
-import { wrapper } from "@/store/store";
-import { fetchArticles } from "@/store/articlesSlice";
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) => async (context) => {
-    await store.dispatch(fetchArticles());
-    const state = store.getState();
-    const { isLoading, data, isError } = state?.articles;
-    const { success, article } = data;
-    return {
-      props: {
-        article,
+export const getServerSideProps = async (context) => {
+  let data = null;
+  try {
+    let response = await fetch("https://blog-zo8s.vercel.app/app/v2/getArticles", {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
       },
-    };
-  }
-);
+    });
 
-export default function Main(props) {
-  const articles = props?.article;
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    data = await response.json();
+
+
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  let {success, article} = data;
+  return {
+    props: {
+      article,
+    },
+  };
+}
+
+
+export default function Main({article}) {
+
+
   return (
     <div>
       <Head>
@@ -35,15 +49,16 @@ export default function Main(props) {
 
         <meta property="og:image" content="https://techamaan.com/logo.png" />
         <meta name="twitter:card" content="summary_large_image" />
-        <link rel="icon" href="./logo.png" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        
       </Head>
 
       <div className={styles.homePageSupremeContainer}>
         <div className={styles.homePageMainContainer}>
           <div className={styles.dailyArticlesMainContainer}>
             <h1>Daily Picks</h1>
-            {articles &&
-              articles.map((article, index) => (
+            {article &&
+              article.map((article, index) => (
                 <Link
                   href="/article/[title]"
                   as={`/article/${encodeURIComponent(article.title.replace(/\s+/g, '-'))}`}
@@ -63,17 +78,17 @@ export default function Main(props) {
                     <h2 className={styles.dailyArticleTitle}>{article.title}</h2>
                     <p className={styles.dailyArticleDescription} dangerouslySetInnerHTML={{ __html: `${article?.description.slice(0, 250)}&hellip;` }}></p>
                     <div className={styles.dailyArticleDateContainer}>
-                    <h3 className={styles.dailyArticleDate}>
-                      Updated &#8226;{" "}
-                      {article.createdAt
-                        .slice(0, 10)
-                        .split("-")
-                        .reverse()
-                        .join("-")}
-                    </h3>
-                    <h4 className={styles.dailyCategory}>
-                      Category &#8226; {article.category}
-                    </h4>
+                      <h3 className={styles.dailyArticleDate}>
+                        Updated &#8226;{" "}
+                        {article.createdAt
+                          .slice(0, 10)
+                          .split("-")
+                          .reverse()
+                          .join("-")}
+                      </h3>
+                      <h4 className={styles.dailyCategory}>
+                        Category &#8226; {article.category}
+                      </h4>
                     </div>
                   </div>
                 </Link>

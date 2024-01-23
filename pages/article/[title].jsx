@@ -2,40 +2,30 @@ import Head from "next/head";
 import Image from "next/image";
 import SideBar from "@/components/sidebar";
 import styles from "../../styles/article.module.css";
-import { wrapper } from "@/store/store";
-import { fetchSingleArticle } from "@/store/singleArticleSlice";
-import { useEffect } from "react";
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) => async (context) => {
-    const { title } = context.query;
-    await store.dispatch(fetchSingleArticle({ title }));
-    const { isLoading, data, isError } = store.getState().singleArticle;
-    const {success, message} = data;
-    // console.log(store.getState());
-
-    if(!success){
-      return{
-        props:{
-          warning: message,
-        }
-      }
-    }
-
-    return {
-      props: {
-        article: data.article,
+export const getServerSideProps = async (context) => {
+  const { title } = context.query;
+  const response = await fetch(
+    `https://blog-zo8s.vercel.app/app/v2/getSingleArticle/${title}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
       },
-    };
-  }
-);
+    }
+  );
+  const data = await response.json();
+  let {success, article} = data;
+  return {
+    props: {
+      article,
+    },
+  };
+}
 
 
-function Article(props) {
-    const article = props.article || props?.warning;
-  useEffect(()=>{
-    console.log(article?.description);
-  },[article])
+function Article({article}) {
+  
   return (
     <div>
       <Head>
@@ -58,11 +48,11 @@ function Article(props) {
         <div className={styles.articlePageMainContainer}>
           <div className={styles.articleMainContainer}>
             <div className={styles.articleContainer}>
-                <h2>Title</h2>
-                <h1>{article.title}</h1>
-                <Image className={styles.articleImage} src={article.articleImage?.[0]} alt={article.title} width={800} height={600} quality={80} layout="responsive" objectFit="cover"/>
-                <h2>Description</h2>
-                <div className={styles.dynamicHtmlContent} dangerouslySetInnerHTML={{ __html: article?.description }}></div>
+              <h2>Title</h2>
+              <h1>{article.title}</h1>
+              <Image className={styles.articleImage} src={article.articleImage?.[0]} alt={article.title} width={800} height={600} quality={80} layout="responsive" objectFit="cover" />
+              <h2>Description</h2>
+              <div className={styles.dynamicHtmlContent} dangerouslySetInnerHTML={{ __html: article?.description }}></div>
             </div>
           </div>
           <div className={styles.articlePageSideBarContainer}>

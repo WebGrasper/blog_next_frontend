@@ -9,17 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@reduxjs/toolkit": "^2.0.1",
     "lodash": "^4.17.21",
     "next": "14.0.4",
-    "next-redux-wrapper": "^8.1.0",
-    "node-fetch": "^3.3.2",
     "nprogress": "^0.2.0",
     "react": "^18",
-    "react-dom": "^18",
-    "react-redux": "^7.2.5",
-    "redux": "^5.0.1",
-    "redux-persist": "^6.0.0"
+    "react-dom": "^18"
   },
   "devDependencies": {
     "eslint": "^8",
