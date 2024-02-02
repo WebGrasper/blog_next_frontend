@@ -39,15 +39,15 @@ export default function Main({article}) {
   return (
     <div>
       <Head>
-        <title>Tech Amaan: Discover insights, tips, gadgets – your hub!</title>
+        <title>WebGrasper: Discover insights, tips, gadgets – your hub!</title>
         <meta name="description" content="Explore trending tech insights, programming tips, and top gadgets. Stay informed on comparisons, details, and discover the latest in technology." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <meta property="og:title" content="Tech Amaan: Discover insights, tips, gadgets – your hub!" />
+        <meta property="og:title" content="WebGrasper: Discover insights, tips, gadgets – your hub!" />
         <meta property="og:description" content="Explore trending tech insights, programming tips, and top gadgets. Stay informed on comparisons, details, and discover the latest in technology." />
-        <link rel="canonical" href="https://www.techamaan.com/" />
+        <link rel="canonical" href="https://webgrasper.vercel.app/" />
 
-        <meta property="og:image" content="https://techamaan.com/logo.png" />
+        <meta property="og:image" content="https://webgrasper.vercel.app/logo.png" />
         <meta name="twitter:card" content="summary_large_image" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         
@@ -76,7 +76,7 @@ export default function Main({article}) {
                   </div>
                   <div className={styles.dailyArticleTitleContainer}>
                     <h2 className={styles.dailyArticleTitle}>{article.title}</h2>
-                    <p className={styles.dailyArticleDescription} dangerouslySetInnerHTML={{ __html: `${article?.description.slice(0, 250)}&hellip;` }}></p>
+                    <p className={styles.dailyArticleDescription}>{article?.description.slice(0, 250)}&hellip;</p>
                     <div className={styles.dailyArticleDateContainer}>
                       <h3 className={styles.dailyArticleDate}>
                         Updated &#8226;{" "}

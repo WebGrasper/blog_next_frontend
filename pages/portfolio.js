@@ -80,15 +80,15 @@ export default function Home({ data }) {
   return (
     <div>
       <Head>
-        <title>Mohammad Amaan | Full Stack Developer</title>
+        <title>Mohammad Amaan | Full Stack Developer | Web Grasper | WebGrasper</title>
         <meta name="description" content="Meet Mohammad Amaan, a tech enthusiast pursuing undergrad studies. Aspiring Full Stack Developer, exploring innovation and programming. #TechPassion" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         <meta property="og:title" content="Mohammad Amaan | Full Stack Developer" />
         <meta property="og:description" content="Meet Mohammad Amaan, a tech enthusiast pursuing undergrad studies. Aspiring Full Stack Developer, exploring innovation and programming. #TechPassion" />
-        <link rel="canonical" href="https://www.techamaan.com/portfolio" />
+        <link rel="canonical" href="https://webgrasper.vercel.app/portfolio" />
 
-        <meta property="og:image" content="https://techamaan.com/logo.png" />
+        <meta property="og:image" content="https://webgrasper.vercel.app/logo.png" />
         <meta name="twitter:card" content="summary_large_image" />
         <link rel="icon" href="./logo.png" />
       </Head>

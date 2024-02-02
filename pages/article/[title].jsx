@@ -37,7 +37,7 @@ function Article({article}) {
 
         <meta property="og:image" content={article?.articleImage?.[0] || "https://picsum.photos/1200/630"} />
 
-        <link rel="canonical" href={`https://www.techamaan.com/${article.title.replace(/\s+/g, '-')}`} />
+        <link rel="canonical" href={`https://webgrasper.vercel.app/${article.title.replace(/\s+/g, '-')}`} />
 
         <meta property="og:image" content="https://techamaan.com/logo.png" />
         <meta name="twitter:card" content="summary_large_image" />
@@ -52,7 +52,7 @@ function Article({article}) {
               <h1>{article.title}</h1>
               <Image className={styles.articleImage} src={article.articleImage?.[0]} alt={article.title} width={800} height={600} quality={80} layout="responsive" objectFit="cover" />
               <h2>Description</h2>
-              <div className={styles.dynamicHtmlContent} dangerouslySetInnerHTML={{ __html: article?.description }}></div>
+              <div className={styles.dynamicHtmlContent} >{article?.description}</div>
             </div>
           </div>
           <div className={styles.articlePageSideBarContainer}>

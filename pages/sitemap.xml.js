@@ -17,7 +17,7 @@ async function generateSiteMap({ article }) {
   try {
     // Generate dynamic sitemap
     let currentDate = new Date().toISOString();
-    let baseUrl = 'https://www.techamaan.com';
+    let baseUrl = 'https://webgrasper.vercel.app';
 
     let urls = article.map((article, index) => ({
       loc: `${baseUrl}/article/${encodeURIComponent(article.title.replace(/ /g, '-'))}`,
