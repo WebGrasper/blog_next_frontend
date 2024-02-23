@@ -1,10 +1,12 @@
 .navbarSupremeContainer {
   width: 100%;
   padding: 1rem;
-  position: -webkit-sticky;
-  position: sticky;
+  /* position: -webkit-sticky;
+  position: sticky; */
+  position: fixed;
   top: 0;
-  background-color: #0f0f0f;
+  /* background-color: rgba(0,0,0,0.5); */
+  /* background-color: #0f0f0f; */
   z-index: 9999;
   transition: all 0.3s ease; /* Smooth transition effect */
 }
@@ -237,9 +239,6 @@
     opacity: 0;
     z-index: 999;
   }
-  .checkBox:checked ~ .container3Navbar {
-    transform: translateX(0);
-  }
   .checkBox:checked ~ .menuButton {
     opacity: 0;
     transition: all 0.4s ease;
@@ -265,9 +264,14 @@
     z-index: 99999;
     background: #0f0f0f;
     height: -webkit-fill-available;
-    width: 100vw;
-    transition: all 0.4s ease;
-    transform: translateX(100%);
+    width: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease-in-out;
+  }
+  .checkBox:checked ~ .container3Navbar {
+    pointer-events: all;
+    opacity: 1;
   }
   .link {
     font-size: large;

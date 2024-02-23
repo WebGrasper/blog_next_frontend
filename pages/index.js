@@ -50,9 +50,12 @@ export default function Main({article}) {
         <meta property="og:image" content="https://webgrasper.vercel.app/logo.png" />
         <meta name="twitter:card" content="summary_large_image" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
-        
       </Head>
-
+      <section className={styles.heroContainer}>
+        <picture>
+          <Image src='https://ik.imagekit.io/94nzrpaat/images/hero_image_1.jpg?updatedAt=1708714167492' alt='hero image' className={styles.heroImage} width={100} height={100} unoptimized/>
+        </picture>
+      </section>
       <div className={styles.homePageSupremeContainer}>
         <div className={styles.homePageMainContainer}>
           <div className={styles.dailyArticlesMainContainer}>
