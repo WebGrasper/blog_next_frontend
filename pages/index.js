@@ -68,7 +68,7 @@ export default function Main({ article }) {
             className={styles.heroImage}
             width={100}
             height={100}
-            unoptimized
+            loading="lazy"
           />
         </picture>
         <div className={styles.heroContent}>
@@ -100,6 +100,7 @@ export default function Main({ article }) {
                     height={112}
                     src={article.articleImage[0]}
                     alt={article.title}
+                    loading="lazy"
                   />
                 </div>
                 <div className={styles.dailyArticleTitleContainer}>

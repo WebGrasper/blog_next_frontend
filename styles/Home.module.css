@@ -9,6 +9,7 @@
   height: 100%;
   object-fit: cover;
   object-position: top;
+  filter: blur(4px);
   position: absolute;
   overflow: hidden;
   z-index: -1;
