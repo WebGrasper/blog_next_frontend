@@ -202,11 +202,6 @@
   font-weight: normal;
 }
 
-.homePageSideBarContainer {
-  display: flex;
-  justify-content: center;
-}
-
 @media only screen and (max-width: 802px) {
   .dailyArticlesMainContainer {
     grid-template-columns: repeat(1, 1fr);

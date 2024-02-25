@@ -88,9 +88,9 @@ export default function Home({ data }) {
         <meta property="og:description" content="Meet Mohammad Amaan, a tech enthusiast pursuing undergrad studies. Aspiring Full Stack Developer, exploring innovation and programming. #TechPassion" />
         <link rel="canonical" href="https://webgrasper.vercel.app/portfolio" />
 
-        <meta property="og:image" content="https://webgrasper.vercel.app/logo.png" />
+        <meta property="og:image" content="https://webgrasper.vercel.app/favicon.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
-        <link rel="icon" href="./logo.png" />
+        <link rel="icon" href="/favicon.jpg" />
       </Head>
       <SecondaryNavbar />
       <main className={styles.main}>

@@ -2,7 +2,6 @@ import Link from "next/link";
 import styles from "@/styles/Home.module.css";
 import Image from "next/image";
 import Head from "next/head";
-import SideBar from "@/components/sidebar";
 
 export const getServerSideProps = async (context) => {
   let data = null;
@@ -56,10 +55,10 @@ export default function Main({ article }) {
 
         <meta
           property="og:image"
-          content="https://webgrasper.vercel.app/logo.png"
+          content="https://webgrasper.vercel.app/favicon.jpg"
         />
         <meta name="twitter:card" content="summary_large_image" />
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon.jpg" sizes="any" />
       </Head>
       <section className={styles.heroContainer}>
         <picture>
@@ -95,8 +94,10 @@ export default function Main({ article }) {
                 key={index}
               >
                 <div className={styles.dailyArticleImageContainer}>
-                  <img
+                  <Image
                     className={styles.dailyArticleImage}
+                    width={176}
+                    height={112}
                     src={article.articleImage[0]}
                     alt={article.title}
                   />
@@ -120,9 +121,6 @@ export default function Main({ article }) {
               </Link>
             ))}
         </div>
-        {/* <div className={styles.homePageSideBarContainer}>
-            <SideBar />
-          </div> */}
       </section>
     </div>
   );

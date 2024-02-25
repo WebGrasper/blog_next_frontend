@@ -4,6 +4,7 @@ import styles from "../styles/navbar.module.css";
 import Link from "next/link";
 import { debounce } from "lodash";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 function Navbar() {
 
@@ -34,50 +35,51 @@ function Navbar() {
 
   //search bar functionality(Ended)
 
-  const [isAtPortfolio, setAtPortfolio] = useState(false);
-  useEffect(()=>{
-    window.addEventListener('scroll', () => {
-      if(window.scrollY){
-        setAtPortfolio(true);
-      } else {
-        setAtPortfolio(false);
-      }
-    });
-  })
-
+  
   const [isOffset, setOffset] = useState(false);
+  const [isHome, setIsHome] = useState(true);
+
+  const pathname = usePathname();
   useEffect(()=>{
-    console.log(window.innerHeight);
+    console.log(pathname)
+    if (pathname !== '/') {
+      setIsHome(false);
+    } else {
+      setIsHome(true);
+    }
+    console.log(isHome)
+  },[pathname]);
+
+  useEffect(()=>{
     window.addEventListener('scroll', () => {
-      if(window.scrollY >= (window.innerHeight - 80)){
+      if(isHome && (window.scrollY >= (window.innerHeight - 80))){
         setOffset(true);
       } else {
         setOffset(false);
       }
     });
   })
-
-  const pathname = usePathname();
-
+  
+  const [atPortfolio, setAtPortfolio] = useState(false);
   useEffect(()=>{
-    console.log(typeof pathname)
-    if (pathname == '/portfolio') {
+    if (pathname === '/portfolio') {
       setAtPortfolio(true);
     } else {
       setAtPortfolio(false);
     }
-  },[pathname]);
+  })
+  
   
   return (
     <div
-      className={`${styles.navbarSupremeContainer} ${isOffset ? styles.activeOffset : ""}`}
+      className={`${isHome ? styles.navbarSupremeContainer : styles.activeNotHomeNavbarSupremeContainer} ${isOffset ? styles.activeOffset : ""} ${atPortfolio ? styles.activeAtPortfolio : ""}`}
     >
       <div>
         <nav className={`${styles.navbar}`}>
           <div className={`${styles.container1}`}>
             <Link href={"/"}>
               <div className={styles.container1H1}>
-                <img src="https://ik.imagekit.io/94nzrpaat/images/gold-logo-with-title-wg_853558-2748-N6dN8fcsA-transformed_1%20(1).png?updatedAt=1708801310085" alt="logo" />
+                <Image src="https://ik.imagekit.io/94nzrpaat/images/gold-logo-with-title-wg_853558-2748-N6dN8fcsA-transformed_1%20(1).png?updatedAt=1708801310085" alt="logo" width={70} height={35}/>
                 <span>Web<span>Grasper</span></span>
               </div>
             </Link>
@@ -90,12 +92,12 @@ function Navbar() {
               />
               <img
                 className={styles.searchButton}
-                src={isOffset ? "/searchButtonBlack.svg" : "/searchButtonWhite.svg"}
+                src={`${!isHome || isOffset ? "/searchButtonBlack.svg" : "/searchButtonWhite.svg"}`}
                 alt="search icon"
               />
               <img
                 className={styles.searchCloseButton}
-                src={isOffset ? "/closeButtonBlack.svg" : "/closeButtonWhite.svg"}
+                src={`${!isHome || isOffset ? "/closeButtonBlack.svg" : "/closeButtonWhite.svg"}`}
                 alt="close button"
               />
           </div>
@@ -108,18 +110,18 @@ function Navbar() {
             />
             <img
               className={styles.menuButton}
-              src={isOffset ? "/menuButtonBlack.svg" : "/menuButtonWhite.svg"}
+              src={`${!isHome || isOffset ? "/menuButtonBlack.svg" : "/menuButtonWhite.svg"}`}
               alt="menu button"
             />
             <div className={styles.container3Navbar}>
               <Link href="/gadgets-insights" passHref onClick={handleLinkClick}>
-                <span className={`${styles.link} ${isOffset ? styles.linkActiveOffset : ""}`}>Gadgets insights</span>
+                <span className={`${styles.link} ${!isHome || isOffset ? styles.linkActiveOffset : ""}`}>Gadgets insights</span>
               </Link>
               <Link href="/stack-craft" passHref onClick={handleLinkClick}>
-                <span className={`${styles.link} ${isOffset ? styles.linkActiveOffset : ""}`}>Coding tutorials</span>
+                <span className={`${styles.link} ${!isHome || isOffset ? styles.linkActiveOffset : ""}`}>Coding tutorials</span>
               </Link>
               <Link href="/portfolio" passHref onClick={handleLinkClick}>
-                <span className={`${styles.link} ${isOffset ? styles.linkActiveOffset : ""}`}>Portfolio</span>
+                <span className={`${styles.link} ${!isHome || isOffset ? styles.linkActiveOffset : ""}`}>Portfolio</span>
               </Link>
             </div>
           </div>
@@ -133,7 +135,7 @@ function Navbar() {
       >
         <input
           type="search"
-          className={`${styles.bottomSearchBar} ${isOffset ? styles.activeBottomSearchBar : ""}`}
+          className={`${styles.bottomSearchBar} ${!isHome || isOffset ? styles.activeBottomSearchBar : ""}`}
           id="container2SearchBox"
           placeholder="Ideas, topics & more..."
           onChange={(e) => {

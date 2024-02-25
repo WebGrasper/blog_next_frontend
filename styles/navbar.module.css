@@ -13,6 +13,29 @@
   transition: all 0.3s ease;
 }
 
+.activeNotHomeNavbarSupremeContainer{
+  width: 100%;
+  padding: 1rem;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  background-color: rgba(255,255,255,1) !important;
+  border-bottom: 1px solid rgba(0,0,0,0.12);
+  z-index: 9999;
+  transition: all 0.3s ease;
+}
+
+.activeAtPortfolio{
+  width: 100%;
+  padding: 1rem;
+  position: static;
+  top: 0;
+  background-color: rgba(255,255,255,1) !important;
+  border-bottom: 1px solid rgba(0,0,0,0.12);
+  z-index: 9999;
+  transition: all 0.3s ease;
+}
+
 .navbar {
   display: grid;
   grid-template-columns: auto auto 4rem;
@@ -42,8 +65,6 @@
 }
 
 .container1H1 > img {
-  width: 70px;
-  height: 35px;
   margin-right: 8px;
 }
 
