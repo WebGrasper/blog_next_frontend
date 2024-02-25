@@ -1,27 +1,22 @@
 .navbarSupremeContainer {
   width: 100%;
   padding: 1rem;
-  /* position: -webkit-sticky;
-  position: sticky; */
   position: fixed;
   top: 0;
-  /* background-color: rgba(0,0,0,0.5); */
-  /* background-color: #0f0f0f; */
   z-index: 9999;
-  transition: all 0.3s ease; /* Smooth transition effect */
+  transition: all 0.3s ease; 
 }
 
-.nonSticky{
-  width: 100%;
-  padding: 0.5rem 1rem;
-  background-color: #0f0f0f;
-  transition: all 0.3s ease; /* Smooth transition effect */
+.activeOffset{
+  border-bottom: 1px solid rgba(0,0,0,0.12);
+  background-color: rgba(255,255,255,1) !important;
+  transition: all 0.3s ease;
 }
 
 .navbar {
   display: grid;
-  grid-template-columns: auto auto auto;
-  height: 4rem;
+  grid-template-columns: auto auto 4rem;
+  height: 3rem;
   max-width: 70rem;
   margin: 0 auto;
 }
@@ -37,103 +32,133 @@
   font-size: 1.5em;
   color: transparent;
   font-weight: normal;
-}
-.container1H1 > span {
   color: white;
-}
-
-.container1H1 > span span {
   font-weight: bold;
 }
 
+.container1H1 span{
+  display: none;
+
+}
+
 .container1H1 > img {
-  width: 25px;
-  height: 25px;
+  width: 70px;
+  height: 35px;
   margin-right: 8px;
 }
 
 .container2 {
   display: flex;
-  justify-content: end;
-  padding: 0 0.5rem;
+  justify-content: right;
+  padding: 0 1rem;
   align-items: center;
+  grid-column: 3;
+  grid-row: 1;
 }
 
-.container2Span,
-.buttomSearchBarContainer {
+/* search button (start) */
+
+.bottomSearchBarContainer {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
+  opacity: 0;
+  height: 0;
+  pointer-events: none;
   align-items: center;
+  max-width: 70rem;
+  padding-right: 0.8rem;
+  margin-inline: auto;
+  transition: opacity 0.4s ease-in-out, height 0.6s ease-in-out;
 }
 
-.buttomSearchBarContainer {
-  display: none;
-  transition: all 0.4s ease;
-}
-
-.searchCheckBoxContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2rem;
-  height: 2rem;
-}
-
-.searchButton,
-.searchCloseButton,
-.searchCheckBox {
-  display: none;
-}
-.searchCheckBox {
-  z-index: 9999;
-}
-
-.container2SearchBox,
-.buttomSearchBar {
-  width: 22.5rem;
+.bottomSearchBar {
+  width: 50%;
   height: 2.8rem;
   border-radius: 9999px;
-  background: rgba(28, 28, 28, 0.5);
+  background: rgba(28, 28, 28, 0.1);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  font-family: 'Open Sans';
+  border: 1px solid rgba(255, 255, 255, 0.3);
   font-size: 1rem;
   line-height: 1.5rem;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.5);
-  margin: 0 auto;
+  color: rgba(255, 255, 255, 0.8);
   cursor: pointer;
   text-indent: 1.5rem;
-  transition: 0.4s ease;
+  transition: opacity 0.6s ease-in-out;
 }
 
-.container2SearchBox::placeholder,
-.buttomSearchBar::placeholder {
-  color: rgba(255, 255, 255, 0.3);
-}
-
-.container2SearchBox:focus,
-.buttomSearchBar:focus {
-  outline: none;
-  /* border: none; */
-}
-
-.container2SearchBox::-webkit-search-cancel-button {
+.bottomSearchBar::-webkit-search-cancel-button,
+.activeBottomSearchBar::-webkit-search-cancel-button{
   display: none;
 }
+
+.activeBottomSearchBar{
+  background: rgba(230, 230, 230, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.bottomSearchBar::placeholder {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.activeBottomSearchBar::placeholder{
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.bottomSearchBar:focus {
+  outline: none;
+}
+
+.bottomSearchBarContainer.show {
+  height: 2.8rem;
+  opacity: 1;
+  pointer-events: all;
+}
+.searchCheckBoxContainer{
+  position: relative;
+}
+.searchButton,
+.searchCheckBox,
+.searchCloseButton{
+  position: absolute;
+}
+.searchCheckBox,
+.searchButton,
+.searchCloseButton{
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.searchCheckBox {
+  opacity: 0;
+  z-index: 9999;
+}
+
+.searchCloseButton{
+  opacity: 0;
+}
+
+.searchCheckBox:checked ~ .searchButton {
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+
+.searchCheckBox:checked ~ .searchCloseButton {
+  opacity: 1;
+  transition: all 0.4s ease;
+}
+
+/* search button (end) */
 
 .containerButton {
   display: grid;
   position: relative;
+  grid-column: 2;
+  grid-row: 1;
 }
 
-.container3 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* padding-right: 1rem; */
-}
 
 .menuButton,
 .closeButton,
@@ -144,7 +169,8 @@
 .container3Navbar {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  gap: 3rem;
+  justify-content: flex-end;
   align-items: center;
 }
 
@@ -153,6 +179,14 @@
   font-size: small;
   position: relative;
   transition: color 0.6s ease; /* Add a transition for color change */
+}
+
+.container3Navbar a:last-child{
+  padding-right: 2rem;
+}
+
+.linkActiveOffset{
+  color: rgba(0,0,0,0.8) !important;
 }
 
 .link::before {
@@ -168,9 +202,11 @@
   transition: transform 0.3s ease;
 }
 
+
 .link:hover::before {
   transform: scaleX(1);
 }
+
 
 @media only screen and (max-width: 962px) {
   .navbarSupremeContainer {
@@ -180,6 +216,9 @@
     grid-template-columns: auto auto 3rem;
     height: 3rem;
   }
+  .container2{
+    grid-column: 2;
+  }
   .container2SeachCheckBox {
     justify-content: space-between;
     padding: 0 0.5rem;
@@ -187,40 +226,15 @@
   .container2Span {
     display: none;
   }
-  .buttomSearchBarContainer.show {
-    display: flex;
-    margin-top: 0.5rem;
-    transition: all 0.4s ease;
+  .containerButton{
+    grid-column: 3;
   }
-  .buttomSearchBar {
-    width: 92vw;
-  }
-  .searchButton,
-  .searchCheckBox {
-    display: block;
-    position: absolute;
-    width: 1.75rem;
-    height: 1.75rem;
-    margin-right: 1rem;
-    transition: all 0.4s ease;
-  }
-  .searchCheckBox:checked ~ .searchButton {
+
+   .checkBox{
     opacity: 0;
-    transition: all 0.4s ease;
+    z-index: 999999;
   }
-  .searchCheckBox:checked ~ .searchCloseButton {
-    display: block;
-    position: absolute;
-    width: 2rem;
-    height: 2rem;
-    margin-right: 1rem;
-    opacity: 100%;
-    transition: all 0.4s ease;
-  }
-  .container2SearchBox {
-    width: 83.3vw;
-    height: 2.5rem;
-  }
+   
   .containerButton {
     align-items: center;
     display: flex;
@@ -231,14 +245,10 @@
   .checkBox {
     display: block;
     position: absolute;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2rem;
+    height: 2rem;
   }
-  .checkBox,
-  .searchCheckBox {
-    opacity: 0;
-    z-index: 999;
-  }
+  
   .checkBox:checked ~ .menuButton {
     opacity: 0;
     transition: all 0.4s ease;
@@ -247,8 +257,9 @@
   .checkBox:checked ~ .closeButton {
     display: block;
     position: absolute;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2rem;
+    height: 2rem;
+    z-index: 9999;
     opacity: 100%;
     transition: all 0.4s ease;
   }
@@ -256,25 +267,35 @@
   .container3Navbar {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
-    top: 5rem;
+    top: 0;
     left: 0;
     position: fixed;
-    z-index: 99999;
-    background: #0f0f0f;
+    z-index: 99;
+    background: white;
     height: -webkit-fill-available;
     width: 100%;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.6s ease-in-out;
   }
+  .container3Navbar a:last-child{
+    padding-right: 0;
+  }
   .checkBox:checked ~ .container3Navbar {
     pointer-events: all;
     opacity: 1;
   }
   .link {
+    color: black;
     font-size: large;
+  }
+}
+
+@media only screen and (max-width: 641px){
+  .bottomSearchBar{
+    width: 100%;
   }
 }
 
@@ -297,6 +318,9 @@
   }
   .container2SearchBox::placeholder {
     font-size: small;
+  }
+  .buttomSearchBarContainer{
+    padding-right: 0;
   }
 }
 

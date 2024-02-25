@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&family=Roboto+Mono&family=DM+Serif+Display&family=DM+Serif+Display&family=Dancing+Script&display=swap');
 
 * {
   box-sizing: border-box;
@@ -12,7 +12,7 @@ body {
 }
 
 body {
-  font-family: 'Open Sans';
+  font-family: 'Roboto';
   text-rendering: optimizeLegibility;
   scrollbar-width: none;
 }

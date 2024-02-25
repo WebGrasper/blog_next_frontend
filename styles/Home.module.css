@@ -1,56 +1,89 @@
-.heroContainer{
+.heroContainer {
   overflow-x: clip;
   position: relative;
   height: 100svh;
 }
 
-.heroImage{
+.heroImage {
   width: 100%;
   height: 100%;
-  /* height: 100svh; */
   object-fit: cover;
+  object-position: top;
   position: absolute;
+  overflow: hidden;
   z-index: -1;
+  scale: 1 1;
+  opacity: 0.85;
+  background-color: black;
+  transform-origin: top;
   animation: scale-up-hero-image linear forwards;
   animation-timeline: view();
   animation-range: exit;
 }
 
-@keyframes scale-up-hero-image{
-  to{
-    scale: 3;
+@keyframes scale-up-hero-image {
+  to {
+    opacity: 0;
+    scale: 2 2;
   }
 }
 
-
-
-.homePageSupremeContainer {
-  background-color: #0f0f0f;
+.heroContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
+  height: 100%;
 }
 
-.homePageMainContainer {
-  max-width: 70rem;
-  margin: 10px auto;
-  display: flex;
-  column-gap: 1rem;
-  padding: 0 0.5rem;
+.heroContainer h1 {
+  display: grid;
+  font-family: "Dancing Script", cursive !important;
+  grid-template-columns: repeat(2);
+  grid-template-rows: repeat(2);
+  line-height: 1;
+  color: white;
+  font-size: clamp(3rem, calc(12vw + 2rem), 12rem);
+  animation: fade-in 2s ease;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.heroContainer h1 span:first-child {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.heroContainer h1 span:last-child {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.homePageSupremeContainer {
+  background-color: white;
+  width: 100%;
+  padding-top: 1rem;
 }
 
 .dailyArticlesMainContainer {
-  display: flex;
-  flex-direction: column;
-  width: 70%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 70rem;
+  column-gap: 3rem;
+  margin-inline: auto;
   padding: 1rem;
   background: rgba(255, 255, 255, 0.01);
   backdrop-filter: blur(1px);
   -webkit-backdrop-filter: blur(1px);
   border-radius: 10px;
-  border: 1px solid rgba(254, 254, 254, 0.1);
-  height: 100vh;
-  row-gap: 1rem;
-  overflow-x: hidden;
-  overflow-y: scroll;
+  row-gap: 2rem;
 }
 
 .dailyArticlesMainContainer::-webkit-scrollbar {
@@ -68,36 +101,44 @@
   background-color: transparent;
 }
 
-.dailyArticlesMainContainer>h1 {
+.dailyArticleHeadingContainer {
+  max-width: 70rem;
+  padding-block: 0.5rem;
+  margin-inline: auto;
+}
+
+.dailyArticleHeadingContainer > h1 {
+  padding-left: 1rem;
   text-overflow: unset;
   overflow: unset;
-  text-transform: uppercase;
+  text-transform: capitalize;
   display: block;
   -webkit-box-orient: unset;
   font-size: 1rem;
-  line-height: 1.5rem;
   font-weight: 700;
   color: transparent;
-  background-clip: text;
-  -webkit-background-clip: text;
-  background-image: linear-gradient(to right, #7abef6, #4670e3, #1c57fc);
-  height: 2rem;
+  color: black;
+  text-transform: uppercase;
 }
 
 .dailyArticlesContainer {
   display: flex;
-  /* height: 12rem; */
-  column-gap: 16px;
+  flex-direction: row-reverse;
+  column-gap: 0.75rem;
   color: black;
   border-radius: 10px;
-  padding: 12px 16px 12px 0;
   cursor: pointer;
-  transform: scale(1);
-  transition: transform 0.4s ease;
+  opacity: 0;
+  animation: visible ease forwards;
+  animation-timeline: view();
+  animation-range-start: cover 10%;
+  animation-range-end: cover 50%;
 }
 
-.dailyArticlesContainer:hover {
-  transform: scale(1.01);
+@keyframes visible {
+  to {
+    opacity: 1;
+  }
 }
 
 .dailyArticleImageContainer {
@@ -107,26 +148,28 @@
 }
 
 .dailyArticleImage {
-  border-radius: 10%;
-  background-size: 100%;
+  border-radius: 3px;
   object-fit: cover;
-  width: 10rem;
-  height: 10rem;
+  max-width: clamp(7rem, 15vw, 11rem);
+  height: min(7rem);
 }
 
 .dailyArticleTitleContainer {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
+  row-gap: 0.5rem;
 }
 
 .dailyArticleTitle {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
   text-overflow: ellipsis;
   overflow: hidden;
   font-size: 1.25rem;
-  line-height: 1.255em;
-  font-weight: bolder;
-  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.2;
+  font-weight: 900;
+  color: rgba(0, 0, 0, 1);
   -webkit-line-clamp: 2;
   z-index: 1;
   width: 100%;
@@ -134,11 +177,13 @@
 }
 
 .dailyArticleDescription {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
   text-overflow: ellipsis;
   overflow: hidden;
-  font-size: 0.75rem;
-  line-height: 1rem;
-  color: rgba(255, 255, 255, 0.6);
+  font-size: 1rem;
+  line-height: 1.2;
+  color: rgba(0, 0, 0, 0.8);
   -webkit-line-clamp: 2;
   z-index: 1;
   width: 100%;
@@ -147,14 +192,13 @@
 
 .dailyArticleDateContainer {
   display: flex;
-  flex-direction: column;
-  row-gap: 0.2rem;
+  column-gap: 1rem;
 }
 
 .dailyArticleDate,
 .dailyCategory {
-  color: rgba(255, 255, 255, 0.4);
-  font-size: 0.6rem;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 0.9rem;
   font-weight: normal;
 }
 
@@ -163,62 +207,30 @@
   justify-content: center;
 }
 
-@media only screen and (max-width: 769px) {
-  .homePageMainContainer {
-    flex-direction: column;
-    align-items: center;
-    max-width: 98%;
-  }
-
+@media only screen and (max-width: 802px) {
   .dailyArticlesMainContainer {
-    padding: 1rem 0.5rem;
-    margin-bottom: 1rem;
-    width: 100%;
-  }
-
-  .dailyArticlesContainer {
-    padding: 0;
-  }
-
-  .dailyArticleTitleContainer {
-    padding-right: 0;
+    grid-template-columns: repeat(1, 1fr);
   }
 }
 
-@media only screen and (max-width: 431px) {
-  .dailyArticleTitle {
-    font-size: 1rem;
-  }
-
-  .dailyArticleDescription {
-    position: absolute;
-    left: -9999px;
-    top: -9999px;
+@media only screen and (max-width: 495px) {
+  .heroContainer h1 {
+    font-size: clamp(3.75rem, calc(13vw + 1rem), 12rem);
   }
 }
-
-@media only screen and (max-width: 368px) {
-  .dailyArticlesContainer {
-    height: 10rem;
-  }
-
-  .dailyArticleImage {
-    width: 8rem;
-    height: 8rem;
-  }
-
-  .dailyArticleTitle {
-    font-size: 0.75rem;
+@media only screen and (max-width: 328px) {
+  .heroContainer h1 {
+    font-size: clamp(3rem, calc(13vw + 1rem), 12rem);
   }
 }
-
-@media only screen and (max-width: 289px) {
-  .dailyArticleTitle {
-    font-size: 0.7rem;
+/* @media only screen and (max-width: 495px) {
+  .heroContainer h1 {
+    font-size: clamp(4rem, calc(15vw + 1rem), 12rem);
   }
-
-  .dailyArticleDate,
-  .dailyCategory {
-    font-size: 0.5rem;
+} */
+/*
+@media only screen and (max-width: 300px) {
+  .heroContainer h1 {
+    font-size: clamp(1.75rem, calc(11vw + 1rem), 12rem);
   }
-}
+} */
