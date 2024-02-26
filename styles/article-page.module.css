@@ -1,0 +1,45 @@
+.articlePageMainContainer {
+  width: 100%;
+  background-color: white;
+  padding-top: 1rem;
+}
+
+.articleMainContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 70rem;
+  column-gap: 3rem;
+  margin-inline: auto;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.01);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+  border-radius: 10px;
+  row-gap: 2rem;
+}
+
+.articleHeadingContainer {
+  max-width: 70rem;
+  padding-block: 0.5rem;
+  margin-inline: auto;
+}
+
+.articleHeadingContainer > h1 {
+  padding-left: 1rem;
+  text-overflow: unset;
+  overflow: unset;
+  text-transform: capitalize;
+  display: block;
+  -webkit-box-orient: unset;
+  font-size: 1rem;
+  font-weight: 700;
+  color: transparent;
+  color: black;
+  text-transform: uppercase;
+}
+
+@media only screen and (max-width: 802px) {
+  .articleMainContainer {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

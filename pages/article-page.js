@@ -1,13 +1,19 @@
 import ArticleCard from "@/components/articleCard";
+import styles from "@/styles/article-page.module.css";
 
-function ArticlePage({ articles }) {
-  console.log(articles)
+function ArticlePage({ articles, name }) {
   return (
-    <>
-      {articles && articles.map((article, index)=>(
-        <ArticleCard article={article} key={index} />
-      ))}
-    </>
+    <section className={styles.articlePageMainContainer}>
+      <div className={styles.articleHeadingContainer}>
+        <h1>{decodeURIComponent(name.replace(/-/g, " "))}</h1>
+      </div>
+      <div className={styles.articleMainContainer}>
+        {articles &&
+          articles.map((article, index) => (
+            <ArticleCard article={article} key={index} />
+          ))}
+      </div>
+    </section>
   );
 }
 
@@ -27,6 +33,7 @@ export const getServerSideProps = async (context) => {
   return {
     props: {
       articles,
+      name,
     },
   };
 };
