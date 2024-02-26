@@ -2,9 +2,10 @@
 import { useEffect, useState } from "react";
 import styles from "../styles/navbar.module.css";
 import Link from "next/link";
-import { debounce } from "lodash";
+import { debounce, replace } from "lodash";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 function Navbar() {
 
@@ -22,15 +23,11 @@ function Navbar() {
   // Close the menu when a link is clicked
 
   //search bar functionality(Started)
-
+  const router = useRouter();
   const handleSearchBlogs = debounce(async (title) => {
-    if (title === null) {
-      // await dispatch(fetchBlogs());
-      window.scrollTo(0, 0);
-      return;
+    if (title !== null) {
+      router.push(`/search?title=${title}`);
     }
-    await dispatch(filterBlogs(title));
-    window.scrollTo(0, 0);
   }, 1000);
 
   //search bar functionality(Ended)

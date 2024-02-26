@@ -2,6 +2,7 @@ import Link from "next/link";
 import styles from "@/styles/Home.module.css";
 import Image from "next/image";
 import Head from "next/head";
+import ArticleCard from "@/components/articleCard";
 
 export const getServerSideProps = async (context) => {
   let data = null;
@@ -85,41 +86,7 @@ export default function Main({ article }) {
         <div className={styles.dailyArticlesMainContainer}>
           {article &&
             article.map((article, index) => (
-              <Link
-                href="/article/[title]"
-                as={`/article/${encodeURIComponent(
-                  article.title.replace(/\s+/g, "-")
-                )}`}
-                className={styles.dailyArticlesContainer}
-                key={index}
-              >
-                <div className={styles.dailyArticleImageContainer}>
-                  <Image
-                    className={styles.dailyArticleImage}
-                    width={176}
-                    height={112}
-                    src={article.articleImage[0]}
-                    alt={article.title}
-                    loading="lazy"
-                  />
-                </div>
-                <div className={styles.dailyArticleTitleContainer}>
-                  <h2 className={styles.dailyArticleTitle}>{article.title}</h2>
-                  <p className={styles.dailyArticleDescription}>
-                    {article?.description.slice(0, 100)}&hellip;
-                  </p>
-                  <div className={styles.dailyArticleDateContainer}>
-                    <h3 className={styles.dailyArticleDate}>
-                      {article.createdAt
-                        .slice(0, 10)
-                        .split("-")
-                        .reverse()
-                        .join("-")}
-                    </h3>
-                    <h4 className={styles.dailyCategory}>{article.category}</h4>
-                  </div>
-                </div>
-              </Link>
+              <ArticleCard article={article} key={index} />
             ))}
         </div>
       </section>
