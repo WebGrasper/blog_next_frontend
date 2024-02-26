@@ -1,28 +1,31 @@
 export async function getServerSideProps(context) {
-    let response = await fetch("https://blog-zo8s.vercel.app/app/v2/getArticles", { method: 'GET' });
-    let data = await response.json();
-    let { success, article } = data;
-    
-    const xml = await generateSiteMap({ article });
-    context.res.end(xml);
+  let response = await fetch(
+    "https://blog-zo8s.vercel.app/app/v2/getArticles",
+    { method: "GET" }
+  );
+  let data = await response.json();
+  let { success, article } = data;
 
-    return {
-      props: {
-      },
-    };
+  const xml = await generateSiteMap({ article });
+  context.res.end(xml);
+
+  return {
+    props: {},
+  };
 }
 
 async function generateSiteMap({ article }) {
-
   try {
     // Generate dynamic sitemap
     let currentDate = new Date().toISOString();
-    let baseUrl = 'https://webgrasper.vercel.app';
+    let baseUrl = "https://webgrasper.vercel.app";
 
     let urls = article.map((article, index) => ({
-      loc: `${baseUrl}/article/${encodeURIComponent(article.title.replace(/ /g, '-'))}`,
+      loc: `${baseUrl}/article/${encodeURIComponent(
+        article.title.replace(/ /g, "-")
+      )}`,
       lastmod: currentDate,
-      priority: 0.80,
+      priority: 0.8,
     }));
 
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -35,17 +38,32 @@ async function generateSiteMap({ article }) {
         <url>
           <loc>${baseUrl}/portfolio</loc>
           <lastmod>${currentDate}</lastmod>
+          <priority>0.7</priority>
+        </url>
+        <url>
+          <loc>${baseUrl}/article-page?name=Frontend</loc>
+          <lastmod>${currentDate}</lastmod>
           <priority>0.8</priority>
         </url>
         <url>
-          <loc>${baseUrl}/gadgets-insights</loc>
+          <loc>${baseUrl}/article-page?name=Backend</loc>
           <lastmod>${currentDate}</lastmod>
-          <priority>0.7</priority>
+          <priority>0.8</priority>
         </url>
         <url>
-          <loc>${baseUrl}/coding-tutorials</loc>
+          <loc>${baseUrl}/article-page?name=Problem-solving</loc>
           <lastmod>${currentDate}</lastmod>
-          <priority>0.7</priority>
+          <priority>0.8</priority>
+        </url>
+        <url>
+          <loc>${baseUrl}/article-page?name=Gadgets-reviews</loc>
+          <lastmod>${currentDate}</lastmod>
+          <priority>0.8</priority>
+        </url>
+        <url>
+        <loc>${baseUrl}/article-page?name=Gadgets-comparison</loc>
+        <lastmod>${currentDate}</lastmod>
+        <priority>0.8</priority>
         </url>
         <url>
           <loc>${baseUrl}/terms-and-conditions</loc>
@@ -72,7 +90,7 @@ async function generateSiteMap({ article }) {
                   </url>
                 `
               )
-              .join('')}
+              .join("")}
           </urlset>`;
     return xml;
   } catch (error) {
@@ -80,9 +98,8 @@ async function generateSiteMap({ article }) {
     console.error("Error generating sitemap:", error);
     return error;
   }
-
 }
 
 export default function Sitemap() {
-    return null;
+  return null;
 }

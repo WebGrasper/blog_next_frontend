@@ -19,27 +19,24 @@ function Footer() {
         <div className={styles.container2}>
           <p className={styles.container2Heading}>Gadgets</p>
           <div className={styles.container2Links}>
-            <Link href="#" className={styles.links}>
+            <Link href="/article-page?name=Gadgets-reviews" className={styles.links}>
               Reviews
             </Link>
-            <Link href="#" className={styles.links}>
+            <Link href="/article-page?name=Gadgets-comparison" className={styles.links}>
               Comparison
-            </Link>
-            <Link href="#" className={styles.links}>
-              Insights
             </Link>
           </div>
         </div>
         <div className={styles.container2}>
           <p className={styles.container2Heading}>Coding</p>
           <div className={styles.container2Links}>
-            <Link href="#" className={styles.links}>
-              Algorithms
+            <Link href="/article-page?name=Problem-solving" className={styles.links}>
+              Problem solving
             </Link>
-            <Link href="#" className={styles.links}>
+            <Link href="/article-page?name=Frontend" className={styles.links}>
               Frontend
             </Link>
-            <Link href="#" className={styles.links}>
+            <Link href="/article-page?name=Backend" className={styles.links}>
               Backend
             </Link>
           </div>

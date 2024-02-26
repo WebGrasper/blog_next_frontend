@@ -26,7 +26,7 @@ function Navbar() {
   const router = useRouter();
   const handleSearchBlogs = debounce(async (title) => {
     if (title !== null) {
-      router.push(`/search?title=${title}`);
+      router.push(`/article-page?title=${title}`);
     }
   }, 1000);
 
@@ -38,7 +38,6 @@ function Navbar() {
 
   const pathname = usePathname();
   useEffect(()=>{
-    console.log(pathname)
     if (pathname !== '/') {
       setIsHome(false);
     } else {
@@ -111,11 +110,20 @@ function Navbar() {
               alt="menu button"
             />
             <div className={styles.container3Navbar}>
-              <Link href="/gadgets-insights" passHref onClick={handleLinkClick}>
-                <span className={`${styles.link} ${!isHome || isOffset ? styles.linkActiveOffset : ""}`}>Gadgets insights</span>
+              <Link href="/article-page?name=Frontend" passHref onClick={handleLinkClick}>
+                <span className={`${styles.link} ${!isHome || isOffset ? styles.linkActiveOffset : ""}`}>Frontend</span>
               </Link>
-              <Link href="/stack-craft" passHref onClick={handleLinkClick}>
-                <span className={`${styles.link} ${!isHome || isOffset ? styles.linkActiveOffset : ""}`}>Coding tutorials</span>
+              <Link href="/article-page?name=Backend" passHref onClick={handleLinkClick}>
+                <span className={`${styles.link} ${!isHome || isOffset ? styles.linkActiveOffset : ""}`}>Backend</span>
+              </Link>
+              <Link href="/article-page?name=Problem-solving" passHref onClick={handleLinkClick}>
+                <span className={`${styles.link} ${!isHome || isOffset ? styles.linkActiveOffset : ""}`}>Problem solving</span>
+              </Link>
+              <Link href="/article-page?name=Gadgets-reviews" passHref onClick={handleLinkClick}>
+                <span className={`${styles.link} ${!isHome || isOffset ? styles.linkActiveOffset : ""}`}>Gadgets reviews</span>
+              </Link>
+              <Link href="/article-page?name=Gadgets-comparison" passHref onClick={handleLinkClick}>
+                <span className={`${styles.link} ${!isHome || isOffset ? styles.linkActiveOffset : ""}`}>Gadgets comparison</span>
               </Link>
               <Link href="/portfolio" passHref onClick={handleLinkClick}>
                 <span className={`${styles.link} ${!isHome || isOffset ? styles.linkActiveOffset : ""}`}>Portfolio</span>
