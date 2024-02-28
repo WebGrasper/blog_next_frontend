@@ -26,7 +26,7 @@ function Navbar() {
   const router = useRouter();
   const handleSearchBlogs = debounce(async (title) => {
     if (title !== null) {
-      router.push(`/article-page?title=${title}`);
+      router.push(`/article-page?name=${title}`);
     }
   }, 1000);
 
