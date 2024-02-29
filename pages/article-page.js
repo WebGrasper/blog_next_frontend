@@ -5,7 +5,7 @@ import Image from "next/image";
 
 function ArticlePage({success, articles, name }) {
   return (
-    <>
+    <main className={styles.rootArticlePage}>
       <Head>
         <title>{`${decodeURIComponent(name.replace(/-/g, " "))} - WebGrasper`}</title>
         <meta
@@ -51,7 +51,7 @@ function ArticlePage({success, articles, name }) {
         <Image src={'https://ik.imagekit.io/94nzrpaat/images/noDataIcon.svg?updatedAt=1709222605789'} width={150} height={150} unoptimized />
        </section>
        }
-    </>
+    </main>
   );
 }
 
