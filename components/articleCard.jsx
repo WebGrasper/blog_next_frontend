@@ -20,7 +20,7 @@ function ArticleCard({article}) {
         />
       </div>
       <div className={styles.TitleContainer}>
-        <h2 className={styles.title}>{article.title}</h2>
+        <h1 className={styles.title}>{article.title}</h1>
         <p className={styles.description}>
           {article?.description.slice(0, 100)}&hellip;
         </p>

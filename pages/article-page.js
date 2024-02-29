@@ -1,8 +1,9 @@
 import ArticleCard from "@/components/articleCard";
 import styles from "@/styles/article-page.module.css";
 import Head from "next/head";
+import Image from "next/image";
 
-function ArticlePage({ articles, name }) {
+function ArticlePage({success, articles, name }) {
   return (
     <>
       <Head>
@@ -30,9 +31,10 @@ function ArticlePage({ articles, name }) {
         <meta name="twitter:card" content="summary_large_image" />
         <link rel="icon" href="/favicon.jpg" sizes="any" />
       </Head>
-      <section className={styles.articlePageMainContainer}>
+      {success ? <section className={styles.articlePageMainContainer}>
         <div className={styles.articleHeadingContainer}>
-          <h1>{decodeURIComponent(name.replace(/-/g, " "))}</h1>
+          <p>Results for: </p>
+          <h2>{decodeURIComponent(name.replace(/-/g, " "))}</h2>
         </div>
         <div className={styles.articleMainContainer}>
           {articles &&
@@ -40,7 +42,15 @@ function ArticlePage({ articles, name }) {
               <ArticleCard article={article} key={index} />
             ))}
         </div>
-      </section>
+      </section> :
+       <section className={styles.documentNotFoundContainer}>
+        <div className={styles.articleHeadingContainer}>
+          <p>Results for: </p>
+          <h2>{decodeURIComponent(name.replace(/-/g, " "))}</h2>
+        </div>
+        <Image src={'https://ik.imagekit.io/94nzrpaat/images/noDataIcon.svg?updatedAt=1709222605789'} width={150} height={150} unoptimized />
+       </section>
+       }
     </>
   );
 }
@@ -58,8 +68,12 @@ export const getServerSideProps = async (context) => {
   );
   const data = await response.json();
   let { success, articles } = data;
+  if(!success){
+    articles = [];
+  }
   return {
     props: {
+      success,
       articles,
       name,
     },
