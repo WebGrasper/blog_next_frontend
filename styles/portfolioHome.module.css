@@ -3,6 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: white;
     width: 100%;
     padding: 1rem;
 }
@@ -29,7 +30,7 @@
 
 /* (start) animation in section 1 text */
 .name {
-    color: white;
+    color: black;
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
     opacity: 1;
@@ -82,12 +83,12 @@
 /* (start)  animation on section 2 */
 
 .section2 span {
-    color: rgba(255, 255, 255, 0.1);
+    color: rgba(0, 0, 0, 0.1);
     background-clip: text;
     -webkit-background-clip: text;
     background-size: 0% 100%;
     background-repeat: no-repeat;
-    background-image: linear-gradient(90deg, white, white);
+    background-image: linear-gradient(90deg, black, black);
     animation: scroll-reveal linear forwards;
     animation-timeline: view();
 }
@@ -159,12 +160,12 @@
 /* (start)  animation on section 3 */
 
 .section3 span {
-    color: rgba(255, 255, 255, 0.1);
+    color: rgba(0, 0, 0, 0.1);
     -webkit-background-clip: text;
     background-clip: text;
     background-size: 0% 100%;
     background-repeat: no-repeat;
-    background-image: linear-gradient(90deg, white, white);
+    background-image: linear-gradient(90deg, black, black);
     animation: scroll-reveal linear forwards;
     animation-timeline: view(y);
     animation-range-start: cover 10%;
@@ -172,7 +173,7 @@
 }
 
 .section3Container {
-    background-image: linear-gradient(90deg, #0f0f0f, #0f0f0f);
+    background-image: linear-gradient(90deg, white, white);
 }
 
 .section3Container img {
@@ -181,7 +182,7 @@
     animation: scroll-reveal-image linear forwards;
     animation-timeline: view(y);
     animation-range-start: cover 11.5%;
-    animation-range-end: cover 25%;
+    animation-range-end: cover 40%;
 }
 
 @keyframes scroll-reveal-image {
@@ -239,16 +240,16 @@
     color: white;
     font-size: 3rem;
     font-weight: 800;
-    color: rgba(255, 255, 255, 0.1);
+    color: rgba(0, 0, 0, 0.1);
     -webkit-background-clip: text;
     background-clip: text;
     background-size: 0% 100%;
     background-repeat: no-repeat;
-    background-image: linear-gradient(90deg, white, white);
+    background-image: linear-gradient(90deg, black, black);
     animation: scroll-reveal linear forwards;
     animation-timeline: view(y);
     animation-range-start: cover 10%;
-    animation-range-end: cover 30%;
+    animation-range-end: cover 40%;
 }
 
 @keyframes scroll-reveal {
@@ -282,14 +283,25 @@
     }
 }
 
+.section4ProjectContainer.expanded > * {
+    opacity: 1 !important;
+    transition: all 2s ease;
+}
+
+.section4ProjectContainer:not(.expanded) > * {
+    opacity: 0 !important;
+}
+
 .section4ProjectContainer.expanded {
+    background: rgba(0, 0, 0, 0.2);
     flex: 1;
+    border-radius: 10px;
     filter: blur(0);
     transition: all 0.6s ease;
 }
 
 .section4ProjectContainer:not(.expanded) {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
     border-radius: 10px;
@@ -314,7 +326,7 @@
 .projectName {
     font-weight: 700;
     font-size: 1.5rem;
-    color: white;
+    color: black;
     margin-bottom: 0.5rem;
 }
 
@@ -324,15 +336,14 @@
     text-align: left;
     word-wrap: unset;
     word-break: break-word;
-    color: white;
+    color: black;
     line-height: 1.25rem;
     margin-bottom: 1rem;
 }
 
 .projectLink {
     padding: 0.25rem 1rem;
-    color: white;
-    background-color: white;
+    background-color: black;
     border-radius: 10px;
     width: max-content;
     transition: all 0.5s ease;

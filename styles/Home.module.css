@@ -9,14 +9,13 @@
   height: 100%;
   object-fit: cover;
   object-position: top;
-  filter: blur(4px);
+  filter: blur(6px);
   position: absolute;
   overflow: hidden;
   z-index: -1;
   scale: 1 1;
-  opacity: 0.85;
   background-color: black;
-  transform-origin: top;
+  transform-origin: bottom;
   animation: scale-up-hero-image linear forwards;
   animation-timeline: view();
   animation-range: exit;
@@ -24,7 +23,6 @@
 
 @keyframes scale-up-hero-image {
   to {
-    opacity: 0;
     scale: 2 2;
   }
 }

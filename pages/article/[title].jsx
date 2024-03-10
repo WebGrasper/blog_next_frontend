@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../../styles/article.module.css";
+import Renderer from "@/utils/renderer";
 
 export const getServerSideProps = async (context) => {
   const { title } = context.query;
@@ -16,7 +17,6 @@ export const getServerSideProps = async (context) => {
   const data = await response.json();
   let { success, article } = data;
   article.description = JSON.parse(article.description);
-  console.log(article.description); 
   return {
     props: {
       article,
@@ -76,19 +76,7 @@ function Article({ article }) {
             <h2>Description</h2>
             <div className={styles.dynamicHtmlContent}>
                 {article.description.map((ptr, index) =>
-                ptr.selfClosing === "false" ? (
-                  <ptr.type
-                    className={styles[ptr.className]} // Dynamically access styles based on className
-                    key={index}
-                  >
-                    {ptr.data}
-                  </ptr.type>
-                ) : (
-                  <ptr.type
-                    className={styles[ptr.className]} // Dynamically access styles based on className
-                    key={index}
-                  />
-                )
+                  Renderer(ptr,index)
               )}
             </div>
           </div>

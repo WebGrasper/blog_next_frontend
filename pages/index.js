@@ -64,7 +64,7 @@ export default function Main({ article }) {
       <section className={styles.heroContainer}>
         <picture>
           <Image
-            src="https://ik.imagekit.io/94nzrpaat/images/hero-large.jpg?updatedAt=1708846125096"
+            src="https://ik.imagekit.io/94nzrpaat/images/dariusz-sankowski-3OiYMgDKJ6k-unsplash.jpg?updatedAt=1709999343480"
             alt="hero image"
             className={styles.heroImage}
             width={100}
