@@ -496,8 +496,8 @@
     }
 
     .section4ProjectContainer:not(.expanded) {
-        background: black;
-        backdrop-filter: blur(0);
+        
+        
         -webkit-backdrop-filter: blur(0);
         border-radius: 6px;
         border: 1px solid white;
@@ -505,7 +505,7 @@
 
     .section4ProjectContainer.expanded .projectDescription,
     .section4ProjectContainer:not(.expanded) .projectDescription {
-        color: white;
+        color: black;
     }
 }
 

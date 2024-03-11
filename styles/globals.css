@@ -16,6 +16,7 @@ body {
   text-rendering: optimizeLegibility;
   scrollbar-width: none;
   background-repeat: no-repeat;
+  background-color:black !important;
 }
 
 /* Optional: For WebKit (Chrome, Safari) */
