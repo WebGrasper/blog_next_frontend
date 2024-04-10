@@ -8,7 +8,6 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 
 function Navbar() {
-
   const [isSeachChechBoxChecked, setSeachChechBoxChecked] = useState(false);
 
   const handleSearchCheckBox = () => {
@@ -16,9 +15,9 @@ function Navbar() {
   };
 
   // New state for menu visibility
-  const [isMenuOpen, setMenuOpen] = useState(false); 
+  const [isMenuOpen, setMenuOpen] = useState(false);
   const handleLinkClick = () => {
-    setMenuOpen(false); 
+    setMenuOpen(false);
   };
   // Close the menu when a link is clicked
 
@@ -32,73 +31,97 @@ function Navbar() {
 
   //search bar functionality(Ended)
 
-  
   const [isOffset, setOffset] = useState(false);
   const [isHome, setIsHome] = useState(true);
 
   const pathname = usePathname();
-  useEffect(()=>{
-    if (pathname !== '/') {
+  useEffect(() => {
+    if (pathname !== "/") {
       setIsHome(false);
     } else {
       setIsHome(true);
     }
-    console.log(isHome)
-  },[pathname]);
+    console.log(isHome);
+  }, [pathname]);
 
-  useEffect(()=>{
-    window.addEventListener('scroll', () => {
-      if(isHome && (window.scrollY >= (window.innerHeight - 80))){
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      if (isHome && window.scrollY >= window.innerHeight - 80) {
         setOffset(true);
       } else {
         setOffset(false);
       }
     });
-  })
-  
+  });
+
   const [atPortfolio, setAtPortfolio] = useState(false);
-  useEffect(()=>{
-    if (pathname === '/portfolio') {
+  useEffect(() => {
+    if (pathname === "/portfolio") {
       setAtPortfolio(true);
     } else {
       setAtPortfolio(false);
     }
-  })
-  
-  
+  });
+
   return (
     <div
-      className={`${isHome ? styles.navbarSupremeContainer : styles.activeNotHomeNavbarSupremeContainer} ${isOffset ? styles.activeOffset : ""} ${atPortfolio ? styles.activeAtPortfolio : ""}`}
+      className={`${
+        isHome
+          ? styles.navbarSupremeContainer
+          : styles.activeNotHomeNavbarSupremeContainer
+      } ${isOffset ? styles.activeOffset : ""} ${
+        atPortfolio ? styles.activeAtPortfolio : ""
+      }`}
     >
       <div>
         <nav className={`${styles.navbar}`}>
           <div className={`${styles.container1}`}>
             <Link href={"/"}>
               <div className={styles.container1H1}>
-                <Image src="https://ik.imagekit.io/94nzrpaat/images/gold-logo-with-title-wg_853558-2748-N6dN8fcsA-transformed_1%20(1).png?updatedAt=1708801310085" alt="logo" width={70} height={35}/>
-                <span>Web<span>Grasper</span></span>
+                <Image
+                  src="https://ik.imagekit.io/94nzrpaat/images/gold-logo-with-title-wg_853558-2748-N6dN8fcsA-transformed_1%20(1).png?updatedAt=1708801310085"
+                  alt="logo"
+                  width={70}
+                  height={35}
+                />
+                <span>
+                  Web<span>Grasper</span>
+                </span>
               </div>
             </Link>
           </div>
           <div className={`${styles.container2}`}>
-              <input
-                type="checkbox"
-                className={styles.searchCheckBox}
-                onClick={handleSearchCheckBox}
-              />
-              <img
-                className={styles.searchButton}
-                src={`${!isHome || isOffset ? "/searchButtonBlack.svg" : "/searchButtonWhite.svg"}`}
-                alt="search icon"
-              />
-              <img
-                className={styles.searchCloseButton}
-                src={`${!isHome || isOffset ? "/closeButtonBlack.svg" : "/closeButtonWhite.svg"}`}
-                alt="close button"
-              />
+            <input
+              type="checkbox"
+              className={styles.searchCheckBox}
+              onClick={handleSearchCheckBox}
+            />
+            <img
+              className={styles.searchButton}
+              src={`${
+                !isHome || isOffset
+                  ? "/searchButtonBlack.svg"
+                  : "/searchButtonWhite.svg"
+              }`}
+              alt="search icon"
+            />
+            <img
+              className={styles.searchCloseButton}
+              src={`${
+                !isHome || isOffset
+                  ? "/closeButtonBlack.svg"
+                  : "/closeButtonWhite.svg"
+              }`}
+              alt="close button"
+            />
           </div>
           <div className={`${styles.containerButton}`}>
-            <input type="checkbox" className={styles.checkBox} checked={isMenuOpen} onChange={() => setMenuOpen(!isMenuOpen)}/>
+            <input
+              type="checkbox"
+              className={styles.checkBox}
+              checked={isMenuOpen}
+              onChange={() => setMenuOpen(!isMenuOpen)}
+            />
             <img
               className={styles.closeButton}
               src="/closeButtonBlack.svg"
@@ -106,27 +129,61 @@ function Navbar() {
             />
             <img
               className={styles.menuButton}
-              src={`${!isHome || isOffset ? "/menuButtonBlack.svg" : "/menuButtonWhite.svg"}`}
+              src={`${
+                !isHome || isOffset
+                  ? "/menuButtonBlack.svg"
+                  : "/menuButtonWhite.svg"
+              }`}
               alt="menu button"
             />
             <div className={styles.container3Navbar}>
-              <Link href="/article-page?name=Frontend" passHref onClick={handleLinkClick}>
-                <span className={`${styles.link} ${!isHome || isOffset ? styles.linkActiveOffset : ""}`}>Frontend</span>
+              <Link
+                href="/article-page?name=Problem-solving"
+                passHref
+                onClick={handleLinkClick}
+              >
+                <span
+                  className={`${styles.link} ${
+                    !isHome || isOffset ? styles.linkActiveOffset : ""
+                  }`}
+                >
+                  Problem solving
+                </span>
               </Link>
-              <Link href="/article-page?name=Backend" passHref onClick={handleLinkClick}>
-                <span className={`${styles.link} ${!isHome || isOffset ? styles.linkActiveOffset : ""}`}>Backend</span>
+              <Link
+                href="/article-page?name=Gadgets-reviews"
+                passHref
+                onClick={handleLinkClick}
+              >
+                <span
+                  className={`${styles.link} ${
+                    !isHome || isOffset ? styles.linkActiveOffset : ""
+                  }`}
+                >
+                  Gadgets reviews
+                </span>
               </Link>
-              <Link href="/article-page?name=Problem-solving" passHref onClick={handleLinkClick}>
-                <span className={`${styles.link} ${!isHome || isOffset ? styles.linkActiveOffset : ""}`}>Problem solving</span>
-              </Link>
-              <Link href="/article-page?name=Gadgets-reviews" passHref onClick={handleLinkClick}>
-                <span className={`${styles.link} ${!isHome || isOffset ? styles.linkActiveOffset : ""}`}>Gadgets reviews</span>
-              </Link>
-              <Link href="/article-page?name=Gadgets-comparison" passHref onClick={handleLinkClick}>
-                <span className={`${styles.link} ${!isHome || isOffset ? styles.linkActiveOffset : ""}`}>Gadgets comparison</span>
+              <Link
+                href="/article-page?name=Gadgets-comparison"
+                passHref
+                onClick={handleLinkClick}
+              >
+                <span
+                  className={`${styles.link} ${
+                    !isHome || isOffset ? styles.linkActiveOffset : ""
+                  }`}
+                >
+                  Gadgets comparison
+                </span>
               </Link>
               <Link href="/portfolio" passHref onClick={handleLinkClick}>
-                <span className={`${styles.link} ${!isHome || isOffset ? styles.linkActiveOffset : ""}`}>Portfolio</span>
+                <span
+                  className={`${styles.link} ${
+                    !isHome || isOffset ? styles.linkActiveOffset : ""
+                  }`}
+                >
+                  Portfolio
+                </span>
               </Link>
             </div>
           </div>
@@ -140,7 +197,9 @@ function Navbar() {
       >
         <input
           type="search"
-          className={`${styles.bottomSearchBar} ${!isHome || isOffset ? styles.activeBottomSearchBar : ""}`}
+          className={`${styles.bottomSearchBar} ${
+            !isHome || isOffset ? styles.activeBottomSearchBar : ""
+          }`}
           id="container2SearchBox"
           placeholder="Ideas, topics & more..."
           onChange={(e) => {

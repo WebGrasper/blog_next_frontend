@@ -33,12 +33,6 @@ function Footer() {
             <Link href="/article-page?name=Problem-solving" className={styles.links}>
               Problem solving
             </Link>
-            <Link href="/article-page?name=Frontend" className={styles.links}>
-              Frontend
-            </Link>
-            <Link href="/article-page?name=Backend" className={styles.links}>
-              Backend
-            </Link>
           </div>
         </div>
         <div className={styles.container3}>

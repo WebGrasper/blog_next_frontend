@@ -41,16 +41,6 @@ async function generateSiteMap({ article }) {
           <priority>0.7</priority>
         </url>
         <url>
-          <loc>${baseUrl}/article-page?name=Frontend</loc>
-          <lastmod>${currentDate}</lastmod>
-          <priority>0.8</priority>
-        </url>
-        <url>
-          <loc>${baseUrl}/article-page?name=Backend</loc>
-          <lastmod>${currentDate}</lastmod>
-          <priority>0.8</priority>
-        </url>
-        <url>
           <loc>${baseUrl}/article-page?name=Problem-solving</loc>
           <lastmod>${currentDate}</lastmod>
           <priority>0.8</priority>
