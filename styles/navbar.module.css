@@ -228,6 +228,36 @@
   transform: scaleX(1);
 }
 
+.profileButton {
+  padding: 0.25rem 0.6rem;
+  font-size: small;
+  color: white;
+  cursor: pointer;
+  border: 2px solid white;
+  transition: background-color 0.3s linear, color 0.3s linear;
+}
+
+.profileButton:hover,
+.profileButton:focus-visible{
+  color: rgba(0, 0, 0, 0.8) !important;
+  background-color: white;
+}
+
+.profileButtonActiveOffset{
+  padding: 0.25rem 0.6rem;
+  font-size: small;
+  color: rgba(0, 0, 0, 0.8) !important;
+  cursor: pointer;
+  border: 2px solid rgba(0, 0, 0, 0.8);
+  transition: background-color 0.3s linear, color 0.3s linear;
+}
+
+.profileButtonActiveOffset:hover,
+.profileButtonActiveOffset:focus-visible{
+  color: rgb(255, 255, 255) !important;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
 
 @media only screen and (max-width: 962px) {
   .navbarSupremeContainer {
@@ -311,6 +341,20 @@
   .link {
     color: black;
     font-size: large;
+  }
+  .profileButton, .profileButtonActiveOffset{
+    font-size: large;
+    color: rgba(0, 0, 0, 0.8) !important;
+    border: 2px solid rgba(0, 0, 0, 0.8);
+    transition: background-color 0.3s linear, color 0.3s linear;
+  }
+  
+  .profileButton:hover,
+  .profileButtonActiveOffset:hover,
+  .profileButton:focus-visible,
+  .profileButtonActiveOffset:focus-visible{
+    color: rgb(255, 255, 255) !important;
+    background-color: rgba(0, 0, 0, 0.8);
   }
 }
 

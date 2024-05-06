@@ -6,6 +6,7 @@ import { debounce, replace } from "lodash";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 function Navbar() {
   const [isSeachChechBoxChecked, setSeachChechBoxChecked] = useState(false);
@@ -62,6 +63,16 @@ function Navbar() {
       setAtPortfolio(false);
     }
   });
+
+  //Check for token presence
+  const [isToken, setToken] = useState(false);
+  useEffect(() => {
+    if (Cookies.get("token")) {
+      setToken(true);
+    } else {
+      setToken(false);
+    }
+  },[Cookies.get("token")]);
 
   return (
     <div
@@ -183,6 +194,15 @@ function Navbar() {
                   }`}
                 >
                   Portfolio
+                </span>
+              </Link>
+              <Link href="/login" passHref onClick={handleLinkClick}>
+                <span
+                  className={`${styles.profileButton} ${
+                    !isHome || isOffset ? styles.profileButtonActiveOffset : ""
+                  }`}
+                >
+                  {isToken ? <>Profile</> : <>Login</>}
                 </span>
               </Link>
             </div>
