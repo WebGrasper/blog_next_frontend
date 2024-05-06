@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+// https://blog-zo8s.vercel.app
 export const login = createAsyncThunk("login", async ({ email, password }) => {
     let response = await fetch("https://blog-zo8s.vercel.app/app/v1/signin", {
         method: 'POST',

@@ -54,19 +54,24 @@ export default function Profile() {
     console.log(cookies.token);
   },[cookies]);
 
+  const [doLogout, setDoLogout] = useState(false);
   const handleLogout = () =>{
     const token = cookies.token;
     dispatch(logout(Cookies.get('token')));
     dispatch(resetLoginState());
     dispatch(resetLogoutState());
-    setTimeout(()=>{
-      if(logout_state && logout_state?.data?.success){
-        document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'; // Set path accordingly
-        removeCookie('token'); // Also remove using the Cookies library
-        router.push('/');
-      }
-    },1000);
+    setDoLogout(true);
   }
+
+  useEffect(()=>{
+    if(doLogout && logout_state && logout_state?.data?.success){
+      document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'; // Set path accordingly
+      removeCookie('token'); // Also remove using the Cookies library
+      // console.log("Token null");
+      router.push('/');
+      setDoLogout(false);
+    }
+  },[doLogout, logout_state?.data?.success]);
 
   return (
     <div>
