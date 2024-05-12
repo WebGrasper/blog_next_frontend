@@ -49,12 +49,15 @@ export default function ForgetPassword() {
       });
     }
     setDisabled(false);
-    if(!forget_password_state?.data?.success && forget_password_state?.data?.message){
-        enqueueSnackbar(forget_password_state?.data?.message, {
-          autoHideDuration: 2000,
-          variant: "error",
-        });
-      }
+    if (
+      !forget_password_state?.data?.success &&
+      forget_password_state?.data?.message
+    ) {
+      enqueueSnackbar(forget_password_state?.data?.message, {
+        autoHideDuration: 2000,
+        variant: "error",
+      });
+    }
     dispatch(resetFPState());
   }, [forget_password_state?.data]);
 
@@ -79,7 +82,10 @@ export default function ForgetPassword() {
       router.push("/login");
     }
     setDisabled(false);
-    if(!reset_password_state?.data?.success && reset_password_state?.data?.message){
+    if (
+      !reset_password_state?.data?.success &&
+      reset_password_state?.data?.message
+    ) {
       enqueueSnackbar(reset_password_state?.data?.message, {
         autoHideDuration: 2000,
         variant: "error",
@@ -113,7 +119,6 @@ export default function ForgetPassword() {
         <link rel="icon" href="/favicon.jpg" sizes="any" />
       </Head>
       <section className={styles.heroContainer}>
-        <div className={styles.loginFormContainer}>
           <div className={styles.loginFormSubContainer}>
             {showOTPForm ? (
               <>
@@ -165,12 +170,16 @@ export default function ForgetPassword() {
                     ref={passwordMatchMessageRef}
                     style={{ color: "red" }}
                   ></div>
-                  <button type="submit" disabled={markDisabled}>{markDisabled ? 'Processing...':'Verify'}</button>
+                  <button type="submit" disabled={markDisabled}>
+                    {markDisabled ? "Verify..." : "Verify"}
+                  </button>
                   <button
                     type="reset"
                     disabled={markDisabled}
                     onClick={(e) => {
                       e.preventDefault();
+                      dispatch(resetFPState());
+                      dispatch(resetRPState());
                       router.push("/");
                     }}
                   >
@@ -193,12 +202,24 @@ export default function ForgetPassword() {
                       required
                     />
                   </div>
-                  <button type="submit" disabled={markDisabled}>{markDisabled ? 'Please wait...' : 'Submit'}</button>
+                  <button type="submit" disabled={markDisabled}>
+                    {markDisabled ? "Submit..." : "Submit"}
+                  </button>
+                  <button
+                    type="button"
+                    disabled={markDisabled}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      dispatch(resetFPState());
+                      router.push("/login");
+                    }}
+                  >
+                    Cancel
+                  </button>
                 </form>
               </>
             )}
           </div>
-        </div>
       </section>
     </div>
   );

@@ -63,6 +63,7 @@ export default function Register() {
         variant: "error",
       });
     }
+    dispatch(resetRegisterState());
   }, [register_state?.data]);
 
   const handleOTPVerification = (event) => {
@@ -91,6 +92,7 @@ export default function Register() {
         variant: "error",
       });
     }
+    dispatch(resetConfirmRegisterState());
   }, [confirm_registration_state?.data]);
 
   return (
@@ -118,7 +120,6 @@ export default function Register() {
         <link rel="icon" href="/favicon.jpg" sizes="any" />
       </Head>
       <section className={styles.heroContainer}>
-        <div className={styles.loginFormContainer}>
           <div className={styles.loginFormSubContainer}>
             {showOTPForm ? (
               <>
@@ -139,9 +140,11 @@ export default function Register() {
                       required
                     />
                   </div>
-                  <button type="submit" disabled={markDisabled}>{markDisabled ? 'Processing...':'Verify'}</button>
+                  <button type="submit" disabled={markDisabled}>{markDisabled ? 'Verify...':'Verify'}</button>
                   <button type="reset" onClick={(e)=>{
                     e.preventDefault();
+                    dispatch(resetRegisterState());
+                    dispatch(resetConfirmRegisterState());
                     router.push('/');
                   }}>Cancel</button>
                 </form>
@@ -159,7 +162,7 @@ export default function Register() {
                       type="name"
                       name="username"
                       id="username"
-                      placeholder="Ex. Mohammad, Ram, John, etc."
+                      placeholder="Ex. Mohammad, etc."
                       pattern="/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/"
                       required
                     />
@@ -206,12 +209,11 @@ export default function Register() {
                       style={{ color: "red" }}
                     ></div>
                   </div>
-                  <button type="submit" disabled={markDisabled}>{markDisabled ? 'Please wait...' : 'Register'}</button>
+                  <button type="submit" disabled={markDisabled}>{markDisabled ? 'Register...' : 'Register'}</button>
                 </form>
               </>
             )}
           </div>
-        </div>
       </section>
     </div>
   );

@@ -36,7 +36,6 @@ export default function Profile() {
 
   const handleLogout = () =>{
     removeCookie('token');
-    dispatch(resetLoginState());
     dispatch(resetProfileState());
     router.push('/')
   }

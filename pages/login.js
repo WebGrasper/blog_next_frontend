@@ -3,7 +3,7 @@ import Link from "next/link";
 import styles from "@/styles/login.module.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "@/store/loginSlice";
+import { login, resetLoginState } from "@/store/loginSlice";
 import { useSnackbar } from "notistack";
 import { useRouter } from "next/router"; // Import useRouter
 import Cookies from "js-cookie";
@@ -33,6 +33,7 @@ export default function Login() {
         autoHideDuration: 2000,
       });
       setDisabled(false);
+      dispatch(resetLoginState());
     }
   }, [state]);
 
@@ -42,12 +43,14 @@ export default function Login() {
       setCookie("token", token, {
         expires: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
       });
+      dispatch(resetLoginState());
       router.push("/profile");
     }
   }, [state, state?.data, router]);
 
   useEffect(() => {
     if (Cookies.get("token")) {
+      dispatch(resetLoginState());
       router.push("/profile");
     }
   }, [Cookies]);
@@ -77,7 +80,6 @@ export default function Login() {
         <link rel="icon" href="/favicon.jpg" sizes="any" />
       </Head>
       <section className={styles.heroContainer}>
-        <div className={styles.loginFormContainer}>
         <div className={styles.loginFormSubContainer}>
           <h1>Login</h1>
           <form className={styles.formContainer} onSubmit={loginFormHandler}>
@@ -107,13 +109,12 @@ export default function Login() {
             <Link href="/forgetPassword" className={styles.forgetPasswordLink}>
               Forget password?
             </Link>
-            <button type="submit" disabled={markDisabled}>{markDisabled ? 'Logging in...' : 'Login'}</button>
+            <button type="submit" disabled={markDisabled}>{markDisabled ? 'Login...' : 'Login'}</button>
             <button type="button" disabled={markDisabled} onClick={(e)=>{
               e.preventDefault();
               router.push('/register');
-            }}>Create account</button>
+            }}>Register</button>
           </form>
-        </div>
         </div>
       </section>
     </div>
