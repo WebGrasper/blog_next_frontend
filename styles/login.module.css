@@ -1,22 +1,9 @@
 .heroContainer {
   height: 100vh;
-  background-color: white;
-  max-width: 100%;
-  display: grid;
-  grid-template-columns: 1.5fr 1fr;
-}
-
-.loginWallpaperContainer {
-  width: 100%;
-}
-
-.loginWallpaperContainer > img {
-  width: 100%;
-  height: 100vh;
-  object-fit: cover;
-  object-position: top;
-  overflow: hidden;
+  background-image: url('https://ik.imagekit.io/94nzrpaat/images/pawel-czerwinski-qe6D0OX1tKo-unsplash.jpg?updatedAt=1715496049968');
+  background-size: cover;
   background-repeat: no-repeat;
+  max-width: 100%;
 }
 
 .loginFormContainer {
@@ -28,17 +15,25 @@
   align-items: center;
 }
 
-.loginFormSubContainer,
+.loginFormSubContainer{
+  background-color: white;
+  padding: 2rem 2rem 2.75rem 2rem;
+  border-radius: 4px;
+}
+
 .formContainer {
+  background-color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
+
 .loginFormSubContainer > h1 {
-  font-family: "Lugrasimo", cursive !important;
-  font-size: 2.5rem;
+  color: rgb(161,102,102);
+  font-size: 2.25rem;
+  margin-bottom: 1.5rem;
 }
 
 .loginFormSubContainer {
@@ -57,7 +52,8 @@
 }
 
 .inputFieldContainer label {
-  font-size: large;
+  font-size: medium;
+  font-weight: bold;
   color: rgba(0, 0, 0, 0.8);
 }
 
@@ -76,7 +72,7 @@
 .inputFieldContainer input:focus,
 .inputFieldContainer input:active {
   outline: none;
-  border-bottom: 2px solid rgb(252, 214, 65);
+  border-bottom: 2px solid rgb(161,102,102);
   transform-origin: left;
 }
 .inputFieldContainer input::placeholder {
@@ -95,21 +91,22 @@
   font-size: large;
   padding: 0.75rem 4rem;
   border-radius: 25px;
-  background-color: rgb(252, 214, 65);
-  border: 2px solid rgb(252, 214, 65);
+  width: 100%;
+  background-color: #2C3639;
+  border: 2px solid #2C3639;
   cursor: pointer;
   transition: background-color 0.2s linear;
 }
 .formContainer button:hover {
-  background-color: rgb(243, 200, 31);
+  background-color: #283032;
 }
 
 .formContainer button:last-child {
-  color: rgb(252, 214, 65);
+  color: #2C3639;
   background-color: transparent;
   transition: all 0.2s linear;
 }
 .formContainer button:last-child:hover {
-  background-color: rgb(252, 214, 65);
+  background-color: #2C3639;
   color: white;
 }

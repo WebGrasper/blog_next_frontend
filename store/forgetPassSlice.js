@@ -1,45 +1,43 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-//Action
-export const profile = createAsyncThunk("profile", async(token) =>{
-    let response = await fetch(`https://blog-zo8s.vercel.app/app/v1/getMyDetails?` + new URLSearchParams({
-        token: token
-    }),{
-        method: 'GET',
+export const forgetPassword = createAsyncThunk("forgetPassword", async (email) => {
+    let response = await fetch("https://blog-zo8s.vercel.app/app/v1/forgetPassword", {
+        method: 'POST',
         // mode: 'no-cors', //Disable the cors(Cross-Origin resource sharing)
         headers: {
             'Content-Type': 'application/json',
         },
-    });
+        body: JSON.stringify({ email }),
+    })
     return response.json();
 })
 
-const profileSlice = createSlice({
-    name: "profile",
-    initialState:{
+const forgetPasswordSlice = createSlice({
+    name: "forgetPassword",
+    initialState: {
         isLoading: false,
         data: null,
         isError: false,
     },
     reducers: {
-        resetProfileState: state => {
+        resetFPState: state => {
             state.isLoading = false;
             state.data = null;
             state.isError = false;
         }
     },
-    extraReducers: (builder) =>{
-        builder.addCase(profile.pending, (state, action)=>{
+    extraReducers: (builder) => {
+        builder.addCase(forgetPassword.pending, (state, action) => {
             state.isLoading = true;
             state.data = null;
             state.isError = false;
         })
-        builder.addCase(profile.fulfilled, (state, action)=>{
+        builder.addCase(forgetPassword.fulfilled, (state, action) => {
             state.isLoading = false;
             state.data = action.payload;
             state.isError = false;
         })
-        builder.addCase(profile.rejected, (state, action)=>{
+        builder.addCase(forgetPassword.rejected, (state, action) => {
             state.isLoading = false;
             state.data = action.error;
             state.isError = true;
@@ -47,5 +45,5 @@ const profileSlice = createSlice({
     }
 })
 
-export const { resetProfileState } = profileSlice.actions; // Export the new action
-export default profileSlice.reducer;
+export const { resetFPState } = forgetPasswordSlice.actions; // Export the new action
+export default forgetPasswordSlice.reducer;

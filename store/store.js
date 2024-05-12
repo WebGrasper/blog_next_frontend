@@ -1,12 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
 import loginSlice from './loginSlice';
 import profileSlice from './profileSlice';
-import logoutSlice, { logout } from './logoutSlice';
+import registrationSlice from './registrationSlice';
+import confirmRegistrationSlice from './confirmRegistrationSlice';
+import forgetPassSlice from './forgetPassSlice';
+import resetPassSlice from './resetPassSlice';
 
 export default configureStore({
   reducer: {
     login: loginSlice,
     profile: profileSlice,
-    logout: logoutSlice,
+    register: registrationSlice,
+    confirmRegistration: confirmRegistrationSlice,
+    forgetPassword: forgetPassSlice,
+    resetPassword: resetPassSlice,
   }
 });

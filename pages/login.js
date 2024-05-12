@@ -1,8 +1,7 @@
-import Image from "next/image";
 import Head from "next/head";
 import Link from "next/link";
 import styles from "@/styles/login.module.css";
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "@/store/loginSlice";
 import { useSnackbar } from "notistack";
@@ -11,36 +10,18 @@ import Cookies from "js-cookie";
 import { useCookies } from "react-cookie";
 
 export default function Login() {
-  const [loginForm, setLoginForm] = useState(true);
-  const passwordMatchMessageRef = useRef(null); // Define the ref here
   const state = useSelector((state) => state.login);
   const dispatch = useDispatch();
   const router = useRouter(); // Initialize useRouter
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
-
-  const handleChange = () => {
-    setLoginForm((prev) => !prev);
-  };
-
-  function check(event) {
-    const confirmPassword = event.target.value;
-    const password = document.getElementById("password").value;
-    const passwordMatchMessage = passwordMatchMessageRef.current; // Access ref here
-
-    if (confirmPassword !== password) {
-      event.target.setCustomValidity("Passwords must match.");
-      passwordMatchMessage.innerHTML = "Passwords do not match.";
-    } else {
-      event.target.setCustomValidity("");
-      passwordMatchMessage.innerHTML = "";
-    }
-  }
+  const [markDisabled, setDisabled] = useState(false);
 
   const loginFormHandler = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target); // Get form data
     const { email, password } = Object.fromEntries(formData.entries()); // Convert FormData to plain object
+    setDisabled(true);
     await dispatch(login({ email, password }));
   };
 
@@ -51,6 +32,7 @@ export default function Login() {
         variant: "error",
         autoHideDuration: 2000,
       });
+      setDisabled(false);
     }
   }, [state]);
 
@@ -95,122 +77,43 @@ export default function Login() {
         <link rel="icon" href="/favicon.jpg" sizes="any" />
       </Head>
       <section className={styles.heroContainer}>
-        <div className={styles.loginWallpaperContainer}>
-          <Image
-            src="https://ik.imagekit.io/94nzrpaat/images/loginWallpaper.jpg?updatedAt=1714299849982"
-            alt="Login page wallpaper: WebGrasper"
-            width={100}
-            height={100}
-            loading="lazy"
-            unoptimized
-          />
-        </div>
         <div className={styles.loginFormContainer}>
-          <div className={styles.loginFormSubContainer}>
-            {loginForm ? (
-              <>
-                <h1>Login</h1>
-                <form
-                  className={styles.formContainer}
-                  onSubmit={loginFormHandler}
-                >
-                  <div className={styles.inputFieldContainer}>
-                    <label htmlFor="Email">Email</label>
-                    <input
-                      type="email"
-                      name="email"
-                      id="email"
-                      placeholder="Ex. abc@gmail.com"
-                      pattern="/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/"
-                      required
-                    />
-                  </div>
-                  <div className={styles.inputFieldContainer}>
-                    <label htmlFor="Email">Password</label>
-                    <input
-                      type="password"
-                      name="password"
-                      id="password"
-                      placeholder="Enter your password"
-                      pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,1024}$"
-                      title="The password should be minimum of 8 characters, which consist atleast one Upper, one Lower case alphabet, one number and one special character[!@#$%^&*]."
-                      required
-                    />
-                  </div>
-                  <Link href="#" className={styles.forgetPasswordLink}>
-                    Forget password?
-                  </Link>
-                  <button type="submit">Login</button>
-                  <button type="button" onClick={handleChange}>
-                    Create account
-                  </button>
-                </form>
-              </>
-            ) : (
-              <>
-                <h1>Register</h1>
-                <form className={styles.formContainer}>
-                  <div className={styles.inputFieldContainer}>
-                    <label htmlFor="Username">Username</label>
-                    <input
-                      type="name"
-                      name="Username"
-                      id="Username"
-                      placeholder="Ex. Mohammad, Ram, John, etc."
-                      pattern="/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/"
-                      required
-                    />
-                  </div>
-                  <div className={styles.inputFieldContainer}>
-                    <label htmlFor="Email">Email</label>
-                    <input
-                      type="email"
-                      name="email"
-                      id="email"
-                      placeholder="Ex. abc@gmail.com"
-                      pattern="/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/"
-                      required
-                    />
-                  </div>
-                  <div className={styles.inputFieldContainer}>
-                    <label htmlFor="password">Password</label>
-                    <input
-                      type="password"
-                      name="password"
-                      id="password"
-                      placeholder="Enter your password"
-                      pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,1024}$"
-                      title="The password should be minimum of 8 characters, which consist atleast one Upper, one Lower case alphabet, one number and one special character[!@#$%^&*]."
-                      required
-                    />
-                  </div>
-                  <div className={styles.inputFieldContainer}>
-                    <label htmlFor="confirmPassword">Confirm password</label>
-                    <input
-                      type="password"
-                      name="confirmPassword"
-                      id="confirmPassword"
-                      placeholder="Re-enter your password"
-                      pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,1024}$"
-                      title="The password should be minimum of 8 characters, which consist atleast one Upper, one Lower case alphabet, one number and one special character[!@#$%^&*]."
-                      required
-                      onInput={check}
-                    />
-                    <div
-                      id="passwordMatchMessage"
-                      className={styles.passwordMatchMessage}
-                      ref={passwordMatchMessageRef}
-                      style={{ color: "red" }}
-                    ></div>
-                  </div>
-                  <button type="submit">Register</button>
-                  <button type="button" onClick={handleChange}>
-                    Login
-                  </button>
-                </form>
-              </>
-            )}
-          </div>
+        <div className={styles.loginFormSubContainer}>
+          <h1>Login</h1>
+          <form className={styles.formContainer} onSubmit={loginFormHandler}>
+            <div className={styles.inputFieldContainer}>
+              <label htmlFor="Email">Email</label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Ex. abc@gmail.com"
+                pattern="/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/"
+                required
+              />
+            </div>
+            <div className={styles.inputFieldContainer}>
+              <label htmlFor="Email">Password</label>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="Enter your password"
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,1024}$"
+                title="The password should be minimum of 8 characters, which consist atleast one Upper, one Lower case alphabet, one number and one special character[!@#$%^&*]."
+                required
+              />
+            </div>
+            <Link href="/forgetPassword" className={styles.forgetPasswordLink}>
+              Forget password?
+            </Link>
+            <button type="submit" disabled={markDisabled}>{markDisabled ? 'Logging in...' : 'Login'}</button>
+            <button type="button" disabled={markDisabled} onClick={(e)=>{
+              e.preventDefault();
+              router.push('/register');
+            }}>Create account</button>
+          </form>
+        </div>
         </div>
       </section>
     </div>

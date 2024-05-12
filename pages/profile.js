@@ -5,10 +5,8 @@ import styles from "@/styles/profile.module.css";
 import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSnackbar } from "notistack";
-import Cookies from "js-cookie";
 import { useRouter } from "next/router"; // Import useRouter
-import { profile } from "@/store/profileSlice";
-import { logout, resetLogoutState } from "@/store/logoutSlice";
+import { profile, resetProfileState } from "@/store/profileSlice";
 import { useCookies } from "react-cookie";
 import { resetLoginState } from "@/store/loginSlice";
 
@@ -17,19 +15,18 @@ export default function Profile() {
   const [isAdmin, setAdmin] = useState(false);
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
-  const [cookies, setCookie, removeCookie] = useCookies(["jwtInCookie"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   
   const state = useSelector((state) => state.profile);
-  const logout_state = useSelector((state)=>state.logout);
 
-  const fetchData = async () => {
-    await dispatch(profile(cookies.token));
+  const fetchData = () => {
+      dispatch(profile(cookies.token));
   };
   useEffect(()=>{
-    if(cookies.token){
+    if(state?.data === null){
       fetchData();
     }
-  },[]);
+  },[state?.data]);
 
   useEffect(() => {
     if (state?.data?.user?.role === "admin") {
@@ -37,41 +34,13 @@ export default function Profile() {
     }
   }, [state]);
 
-  // useEffect(()=>{
-  //   if(!Cookies.get('token') || (Cookies.get('token') && state?.isError)){
-  //     enqueueSnackbar("Please login with valid credentials.",{
-  //       variant:"error",
-  //       autoHideDuration:1000
-  //     })
-  //     setTimeout(()=>{
-  //       router.push('/login');
-  //     },1000);
-  //   }
-  // },[])
-
-
-  useEffect(()=>{
-    console.log(cookies.token);
-  },[cookies]);
-
-  const [doLogout, setDoLogout] = useState(false);
   const handleLogout = () =>{
-    const token = cookies.token;
-    dispatch(logout(Cookies.get('token')));
+    removeCookie('token');
     dispatch(resetLoginState());
-    dispatch(resetLogoutState());
-    setDoLogout(true);
+    dispatch(resetProfileState());
+    router.push('/')
   }
 
-  useEffect(()=>{
-    if(doLogout && logout_state && logout_state?.data?.success){
-      document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'; // Set path accordingly
-      removeCookie('token'); // Also remove using the Cookies library
-      // console.log("Token null");
-      router.push('/');
-      setDoLogout(false);
-    }
-  },[doLogout, logout_state?.data?.success]);
 
   return (
     <div>
