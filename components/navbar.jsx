@@ -93,6 +93,7 @@ function Navbar() {
                   src="https://ik.imagekit.io/94nzrpaat/images/gold-logo-with-title-wg_853558-2748-N6dN8fcsA-transformed_1%20(1).png?updatedAt=1708801310085"
                   alt="logo"
                   width={70}
+                  priority={true}
                   height={35}
                 />
                 <span>
@@ -114,6 +115,7 @@ function Navbar() {
                   ? "/searchButtonBlack.svg"
                   : "/searchButtonWhite.svg"
               }`}
+              fetchPriority="high"
               alt="search icon"
             />
             <img
@@ -123,6 +125,7 @@ function Navbar() {
                   ? "/closeButtonBlack.svg"
                   : "/closeButtonWhite.svg"
               }`}
+              fetchPriority="high"
               alt="close button"
             />
           </div>
@@ -137,6 +140,7 @@ function Navbar() {
               className={styles.closeButton}
               src="/closeButtonBlack.svg"
               alt="close button"
+              fetchPriority="high"
             />
             <img
               className={styles.menuButton}
@@ -145,6 +149,7 @@ function Navbar() {
                   ? "/menuButtonBlack.svg"
                   : "/menuButtonWhite.svg"
               }`}
+              fetchPriority="high"
               alt="menu button"
             />
             <div className={styles.container3Navbar}>

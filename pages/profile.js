@@ -16,17 +16,17 @@ export default function Profile() {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
-  
+
   const state = useSelector((state) => state.profile);
 
   const fetchData = () => {
-      dispatch(profile(cookies.token));
+    dispatch(profile(cookies.token));
   };
-  useEffect(()=>{
-    if(state?.data === null){
+  useEffect(() => {
+    if (state?.data === null) {
       fetchData();
     }
-  },[state?.data]);
+  }, [state?.data]);
 
   useEffect(() => {
     if (state?.data?.user?.role === "admin") {
@@ -34,12 +34,11 @@ export default function Profile() {
     }
   }, [state]);
 
-  const handleLogout = () =>{
-    removeCookie('token');
+  const handleLogout = () => {
+    removeCookie("token");
+    router.push("/");
     dispatch(resetProfileState());
-    router.push('/')
-  }
-
+  };
 
   return (
     <div>
@@ -66,29 +65,46 @@ export default function Profile() {
         <link rel="icon" href="/favicon.jpg" sizes="any" />
       </Head>
       <section className={styles.profile_supreme_container}>
-        <div className={styles.profile_container}>
-          <div className={styles.profile_image_container}>
-            <img
-              className={styles.profile_image}
-              src={state?.data?.user?.avatar}
-              alt=""
-            />
+        <div className={styles.profileMainContainer}>
+          <div className={styles.profile_container}>
+            <div className={styles.profile_image_container}>
+              <img
+                className={styles.profile_image}
+                src={state?.data?.user?.avatar}
+                alt=""
+              />
+            </div>
+            <div className={styles.personal_details_container}>
+              <div className={styles.name_container}>
+                <p>{state?.data?.user?.username}</p>
+              </div>
+              <div className={styles.address_container}>
+              <img className={styles.locationSVG} src="/location.svg" alt="svg location - webgrasper"/>
+                <p>Moradabad, India</p>
+              </div>
+              <div className={styles.bio_container}>
+                <p>A philanthropist, who only believes in karma</p>
+              </div>
+              {isAdmin && (
+                <div className={styles.admin_panel_container}>
+                  <Link className={styles.admin_panel_link} href={"#"}>
+                    [ Admin Panel ]
+                  </Link>
+                </div>
+              )}
+              <button onClick={handleLogout} className={styles.logout_button}>Logout</button>
+            </div>
           </div>
-          <div className={styles.personal_details_container}>
-            <div className={styles.name_container}>
-              <p className={styles.profile_head2}>Name: </p>
+          <div className={styles.profileFormContainer}>
+          div
+            <div className={styles.name__container}>
+              <p className={styles.profile__head2}>Name: </p>
               <p>{state?.data?.user?.username}</p>
             </div>
-            <div className={styles.gmail_container}>
-              <p className={styles.profile_head2}>Email: </p>
+            <div className={styles.gmail__container}>
+              <p className={styles.profile__head2}>Email: </p>
               <p>{state?.data?.user?.email}</p>
             </div>
-            {isAdmin && (
-              <div className={styles.admin_panel_container}>
-                <Link className={styles.admin_panel_link} href={'#'}>[ Admin Panel ]</Link>
-              </div>
-            )}
-            <button onClick={handleLogout}>Logout</button>
           </div>
         </div>
       </section>

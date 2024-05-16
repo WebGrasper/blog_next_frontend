@@ -25,7 +25,8 @@ function ArticleCard({ article }) {
           height={112}
           src={article.articleImage[0]}
           alt={article.title}
-          loading="lazy"
+          quality={50}
+          priority={false}
         />
       </div>
       <div className={styles.TitleContainer}>

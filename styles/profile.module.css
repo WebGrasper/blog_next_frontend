@@ -1,54 +1,169 @@
-.profile_supreme_container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+.profile_supreme_container {
+  width: 100%;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-block: 2rem;
+  background: rgb(250, 228, 212) 0%,;
+
+  background: radial-gradient(
+    circle,
+    rgb(250, 228, 212) 0%,
+    hsla(0, 0%, 100%, 1) 100%
+  );
+
+  background: -moz-radial-gradient(
+    circle,
+    rgb(250, 228, 212) 0%,
+    hsla(0, 0%, 100%, 1) 100%
+  );
+
+  background: -webkit-radial-gradient(
+    circle,
+    rgb(250, 228, 212) 0%,
+    hsla(0, 0%, 100%, 1) 100%
+  );
+  background-repeat: no-repeat;
 }
 
-.profile_container{
-    display: flex;
-    flex-direction: column;
-    padding: 2rem;
-    width: 60vw;
-    background-color: white;
-    border-radius: 0.5rem;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.19), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+.profileMainContainer {
+  display: grid;
+  grid-template-columns: 3fr 6fr;
+  width: 80%;
+  gap: 1.25rem;
+  padding: 1rem;
+  border-radius: 10px;
+  background-color: rgb(237, 237, 237);
 }
 
-.profile_image_container{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.profile_container {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  row-gap: 0.25rem;
+  height: 100%;
+  border-radius: 10px;
+  background-color: white;
 }
 
-.profile_image{
-    border-radius: 50%;
-    width: 10rem;
-    height: 10rem;
-    border: 8px solid rgb(199, 199, 199);
+.profileFormContainer {
+  display: flex;
+  flex-wrap: nowrap;
+  padding-inline: 1.5rem;
+  padding-block: 1.5rem;
+  gap: 4rem;
+  height: 100%;
+  background-color: white;
+  color: #283032;
+  border-radius: 10px;
 }
 
-.personal_details_container{
-    display: flex;
-    flex-direction: column;
+.personal_details_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* row-gap: 0.25rem; */
 }
 
-.name_container, .gmail_container, .bio-container, .address_container{
-    color: black;
-    display: flex;
-    align-items: center;
+.profile_image_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.profile_head2{
-    color: black;
-    margin-right: 1rem;
+.profile_image {
+  border-radius: 50%;
+  width: 7rem;
+  height: 7rem;
+  border: 3px solid #2c3639;
 }
 
-.admin-panel_container{
-    margin-top: 0.8rem;
+.name_container,
+.gmail_container,
+.bio_container,
+.address_container {
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
-.admin_panel_link{
-    color: black;
+.name_container > p {
+  font-size: 2.25rem;
+  font-weight: bold;
+}
+
+.name__container, .gmail__container{
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.name__container > p:first-child, .gmail__container>p:first-child{
+  font-weight: bold;
+}
+.name__container >p:last-child, .gmail__container >p:last-child{
+  padding-left: 0.25rem;
+  opacity: 0.8;
+}
+
+.address_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 0.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.address_container > img {
+  width: 1rem;
+  height: 1rem;
+  opacity: 0.5;
+}
+
+.address_container > p {
+  font-weight: bold;
+  opacity: 0.5;
+}
+
+.bio_container > p {
+  font-style: italic;
+  opacity: 0.75;
+}
+
+.profile_head2 {
+  color: black;
+  margin-right: 1rem;
+}
+
+.admin_panel_container {
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.admin_panel_link {
+  color: black;
+  font-weight: bold;
+}
+
+.logout_button {
+  font-size: large;
+  padding: 0.75rem 4rem;
+  border-radius: 25px;
+  width: 100%;
+  margin-top: 1.25rem;
+  background-color: #2c3639;
+  border: 2px solid #2c3639;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.2s linear;
+}
+
+.logout_button:hover {
+  background-color: #283032;
 }

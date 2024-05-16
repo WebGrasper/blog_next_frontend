@@ -1,7 +1,24 @@
 .heroContainer {
   height: 100svh;
-  background-image: url('https://ik.imagekit.io/94nzrpaat/images/pawel-czerwinski-qe6D0OX1tKo-unsplash.jpg?updatedAt=1715496049968');
-  background-size: cover;
+  background: rgb(250, 228, 212) 0%,;
+
+  background: radial-gradient(
+    circle,
+    rgb(250, 228, 212) 0%,
+    hsla(0, 0%, 100%, 1) 100%
+  );
+
+  background: -moz-radial-gradient(
+    circle,
+    rgb(250, 228, 212) 0%,
+    hsla(0, 0%, 100%, 1) 100%
+  );
+
+  background: -webkit-radial-gradient(
+    circle,
+    rgb(250, 228, 212) 0%,
+    hsla(0, 0%, 100%, 1) 100%
+  );
   background-repeat: no-repeat;
   max-width: 100%;
   display: flex;
@@ -19,12 +36,12 @@
   align-items: center;
 }
 
-.loginFormSubContainer{
+.loginFormSubContainer {
   background-color: white;
   padding: 2rem 2rem 2.75rem 2rem;
   margin: 0.75rem;
   border-radius: 4px;
-  width: clamp(18rem, 60vw, 25rem); 
+  width: clamp(18rem, 60vw, 25rem);
 }
 
 .formContainer {
@@ -35,9 +52,8 @@
   align-items: center;
 }
 
-
 .loginFormSubContainer > h1 {
-  color: rgb(161,102,102);
+  color: rgb(161, 102, 102);
   font-size: 2.25rem;
   margin-bottom: 1.5rem;
 }
@@ -79,7 +95,7 @@
 .inputFieldContainer input:focus,
 .inputFieldContainer input:active {
   outline: none;
-  border-bottom: 2px solid rgb(161,102,102);
+  border-bottom: 2px solid rgb(161, 102, 102);
   transform-origin: left;
 }
 .inputFieldContainer input::placeholder {
@@ -99,8 +115,8 @@
   padding: 0.75rem 4rem;
   border-radius: 25px;
   width: 100%;
-  background-color: #2C3639;
-  border: 2px solid #2C3639;
+  background-color: #2c3639;
+  border: 2px solid #2c3639;
   cursor: pointer;
   color: white;
   transition: background-color 0.2s linear;
@@ -110,12 +126,12 @@
 }
 
 .formContainer button:last-child {
-  color: #2C3639;
+  color: #2c3639;
   background-color: transparent;
   transition: all 0.2s linear;
 }
 .formContainer button:last-child:hover {
-  background-color: #2C3639;
+  background-color: #2c3639;
   color: white;
 }
 
@@ -123,7 +139,7 @@
   /* .loginFormSubContainer{
     padding: 1rem 1rem 1.75rem 1rem;
   } */
-  .inputFieldContainer input{
+  .inputFieldContainer input {
     /* max-width: 18rem; */
   }
 }

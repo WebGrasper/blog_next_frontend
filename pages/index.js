@@ -69,7 +69,7 @@ export default function Main({ article }) {
             className={styles.heroImage}
             width={100}
             height={100}
-            loading="lazy"
+            priority={false}
           />
         </picture>
         <div className={styles.heroContent}>
