@@ -7,9 +7,12 @@ import { Provider } from "react-redux";
 import store from "@/store/store";
 import { SnackbarProvider } from "notistack";
 import { CookiesProvider } from "react-cookie";
+import { useRouter } from "next/router";
+
 
 import NProgress from "nprogress"; //nprogress module
 import "../styles/nprogress.css"; //styles of nprogress
+import { useEffect, useState } from "react";
 
 //Route Events.
 Router.events.on("routeChangeStart", () => NProgress.start());
@@ -17,6 +20,16 @@ Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
 
 function App({ Component, pageProps }) {
+  const router = useRouter();
+  const [notAtPortfolioPage, setNotAtPortfolioPage] = useState(true);
+
+  useEffect(()=>{
+    if(router.pathname === '/portfolio'){
+      setNotAtPortfolioPage(false);
+    } else {
+      setNotAtPortfolioPage(true)
+    }
+  },[router.pathname])
   return (
     <Provider store={store}>
       <CookiesProvider defaultSetOptions={{ path: '/' }}>
@@ -28,9 +41,9 @@ function App({ Component, pageProps }) {
                 content="W-J-mNMNzVPU3Qr3WfClrmnijPs3Ajn-j3pcUgOV16k"
               />
             </Head>
-            <Navbar />
+            {notAtPortfolioPage && <Navbar />}
             <Component {...pageProps} />
-            <Footer />
+            {notAtPortfolioPage && <Footer />}
           </div>
         </SnackbarProvider>
       </CookiesProvider>

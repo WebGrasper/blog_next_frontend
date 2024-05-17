@@ -1,49 +1,69 @@
 {
   "experience": [
-      {
-        "role": "Software Developer Engineer Intern",
-        "companyName": "Sklepon AI Services Private Limited",
-        "period": "1/oct/2023 - 30/nov/2023"
-      },
-      {
-        "role": "React Developer Intern",
-        "companyName": "CodeClause",
-        "period": "1/may/2023 - 1/june/2023"
-      },
-      {
-        "role": "Frontend Designer Intern",
-        "companyName": "VlsiMaster",
-        "period": "18/Aug/2022 - 18/oct/2022"
-      }
-    ],
+    {
+      "role": "Software Developer Engineer Intern",
+      "companyName": "Sklepon AI Services Private Limited",
+      "period": "1/oct/2023 - 30/nov/2023"
+    },
+    {
+      "role": "React Developer Intern",
+      "companyName": "CodeClause",
+      "period": "1/may/2023 - 1/june/2023"
+    },
+    {
+      "role": "Frontend Designer Intern",
+      "companyName": "VlsiMaster",
+      "period": "18/Aug/2022 - 18/oct/2022"
+    }
+  ],
   "technology": [
-    { "imgSrc": "/iconpack/c.svg", "alt": "c logo" },
-    { "imgSrc": "/iconpack/css3-plain.svg", "alt": "css logo" },
-    { "imgSrc": "/iconpack/express.svg", "alt": "expressjs logo" },
-    { "imgSrc": "/iconpack/git-plain.svg", "alt": "git logo" },
-    { "imgSrc": "/iconpack/html5-original.svg", "alt": "html5 logo" },
-    { "imgSrc": "/iconpack/javascript-original.svg", "alt": "javasript logo" },
-    { "imgSrc": "/iconpack/mongodb-plain.svg", "alt": "mongodb logo" },
-    { "imgSrc": "/iconpack/nextjs-icon-svgrepo-com.svg", "alt": "nextjs logo" },
-    { "imgSrc": "/iconpack/nodejs.svg", "alt": "nodejs logo" },
-    { "imgSrc": "/iconpack/postman.svg", "alt": "postman logo" },
-    { "imgSrc": "/iconpack/react-original-wordmark.svg", "alt": "reactjs logo" }
+    {
+      "imgSrc": "https://ik.imagekit.io/94nzrpaat/icon-pack/html5.png?updatedAt=1715938482132",
+      "alt": "html5 logo"
+    },
+    {
+      "imgSrc": "https://ik.imagekit.io/94nzrpaat/icon-pack/css.png?updatedAt=1715938482141",
+      "alt": "css logo"
+    },
+    {
+      "imgSrc": "https://ik.imagekit.io/94nzrpaat/icon-pack/nodejs.png?updatedAt=1715938482149",
+      "alt": "nodejs logo"
+    },
+    {
+      "imgSrc": "https://ik.imagekit.io/94nzrpaat/icon-pack/react.png?updatedAt=1715938482402",
+      "alt": "reactjs logo"
+    },
+    {
+      "imgSrc": "https://ik.imagekit.io/94nzrpaat/icon-pack/mongodb.png?updatedAt=1715938482500",
+      "alt": "mongodb logo"
+    },
+    {
+      "imgSrc": "https://ik.imagekit.io/94nzrpaat/icon-pack/c.png?updatedAt=1715938482254",
+      "alt": "c++ logo"
+    },
+    {
+      "imgSrc": "https://ik.imagekit.io/94nzrpaat/icon-pack/git.png?updatedAt=1715938482405",
+      "alt": "git logo"
+    },
+    {
+      "imgSrc": "https://ik.imagekit.io/94nzrpaat/icon-pack/postman.png?updatedAt=1715938482294",
+      "alt": "postman logo"
+    },
+    {
+      "imgSrc": "https://ik.imagekit.io/94nzrpaat/icon-pack/figma.png?updatedAt=1715938482552",
+      "alt": "figma logo"
+    }
   ],
   "projects": [
+    {
+      "name": "Delta line",
+      "description": "Get your stabilizers, power transformers and E Panels from us at Delta Line. Where quality and performance meet in our top notch products.",
+      "link": "https://www.delta-line.in/"
+    },
     {
       "name": "Sarte Living",
       "description": "Exporter of handmade metal furniture: coffee, console, side tables, and lifestyle accessories. Blend international aesthetics with Indian craftsmanship at Sarte Living.",
       "link": "https://sarteliving.com/"
-    },
-    {
-      "name": "New Stash",
-      "description": "Explore insightful articles on tech, lifestyle, and more. Stay informed, share thoughts, and enrich your knowledge. Join our community now for engaging content!",
-      "link": "https://newstash.vercel.app/"
-    },
-    {
-      "name": "Stashify",
-      "description": "Discover diverse, concise blog articles. Stay informed on trends, opinions, lifestyle, and tech. Join our community, read, and share your thoughts.",
-      "link": "https://stashify-app.vercel.app/"
     },
     {
       "name": "Compressify",

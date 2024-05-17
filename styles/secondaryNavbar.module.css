@@ -4,7 +4,7 @@
     align-items: center;
     width: 100%;
     padding: 1rem;
-    background: white;
+    background: black;
     position: sticky;
     top: 0;
     z-index: 9;
@@ -30,7 +30,7 @@
 .secondaryNavbarLink {
     font-size: small;
     padding: 0 0.5rem;
-    color: rgb(0, 0, 0);
+    color: white;
 }
 
 @media only screen and (max-width:350px){
