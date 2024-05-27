@@ -8,13 +8,14 @@ import { useSnackbar } from "notistack";
 import { useRouter } from "next/router"; // Import useRouter
 import Cookies from "js-cookie";
 import { useCookies } from "react-cookie";
+import { profile } from "@/store/profileSlice";
 
 export default function Login() {
   const state = useSelector((state) => state.login);
   const dispatch = useDispatch();
   const router = useRouter(); // Initialize useRouter
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["token", "username", "avatar"]);
   const [markDisabled, setDisabled] = useState(false);
 
   const loginFormHandler = async (event) => {
@@ -40,11 +41,21 @@ export default function Login() {
   useEffect(() => {
     if (state && state?.data?.success) {
       let token = state?.data?.token;
+      let username = state?.data?.user?.username;
+      console.log("username", username)
+      let avatar = state?.data?.user?.avatar || 'https://ik.imagekit.io/94nzrpaat/images/resize.jpg?updatedAt=1708900407744';
       setCookie("token", token, {
         expires: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
       });
-      dispatch(resetLoginState());
+      setCookie("username", username,{
+        expires: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
+      });
+      setCookie("avatar", avatar,{
+        expires: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
+      });
+      dispatch(profile(cookies.token))
       router.push("/profile");
+      dispatch(resetLoginState());
     }
   }, [state, state?.data, router]);
 

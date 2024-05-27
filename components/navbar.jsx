@@ -115,7 +115,7 @@ function Navbar() {
                   ? "/searchButtonBlack.svg"
                   : "/searchButtonWhite.svg"
               }`}
-              fetchPriority="high"
+              fetchpriority="high"
               alt="search icon"
             />
             <img
@@ -125,7 +125,7 @@ function Navbar() {
                   ? "/closeButtonBlack.svg"
                   : "/closeButtonWhite.svg"
               }`}
-              fetchPriority="high"
+              fetchpriority="high"
               alt="close button"
             />
           </div>
@@ -140,7 +140,7 @@ function Navbar() {
               className={styles.closeButton}
               src="/closeButtonBlack.svg"
               alt="close button"
-              fetchPriority="high"
+              fetchpriority="high"
             />
             <img
               className={styles.menuButton}
@@ -149,7 +149,7 @@ function Navbar() {
                   ? "/menuButtonBlack.svg"
                   : "/menuButtonWhite.svg"
               }`}
-              fetchPriority="high"
+              fetchpriority="high"
               alt="menu button"
             />
             <div className={styles.container3Navbar}>
@@ -201,7 +201,7 @@ function Navbar() {
                   Portfolio
                 </span>
               </Link>
-              <Link href="/login" passHref onClick={handleLinkClick}>
+              <Link href={isToken ? "/profile" : "/login"} passHref onClick={handleLinkClick}>
                 <span
                   className={`${styles.profileButton} ${
                     !isHome || isOffset ? styles.profileButtonActiveOffset : ""

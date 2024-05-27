@@ -1,50 +1,47 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 // https://blog-zo8s.vercel.app
-export const login = createAsyncThunk("login", async ({ email, password }) => {
-    let response = await fetch("https://blog-zo8s.vercel.app/app/v1/signin", {
+export const addComment = createAsyncThunk("addComment", async ({articleID, token, commentBody}) => {
+    let response = await fetch(`https://blog-zo8s.vercel.app/app/v2/addComment?` + new URLSearchParams({
+        articleID: articleID,
+        token: token
+    }),{
         method: 'POST',
         // mode: 'no-cors', //Disable the cors(Cross-Origin resource sharing)
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }),
-    })
-    if (!response.ok) {
-        // If response is not ok (status code other than 2xx), throw an error
-        let error_data = await response.json();
-        throw new Error(error_data.message);
-    }
-    
+        body: JSON.stringify({ commentBody }),
+    });
     return response.json();
 })
 
-const loginSlice = createSlice({
-    name: "login",
+const addCommentSlice = createSlice({
+    name: "addComment",
     initialState: {
         isLoading: false,
         data: null,
         isError: false,
     },
     reducers: {
-        resetLoginState: state => {
+        resetACState: state => {
             state.isLoading = false;
             state.data = null;
             state.isError = false;
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(login.pending, (state, action) => {
+        builder.addCase(addComment.pending, (state, action) => {
             state.isLoading = true;
             state.data = null;
             state.isError = false;
         })
-        builder.addCase(login.fulfilled, (state, action) => {
+        builder.addCase(addComment.fulfilled, (state, action) => {
             state.isLoading = false;
             state.data = action.payload;
             state.isError = false;
         })
-        builder.addCase(login.rejected, (state, action) => {
+        builder.addCase(addComment.rejected, (state, action) => {
             state.isLoading = false;
             state.data = action.error;
             state.isError = true;
@@ -52,6 +49,5 @@ const loginSlice = createSlice({
     }
 })
 
-export const { resetLoginState } = loginSlice.actions; // Export the new action
-
-export default loginSlice.reducer;
+export const { resetACState } = addCommentSlice.actions; // Export the new action
+export default addCommentSlice.reducer;

@@ -132,7 +132,7 @@ export default function Home({ data }) {
                   src={tech.imgSrc}
                   alt={tech.alt}
                   className={styles.techIcon}
-                  fetchPriority="low"
+                  fetchpriority="low"
                 />
               ))}
             </div>

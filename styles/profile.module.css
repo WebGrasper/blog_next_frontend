@@ -79,7 +79,7 @@
   border-radius: 50%;
   width: 7rem;
   height: 7rem;
-  border: 3px solid #2c3639;
+  object-fit: cover;
 }
 
 .name_container,

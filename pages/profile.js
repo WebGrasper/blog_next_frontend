@@ -34,9 +34,11 @@ export default function Profile() {
     }
   }, [state]);
 
-  const handleLogout = () => {
+  const handleLogout = async() => {
+    await router.push("/");
     removeCookie("token");
-    router.push("/");
+    removeCookie("username");
+    removeCookie("avatar");
     dispatch(resetProfileState());
   };
 
@@ -70,8 +72,8 @@ export default function Profile() {
             <div className={styles.profile_image_container}>
               <img
                 className={styles.profile_image}
-                src={state?.data?.user?.avatar}
-                alt=""
+                src={state?.data?.user?.avatar || "https://ik.imagekit.io/94nzrpaat/images/resize.jpg?updatedAt=1708900407744"}
+                alt="Profile image"
               />
             </div>
             <div className={styles.personal_details_container}>

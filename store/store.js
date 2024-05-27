@@ -5,6 +5,7 @@ import registrationSlice from './registrationSlice';
 import confirmRegistrationSlice from './confirmRegistrationSlice';
 import forgetPassSlice from './forgetPassSlice';
 import resetPassSlice from './resetPassSlice';
+import addCommentSlice from './commentSlice';
 
 export default configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export default configureStore({
     confirmRegistration: confirmRegistrationSlice,
     forgetPassword: forgetPassSlice,
     resetPassword: resetPassSlice,
+    addComment: addCommentSlice
   }
 });
