@@ -50,6 +50,17 @@
 .articleImage {
   margin-block: 1.25rem;
 }
+
+.articleContainer h2 {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  font-size: 1.75rem;
+  margin-block: 0.5rem;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 1);
+  text-transform: capitalize;
+}
 /* Dynamic Content (Start)*/
 .heading2 {
   text-overflow: ellipsis;
