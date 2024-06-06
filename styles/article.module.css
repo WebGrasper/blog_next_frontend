@@ -50,8 +50,8 @@
 .articleImage {
   margin-block: 1.25rem;
 }
-
-.articleContainer h2 {
+/* Dynamic Content (Start)*/
+.heading2 {
   text-overflow: ellipsis;
   overflow: hidden;
   -webkit-box-orient: vertical;
@@ -62,7 +62,7 @@
   text-transform: capitalize;
 }
 
-.dynamicHtmlContent p {
+.paragraph {
   margin-block: 0.5rem;
   text-overflow: unset;
   overflow: unset;
@@ -75,6 +75,8 @@
   color: rgba(0, 0, 0, 0.9);
   text-align: left;
 }
+
+/* Dynamic Content (End)*/
 
 .commentsContainer {
   width: 100%;
