@@ -89,7 +89,7 @@ export default function Profile() {
               </div>
               {isAdmin && (
                 <div className={styles.admin_panel_container}>
-                  <Link className={styles.admin_panel_link} href={"#"}>
+                  <Link className={styles.admin_panel_link} href={"/create-article"}>
                     [ Admin Panel ]
                   </Link>
                 </div>

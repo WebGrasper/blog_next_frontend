@@ -32,7 +32,7 @@ export default function Home({ data }) {
         if (isTyping) {
           // Typing animation
           if (charIndex < currentString.length) {
-            typeJsTextRef.current.innerHTML += currentString.charAt(charIndex);
+            typeJsTextRef.current.innerHTML += currentString?.charAt(charIndex);
             charIndex++;
           } else {
             isTyping = false; // Switch to erasing mode

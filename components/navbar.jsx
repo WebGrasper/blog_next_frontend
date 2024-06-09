@@ -192,7 +192,7 @@ function Navbar() {
                   Gadgets comparison
                 </span>
               </Link>
-              <Link href="/portfolio" passHref onClick={handleLinkClick}>
+              <Link href="/portfolio" passHref onClick={handleLinkClick} target="_blank">
                 <span
                   className={`${styles.link} ${
                     !isHome || isOffset ? styles.linkActiveOffset : ""
