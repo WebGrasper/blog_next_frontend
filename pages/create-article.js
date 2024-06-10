@@ -167,7 +167,7 @@ export default function Home() {
 
     try {
       let response = await fetch(
-        `http://localhost:7860/app/v2/createArticle?token=${token}`,
+        `https://blog-zo8s.vercel.app/app/v2/createArticle?token=${token}`,
         {
           method: "POST",
           body: newFormData,
