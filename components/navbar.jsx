@@ -154,7 +154,7 @@ function Navbar() {
             />
             <div className={styles.container3Navbar}>
               <Link
-                href="/article-page?name=Problem-solving"
+                href="/article-page?name=Politics"
                 passHref
                 onClick={handleLinkClick}
               >
@@ -163,11 +163,11 @@ function Navbar() {
                     !isHome || isOffset ? styles.linkActiveOffset : ""
                   }`}
                 >
-                  Problem solving
+                  Politics
                 </span>
               </Link>
               <Link
-                href="/article-page?name=Gadgets-reviews"
+                href="/article-page?name=Technology"
                 passHref
                 onClick={handleLinkClick}
               >
@@ -176,11 +176,11 @@ function Navbar() {
                     !isHome || isOffset ? styles.linkActiveOffset : ""
                   }`}
                 >
-                  Gadgets reviews
+                  Technology
                 </span>
               </Link>
               <Link
-                href="/article-page?name=Gadgets-comparison"
+                href="/article-page?name=Stocks"
                 passHref
                 onClick={handleLinkClick}
               >
@@ -189,16 +189,16 @@ function Navbar() {
                     !isHome || isOffset ? styles.linkActiveOffset : ""
                   }`}
                 >
-                  Gadgets comparison
+                  Stocks
                 </span>
               </Link>
-              <Link href="/portfolio" passHref onClick={handleLinkClick} target="_blank">
+              <Link href="/article-page?name=Cricket" passHref onClick={handleLinkClick}>
                 <span
                   className={`${styles.link} ${
                     !isHome || isOffset ? styles.linkActiveOffset : ""
                   }`}
                 >
-                  Portfolio
+                  Cricket
                 </span>
               </Link>
               <Link href={isToken ? "/profile" : "/login"} passHref onClick={handleLinkClick}>

@@ -9,29 +9,48 @@ function Footer() {
           <Link href={"/"}>
             <div className={styles.footerLogo}>
               <img src="/logo.png" alt="stashify logo" />
-              <span>Web<span>Grasper</span></span>
+              <span>
+                Web<span>Grasper</span>
+              </span>
             </div>
           </Link>
           <p className={styles.footerDescription}>
-            Explore trending tech insights, programming tips, and top gadgets. Stay informed on comparisons, details, and discover the latest in technology.
+            Explore trending tech insights, programming tips, and top gadgets.
+            Stay informed on comparisons, details, and discover the latest in
+            technology.
           </p>
         </div>
         <div className={styles.container2}>
-          <p className={styles.container2Heading}>Gadgets</p>
+          <p className={styles.container2Heading}>General</p>
           <div className={styles.container2Links}>
-            <Link href="/article-page?name=Gadgets-reviews" className={styles.links}>
-              Reviews
+            <Link href="/article-page?name=Politics" className={styles.links}>
+              Politics
             </Link>
-            <Link href="/article-page?name=Gadgets-comparison" className={styles.links}>
-              Comparison
+            <Link href="/article-page?name=Technology" className={styles.links}>
+              Technology
+            </Link>
+            <Link href="/article-page?name=Cricket" className={styles.links}>
+              Cricket
+            </Link>
+            <Link href="/article-page?name=Railway" className={styles.links}>
+              Railway
             </Link>
           </div>
         </div>
         <div className={styles.container2}>
-          <p className={styles.container2Heading}>Coding</p>
+          <p className={styles.container2Heading}>Finance</p>
           <div className={styles.container2Links}>
-            <Link href="/article-page?name=Problem-solving" className={styles.links}>
-              Problem solving
+            <Link
+              href="/article-page?name=Stocks"
+              className={styles.links}
+            >
+              Stocks
+            </Link>
+            <Link
+              href="/article-page?name=Crypto"
+              className={styles.links}
+            >
+              Crypto
             </Link>
           </div>
         </div>
@@ -46,6 +65,9 @@ function Footer() {
             </Link>
             <Link href={"#"} className={styles.links}>
               Contact us
+            </Link>
+            <Link href={"/portfolio"} className={styles.links} target="_blank">
+              Developer Portfolio
             </Link>
           </div>
         </div>
