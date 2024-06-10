@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: false,
+  reactStrictMode: true,
   images: {
     domains: ['ik.imagekit.io','images.unsplash.com','plus.unsplash.com'],
   },

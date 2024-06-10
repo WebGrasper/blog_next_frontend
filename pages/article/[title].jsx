@@ -10,7 +10,7 @@ import Link from "next/link";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
-import { v4 as uuidv4 } from 'uuid'; // Import uuid to generate unique IDs for comments
+import { v4 as uuidv4 } from "uuid"; // Import uuid to generate unique IDs for comments
 
 export const getServerSideProps = async (context) => {
   const { title } = context.query;
@@ -80,7 +80,6 @@ export const getServerSideProps = async (context) => {
       commenterImage = commenter.avatar;
     }
 
-
     return {
       ...comment,
       commenterName,
@@ -107,7 +106,6 @@ function Article({ article, final_comments_res }) {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [comments, setComments] = useState(final_comments_res); // Use state to manage comments
 
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!Cookies.get("token")) {
@@ -118,7 +116,9 @@ function Article({ article, final_comments_res }) {
       let articleID = article?._id;
       setSubmit(true);
       let token = cookies.token;
-      let response = await dispatch(addComment({ articleID, token, commentBody }));
+      let response = await dispatch(
+        addComment({ articleID, token, commentBody })
+      );
       if (response?.payload?.success) {
         const newComment = {
           _id: uuidv4(), // Generate a unique ID for the new comment
@@ -129,26 +129,25 @@ function Article({ article, final_comments_res }) {
         };
 
         setComments((prevComments) => [newComment, ...prevComments]);
+      }
     }
-  }
-};
+  };
 
-  useEffect(()=>{
-    if(state?.data?.success){
+  useEffect(() => {
+    if (state?.data?.success) {
       enqueueSnackbar(state?.data?.message, {
         autoHideDuration: 2000,
         variant: "success",
       });
     }
-    if(!state?.data?.success &&
-      state?.data?.message){
+    if (!state?.data?.success && state?.data?.message) {
       enqueueSnackbar(state?.data?.message, {
         autoHideDuration: 2000,
         variant: "error",
       });
     }
     dispatch(resetACState());
-  },[state?.data?.success]);
+  }, [state?.data?.success]);
 
   //Check for token presence
   const [isToken, setToken] = useState(false);
@@ -158,7 +157,7 @@ function Article({ article, final_comments_res }) {
     } else {
       setToken(false);
     }
-  },[Cookies.get("token")]);
+  }, []);
 
   return (
     <div>
@@ -203,6 +202,7 @@ function Article({ article, final_comments_res }) {
               src={article.articleImage?.[0]}
               alt={article.title}
               width={800}
+              loading="lazy"
               height={600}
               layout="responsive"
               objectFit="cover"
@@ -217,7 +217,10 @@ function Article({ article, final_comments_res }) {
             {comments.map((comment) => (
               <div key={comment._id} className={styles.commenterContainer}>
                 <Link href={"#"} className={styles.commenterImage}>
-                  <img
+                  <Image
+                    width={40}
+                    height={40}
+                    loading="lazy"
                     src={comment.commenterImage}
                     alt="commenters profile image"
                   />

@@ -8,6 +8,7 @@ import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router"; // Import useRouter
 import Cookies from "js-cookie";
+import Image from "next/image";
 
 export default function Home() {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -346,7 +347,10 @@ export default function Home() {
                     <h3>Add description*</h3>
                   </div>
                   <div className={styles.addButton} onClick={handleClick}>
-                    <img
+                    <Image
+                    width={40}
+                    height={40}
+                    loading="lazy"
                       src="/add-icon.png"
                       alt="add-icon"
                       className={`${styles.img1} ${
@@ -354,16 +358,22 @@ export default function Home() {
                       }`}
                       id="img1"
                     />
-                    <img
+                    <Image
+                    width={40}
+                    height={40}
                       src="/heading-icon.png"
                       alt="heading-icon"
+                      loading="lazy"
                       className={`${
                         isExpanded ? styles.showImg2 : styles.img2
                       }`}
                       id="img2"
                       onClick={() => handleAddElement("h2")}
                     />
-                    <img
+                    <Image
+                    width={40}
+                    height={40}
+                    loading="lazy"
                       src="/paragraph-icon.png"
                       alt="paragraph-icon"
                       className={`${
@@ -375,7 +385,7 @@ export default function Home() {
                   </div>
                 </div>
                 {elements.map((element) => (
-                  <div className={styles.dynamicInputContainer}>
+                  <div key={element.id} className={styles.dynamicInputContainer}>
                     <textarea
                       key={element.id}
                       type="text"
@@ -386,7 +396,9 @@ export default function Home() {
                       }
                       placeholder={`Enter text for ${element.type}`}
                     ></textarea>
-                    <img
+                    <Image
+                    width={24}
+                    height={24}
                       src="/delete-icon.svg"
                       alt="delete icon"
                       className={styles.deleteIcon}
