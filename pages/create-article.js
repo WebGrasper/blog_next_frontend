@@ -164,6 +164,7 @@ export default function Home() {
     console.log([...newFormData.entries()]);
 
     let token = cookies?.token;
+    let data = undefined;
 
     try {
       let response = await fetch(
@@ -177,13 +178,13 @@ export default function Home() {
         let error_data = await response.json();
         throw new Error(error_data.message);
       }
-      let data = await response.json();
+      data = await response.json();
       enqueueSnackbar(data?.message, {
         autoHideDuration: 2000,
         variant: "success",
       });
     } catch (error) {
-      enqueueSnackbar("Article cannot be created!", {
+      enqueueSnackbar(data?.message, {
         autoHideDuration: 2000,
         variant: "error",
       });
