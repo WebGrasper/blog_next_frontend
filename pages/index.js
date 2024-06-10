@@ -3,6 +3,7 @@ import styles from "@/styles/Home.module.css";
 import Image from "next/image";
 import Head from "next/head";
 import ArticleCard from "@/components/articleCard";
+import moment from "moment";
 
 export const getServerSideProps = async (context) => {
   let data = null;
@@ -26,6 +27,12 @@ export const getServerSideProps = async (context) => {
     console.error("Error fetching data:", error);
   }
   let { success, article } = data;
+
+  article = article.map((art) => ({
+    ...art,
+    formattedDate: moment(art.createdAt).fromNow(), // Format the date using moment
+  }));
+
   return {
     props: {
       article,

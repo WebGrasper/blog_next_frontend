@@ -34,7 +34,7 @@ function ArticleCard({ article }) {
         <p className={styles.description}>{description[0]?.data}</p>
         <div className={styles.dateContainer}>
           <h3 className={styles.date}>
-            {article.createdAt.slice(0, 10).split("-").reverse().join("-")}
+          {article.formattedDate}
           </h3>
           <h4 className={styles.category}>{article.category}</h4>
         </div>

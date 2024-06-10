@@ -10,6 +10,7 @@ import Link from "next/link";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
+import moment from "moment";
 import { v4 as uuidv4 } from "uuid"; // Import uuid to generate unique IDs for comments
 
 export const getServerSideProps = async (context) => {
@@ -25,7 +26,28 @@ export const getServerSideProps = async (context) => {
   );
   const data = await response.json();
   let { success, article } = data;
-  article.description = JSON.parse(article.description);
+  article.description = JSON.parse(article?.description);
+
+  const article_creator = await fetch(
+    `https://blog-zo8s.vercel.app/app/v1/getSingleUserDetails?` +
+      new URLSearchParams({
+        creatorID: article?.createdBy,
+      }),
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  let final_article_creator = await article_creator.json();
+
+  // Set default avatar if the creator doesn't have one
+  const defaultAvatar = "https://ik.imagekit.io/94nzrpaat/images/resize.jpg?updatedAt=1708900407744";
+  if (!final_article_creator?.user?.avatar) {
+    final_article_creator.user.avatar = defaultAvatar;
+  }
 
   let articleID = article?._id;
 
@@ -80,24 +102,34 @@ export const getServerSideProps = async (context) => {
       commenterImage = commenter.avatar;
     }
 
+    // Calculate human-readable time
+    let timeAgo = moment(comment.commentedAt).fromNow();
+
     return {
       ...comment,
       commenterName,
       commenterImage,
+      timeAgo,
     };
   });
 
-  // console.log(final_comments_res);
+  // Calculate human-readable time for the article
+  let articleTimeAgo = moment(article.createdAt).fromNow();
+
+  // Append current time to the JSON response
+  article.currentTime = moment().toISOString();
+  article.timeAgo = articleTimeAgo;
 
   return {
     props: {
       article,
       final_comments_res: final_comments_res.reverse(),
+      final_article_creator,
     },
   };
 };
 
-function Article({ article, final_comments_res }) {
+function Article({ article, final_comments_res, final_article_creator }) {
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const dispatch = useDispatch();
   const router = useRouter(); // Initialize useRouter
@@ -132,6 +164,31 @@ function Article({ article, final_comments_res }) {
       }
     }
   };
+
+  useEffect(()=>{
+
+  })
+
+  useEffect(() => {
+    const timeout = setTimeout(async() => {
+      const response = await fetch(
+        `https://blog-zo8s.vercel.app/app/v2/viewsIncrementer?` +
+          new URLSearchParams({
+            articleID: article?._id,
+          }),
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      let FR = await response.json();
+      console.log(FR);
+    }, 30000);
+
+    return () => clearTimeout(timeout);
+  }, []);
 
   useEffect(() => {
     if (state?.data?.success) {
@@ -197,6 +254,54 @@ function Article({ article, final_comments_res }) {
         <div className={styles.articleMainContainer}>
           <div className={styles.articleContainer}>
             <h1>{article.title}</h1>
+            <div className={styles.creatorMainContainer}>
+              <div className={styles.creatorContainer}>
+                <Image
+                  className={styles.creatorImage}
+                  src={final_article_creator?.user?.avatar}
+                  alt={"Article creator image"}
+                  width={44}
+                  loading="lazy"
+                  height={44}
+                  objectFit="contain"
+                />
+                <div className={styles.creatorDetailsContainer}>
+                  <h6>{final_article_creator?.user?.username}</h6>
+                  <div className={styles.articleTimePeriod}>
+                    <p>
+                      Published in <span>{article?.category}</span>
+                    </p>
+                    <p>{article.timeAgo}</p>
+                  </div>
+                </div>
+              </div>
+              <div className={styles.articleStatsContainer}>
+                <div className={styles.viewsContainer}>
+                  <Image
+                    className={styles.eyeIcon}
+                    src={'/eye-icon.png'}
+                    alt={"Eye icon"}
+                    width={25}
+                    loading="lazy"
+                    height={25}
+                    objectFit="contain"
+                  />
+                  <p>{article?.impressions}</p>
+                </div>
+                <div className={styles.commentCountContainer}>
+                <Image
+                    className={styles.eyeIcon}
+                    src={'/comment-icon.png'}
+                    alt={"Comment icon"}
+                    width={25}
+                    loading="lazy"
+                    height={25}
+                    objectFit="contain"
+                  />
+                  <p>{comments?.length}</p>
+                </div>
+              </div>
+            </div>
             <Image
               className={styles.articleImage}
               src={article.articleImage?.[0]}
@@ -209,7 +314,7 @@ function Article({ article, final_comments_res }) {
             />
             <h2>Description</h2>
             <div className={styles.dynamicHtmlContent}>
-              {article.description.map((ptr, index) => Renderer(ptr, index))}
+              {article?.description.map((ptr, index) => Renderer(ptr, index))}
             </div>
           </div>
           <div className={styles.commentsContainer}>
@@ -230,13 +335,7 @@ function Article({ article, final_comments_res }) {
                     <h6 className={styles.commenterName}>
                       {comment.commenterName}
                     </h6>
-                    <p className={styles.commentTime}>
-                      {comment.commentedAt
-                        .slice(0, 10)
-                        .split("-")
-                        .reverse()
-                        .join("-")}
-                    </p>
+                    <p className={styles.commentTime}>{comment.timeAgo}</p>
                   </div>
                   <p className={styles.comment}>{comment.commentBody}</p>
                 </div>
