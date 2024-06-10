@@ -41,17 +41,32 @@ async function generateSiteMap({ article }) {
           <priority>0.7</priority>
         </url>
         <url>
-          <loc>${baseUrl}/article-page?name=Problem-solving</loc>
+          <loc>${baseUrl}/article-page?name=Politics</loc>
           <lastmod>${currentDate}</lastmod>
           <priority>0.8</priority>
         </url>
         <url>
-          <loc>${baseUrl}/article-page?name=Gadgets-reviews</loc>
+          <loc>${baseUrl}/article-page?name=Technology</loc>
           <lastmod>${currentDate}</lastmod>
           <priority>0.8</priority>
         </url>
         <url>
-        <loc>${baseUrl}/article-page?name=Gadgets-comparison</loc>
+        <loc>${baseUrl}/article-page?name=Cricket</loc>
+        <lastmod>${currentDate}</lastmod>
+        <priority>0.8</priority>
+        </url>
+        <url>
+        <loc>${baseUrl}/article-page?name=Railway</loc>
+        <lastmod>${currentDate}</lastmod>
+        <priority>0.8</priority>
+        </url>
+        <url>
+        <loc>${baseUrl}/article-page?name=Stocks</loc>
+        <lastmod>${currentDate}</lastmod>
+        <priority>0.8</priority>
+        </url>
+        <url>
+        <loc>${baseUrl}/article-page?name=Crypto</loc>
         <lastmod>${currentDate}</lastmod>
         <priority>0.8</priority>
         </url>
