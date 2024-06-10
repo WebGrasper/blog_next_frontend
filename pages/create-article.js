@@ -29,7 +29,7 @@ export default function Home() {
     if (state?.data?.user?.role === "admin") {
       setAdmin(true);
     } else {
-        setAdmin(false);
+      setAdmin(false);
     }
   }, [state]);
 
@@ -146,7 +146,7 @@ export default function Home() {
 
     const totalWordCount = await calculateTotalWordCount(filteredElements);
 
-    if (totalWordCount <= 1) {
+    if (totalWordCount <= 299) {
       setDescriptionWarning(true);
       return;
     } else {
@@ -164,31 +164,26 @@ export default function Home() {
     console.log([...newFormData.entries()]);
 
     let token = cookies?.token;
-    let data = undefined;
 
-    try {
-      let response = await fetch(
-        `https://blog-zo8s.vercel.app/app/v2/createArticle?token=${token}`,
-        {
-          method: "POST",
-          body: newFormData,
-        }
-      );
-      if (!response.ok) {
-        let error_data = await response.json();
-        throw new Error(error_data.message);
+    let response = await fetch(
+      `https://blog-zo8s.vercel.app/app/v2/createArticle?token=${token}`,
+      {
+        method: "POST",
+        body: newFormData,
       }
-      data = await response.json();
-      enqueueSnackbar(data?.message, {
-        autoHideDuration: 2000,
-        variant: "success",
-      });
-    } catch (error) {
+    );
+    let data = await response.json();
+    if (!data?.success) {
       enqueueSnackbar(data?.message, {
         autoHideDuration: 2000,
         variant: "error",
       });
+      return;
     }
+    enqueueSnackbar(data?.message, {
+      autoHideDuration: 2000,
+      variant: "success",
+    });
   };
 
   return (
@@ -349,9 +344,9 @@ export default function Home() {
                   </div>
                   <div className={styles.addButton} onClick={handleClick}>
                     <Image
-                    width={40}
-                    height={40}
-                    loading="lazy"
+                      width={40}
+                      height={40}
+                      loading="lazy"
                       src="/add-icon.png"
                       alt="add-icon"
                       className={`${styles.img1} ${
@@ -360,8 +355,8 @@ export default function Home() {
                       id="img1"
                     />
                     <Image
-                    width={40}
-                    height={40}
+                      width={40}
+                      height={40}
                       src="/heading-icon.png"
                       alt="heading-icon"
                       loading="lazy"
@@ -372,9 +367,9 @@ export default function Home() {
                       onClick={() => handleAddElement("h2")}
                     />
                     <Image
-                    width={40}
-                    height={40}
-                    loading="lazy"
+                      width={40}
+                      height={40}
+                      loading="lazy"
                       src="/paragraph-icon.png"
                       alt="paragraph-icon"
                       className={`${
@@ -386,7 +381,10 @@ export default function Home() {
                   </div>
                 </div>
                 {elements.map((element) => (
-                  <div key={element.id} className={styles.dynamicInputContainer}>
+                  <div
+                    key={element.id}
+                    className={styles.dynamicInputContainer}
+                  >
                     <textarea
                       key={element.id}
                       type="text"
@@ -398,8 +396,8 @@ export default function Home() {
                       placeholder={`Enter text for ${element.type}`}
                     ></textarea>
                     <Image
-                    width={24}
-                    height={24}
+                      width={24}
+                      height={24}
                       src="/delete-icon.svg"
                       alt="delete icon"
                       className={styles.deleteIcon}
@@ -409,7 +407,7 @@ export default function Home() {
                 ))}
                 {descriptionWarning && (
                   <p className={styles.warning}>
-                    Please add a description with at least 500 words.
+                    Please add a description with at least 300 words.
                   </p>
                 )}
                 <button type="submit">Submit</button>
