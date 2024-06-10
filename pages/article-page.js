@@ -48,7 +48,7 @@ function ArticlePage({success, articles, name }) {
           <p>Results for: </p>
           <h2>{decodeURIComponent(name.replace(/-/g, " "))}</h2>
         </div>
-        <Image src={'https://ik.imagekit.io/94nzrpaat/images/noDataIcon.svg?updatedAt=1709222605789'} width={150} height={150} unoptimized />
+        <Image src={'https://ik.imagekit.io/94nzrpaat/images/noDataIcon.svg?updatedAt=1709222605789'} width={150} height={150} loading="lazy" unoptimized alt="not found image" />
        </section>
        }
     </main>
