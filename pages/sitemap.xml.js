@@ -40,6 +40,14 @@ async function generateSiteMap({ article }) {
           <lastmod>${currentDate}</lastmod>
           <priority>0.7</priority>
         </url>
+        <loc>${baseUrl}/article-page?name=India-News</loc>
+        <lastmod>${currentDate}</lastmod>
+        <priority>0.8</priority>
+        </url>
+        <loc>${baseUrl}/article-page?name=International-News</loc>
+        <lastmod>${currentDate}</lastmod>
+        <priority>0.8</priority>
+        </url>
         <url>
           <loc>${baseUrl}/article-page?name=Politics</loc>
           <lastmod>${currentDate}</lastmod>
@@ -51,7 +59,7 @@ async function generateSiteMap({ article }) {
           <priority>0.8</priority>
         </url>
         <url>
-        <loc>${baseUrl}/article-page?name=Cricket</loc>
+        <loc>${baseUrl}/article-page?name=Sports</loc>
         <lastmod>${currentDate}</lastmod>
         <priority>0.8</priority>
         </url>
@@ -61,12 +69,7 @@ async function generateSiteMap({ article }) {
         <priority>0.8</priority>
         </url>
         <url>
-        <loc>${baseUrl}/article-page?name=Stocks</loc>
-        <lastmod>${currentDate}</lastmod>
-        <priority>0.8</priority>
-        </url>
-        <url>
-        <loc>${baseUrl}/article-page?name=Crypto</loc>
+        <loc>${baseUrl}/article-page?name=Markets</loc>
         <lastmod>${currentDate}</lastmod>
         <priority>0.8</priority>
         </url>

@@ -43,12 +43,6 @@ export const getServerSideProps = async (context) => {
 
   let final_article_creator = await article_creator.json();
 
-  // Set default avatar if the creator doesn't have one
-  const defaultAvatar = "https://ik.imagekit.io/94nzrpaat/images/resize.jpg?updatedAt=1708900407744";
-  if (!final_article_creator?.user?.avatar) {
-    final_article_creator.user.avatar = defaultAvatar;
-  }
-
   let articleID = article?._id;
 
   const comments_res = await fetch(
@@ -58,7 +52,6 @@ export const getServerSideProps = async (context) => {
       }),
     {
       method: "GET",
-      // mode: 'no-cors', //Disable the cors(Cross-Origin resource sharing)
       headers: {
         "Content-Type": "application/json",
       },
@@ -68,7 +61,7 @@ export const getServerSideProps = async (context) => {
   let final_comments_res = await comments_res.json();
 
   // Extract commenter IDs
-  const commenterIds = final_comments_res.comments.map(
+  const commenterIds = final_comments_res?.comments.map(
     (comment) => comment.commenterID
   );
 
@@ -85,15 +78,13 @@ export const getServerSideProps = async (context) => {
   );
 
   const commentersData = await commentersRes.json();
-  const commenters = commentersData.commenters;
+  const commenters = commentersData?.commenters;
 
   // Combine comments with commenter details
   final_comments_res = final_comments_res.comments.map((comment) => {
     const commenter = commenters.find((c) => c._id === comment.commenterID);
-    let commenterName = commenter.username;
-    let commenterImage =
-      "https://ik.imagekit.io/94nzrpaat/images/resize.jpg?updatedAt=1708900407744"; // Default to null if commenter or commenter.avatar is not valid
-
+    let commenterName = commenter?.username;
+    let commenterImage = undefined;
     if (
       commenter &&
       typeof commenter.avatar === "string" &&

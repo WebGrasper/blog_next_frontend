@@ -29,28 +29,34 @@ function Footer() {
             <Link href="/article-page?name=Technology" className={styles.links}>
               Technology
             </Link>
-            <Link href="/article-page?name=Cricket" className={styles.links}>
-              Cricket
+            <Link href="/article-page?name=India-News" className={styles.links}>
+              India news
             </Link>
-            <Link href="/article-page?name=Railway" className={styles.links}>
-              Railway
+            <Link
+              href="/article-page?name=International-News"
+              className={styles.links}
+            >
+              International news
             </Link>
           </div>
         </div>
         <div className={styles.container2}>
-          <p className={styles.container2Heading}>Finance</p>
+          <p className={styles.container2Heading}>Others</p>
           <div className={styles.container2Links}>
-            <Link
-              href="/article-page?name=Stocks"
-              className={styles.links}
-            >
-              Stocks
+            <Link href="/article-page?name=Markets" className={styles.links}>
+              Markets
             </Link>
-            <Link
-              href="/article-page?name=Crypto"
-              className={styles.links}
-            >
-              Crypto
+            <Link href="/article-page?name=Sports" className={styles.links}>
+              Sports
+            </Link>
+            <Link href="/article-page?name=Railway" className={styles.links}>
+              Railway
+            </Link>
+            <Link href="/article-page?name=Health" className={styles.links}>
+              Health
+            </Link>
+            <Link href="/article-page?name=Education" className={styles.links}>
+              Education
             </Link>
           </div>
         </div>

@@ -7,9 +7,13 @@ import moment from "moment";
 
 export const getServerSideProps = async (context) => {
   let data = null;
+  let dailyArticlesLimit = 8;
   try {
     let response = await fetch(
-      "https://blog-zo8s.vercel.app/app/v2/getArticles",
+      `https://blog-zo8s.vercel.app/app/v2/dailyArticles?` +
+        new URLSearchParams({
+          limit: dailyArticlesLimit,
+        }),
       {
         method: "GET",
         headers: {
@@ -26,21 +30,27 @@ export const getServerSideProps = async (context) => {
   } catch (error) {
     console.error("Error fetching data:", error);
   }
-  let { success, article } = data;
+  let { success, articles } = data;
 
-  article = article.map((art) => ({
-    ...art,
-    formattedDate: moment(art.createdAt).fromNow(), // Format the date using moment
-  }));
+  // Check if article is not undefined and is an array before mapping
+  let dailyArticles = undefined;
+  if (articles && Array.isArray(articles)) {
+    dailyArticles = articles.map((art) => ({
+      ...art,
+      formattedDate: moment(art.createdAt).fromNow(), // Format the date using moment
+    }));
+  } else {
+    dailyArticles = []; // Set article to an empty array if it's undefined or not an array
+  }
 
   return {
     props: {
-      article,
+      dailyArticles,
     },
   };
 };
 
-export default function Main({ article }) {
+export default function Main({ dailyArticles }) {
   return (
     <div>
       <Head>
@@ -91,8 +101,8 @@ export default function Main({ article }) {
           <h1>Daily Picks</h1>
         </div>
         <div className={styles.dailyArticlesMainContainer}>
-          {article &&
-            article.map((article, index) => (
+          {dailyArticles &&
+            dailyArticles.map((article, index) => (
               <ArticleCard article={article} key={index} />
             ))}
         </div>

@@ -167,38 +167,47 @@ function Navbar() {
                 </span>
               </Link>
               <Link
-                href="/article-page?name=Technology"
+                href="/article-page?name=India-News"
                 passHref
                 onClick={handleLinkClick}
               >
+                <span
+                  className={`${styles.link} ${
+                    !isHome || isOffset ? styles.linkActiveOffset : ""
+                  }`}
+                >
+                  India news
+                </span>
+              </Link>
+              <Link
+                href="/article-page?name=International-News"
+                passHref
+                onClick={handleLinkClick}
+              >
+                <span
+                  className={`${styles.link} ${
+                    !isHome || isOffset ? styles.linkActiveOffset : ""
+                  }`}
+                >
+                  International news
+                </span>
+              </Link>
+              <Link href="/article-page?name=Sports" passHref onClick={handleLinkClick}>
+                <span
+                  className={`${styles.link} ${
+                    !isHome || isOffset ? styles.linkActiveOffset : ""
+                  }`}
+                >
+                  Sports
+                </span>
+              </Link>
+              <Link href="/article-page?name=Technology" passHref onClick={handleLinkClick}>
                 <span
                   className={`${styles.link} ${
                     !isHome || isOffset ? styles.linkActiveOffset : ""
                   }`}
                 >
                   Technology
-                </span>
-              </Link>
-              <Link
-                href="/article-page?name=Stocks"
-                passHref
-                onClick={handleLinkClick}
-              >
-                <span
-                  className={`${styles.link} ${
-                    !isHome || isOffset ? styles.linkActiveOffset : ""
-                  }`}
-                >
-                  Stocks
-                </span>
-              </Link>
-              <Link href="/article-page?name=Cricket" passHref onClick={handleLinkClick}>
-                <span
-                  className={`${styles.link} ${
-                    !isHome || isOffset ? styles.linkActiveOffset : ""
-                  }`}
-                >
-                  Cricket
                 </span>
               </Link>
               <Link href={isToken ? "/profile" : "/login"} passHref onClick={handleLinkClick}>

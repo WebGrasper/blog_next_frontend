@@ -289,48 +289,93 @@ export default function Home() {
                   </label>
                   <label
                     className={`${styles.customRadioLabel} ${
-                      selectedCategory === "Cricket" ? styles.selected : ""
+                      selectedCategory === "Sports" ? styles.selected : ""
                     }`}
                   >
                     <input
                       type="radio"
                       name="category"
-                      value="Cricket"
-                      checked={selectedCategory === "Cricket"}
+                      value="Sports"
+                      checked={selectedCategory === "Sports"}
                       onChange={(e) => setSelectedCategory(e.target.value)}
                     />
                     <span className={styles.customRadioButton}></span>
-                    Cricket
+                    Sports
                   </label>
                   <label
                     className={`${styles.customRadioLabel} ${
-                      selectedCategory === "Stocks" ? styles.selected : ""
+                      selectedCategory === "Markets" ? styles.selected : ""
                     }`}
                   >
                     <input
                       type="radio"
                       name="category"
-                      value="Stocks"
-                      checked={selectedCategory === "Stocks"}
+                      value="Markets"
+                      checked={selectedCategory === "Markets"}
                       onChange={(e) => setSelectedCategory(e.target.value)}
                     />
                     <span className={styles.customRadioButton}></span>
-                    Stocks
+                    Markets
                   </label>
                   <label
                     className={`${styles.customRadioLabel} ${
-                      selectedCategory === "Crypto" ? styles.selected : ""
+                      selectedCategory === "India News" ? styles.selected : ""
                     }`}
                   >
                     <input
                       type="radio"
                       name="category"
-                      value="Crypto"
-                      checked={selectedCategory === "Crypto"}
+                      value="India News"
+                      checked={selectedCategory === "India News"}
                       onChange={(e) => setSelectedCategory(e.target.value)}
                     />
                     <span className={styles.customRadioButton}></span>
-                    Crypto
+                    India News
+                  </label>
+                  <label
+                    className={`${styles.customRadioLabel} ${
+                      selectedCategory === "International News" ? styles.selected : ""
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="category"
+                      value="International News"
+                      checked={selectedCategory === "International News"}
+                      onChange={(e) => setSelectedCategory(e.target.value)}
+                    />
+                    <span className={styles.customRadioButton}></span>
+                    International News
+                  </label>
+                  <label
+                    className={`${styles.customRadioLabel} ${
+                      selectedCategory === "Health" ? styles.selected : ""
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="category"
+                      value="Health"
+                      checked={selectedCategory === "Health"}
+                      onChange={(e) => setSelectedCategory(e.target.value)}
+                    />
+                    <span className={styles.customRadioButton}></span>
+                    Health
+                  </label>
+                  <label
+                    className={`${styles.customRadioLabel} ${
+                      selectedCategory === "Education" ? styles.selected : ""
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="category"
+                      value="Education"
+                      checked={selectedCategory === "Education"}
+                      onChange={(e) => setSelectedCategory(e.target.value)}
+                    />
+                    <span className={styles.customRadioButton}></span>
+                    Education
                   </label>
                 </div>
                 {showWarning && (
