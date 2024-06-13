@@ -52,7 +52,7 @@ export const getServerSideProps = async (context) => {
 
 export default function Main({ dailyArticles }) {
   return (
-    <div>
+    <div className={styles.root}>
       <Head>
         <title>WebGrasper: Discover insights, tips, gadgets – your hub!</title>
         <meta
@@ -78,22 +78,26 @@ export default function Main({ dailyArticles }) {
         <meta name="twitter:card" content="summary_large_image" />
         <link rel="icon" href="/favicon.jpg" sizes="any" />
       </Head>
-      <section className={styles.heroContainer}>
-        <picture>
-          <Image
-            src="https://ik.imagekit.io/94nzrpaat/images/dariusz-sankowski-3OiYMgDKJ6k-unsplash.jpg?updatedAt=1709999343480"
-            alt="hero image"
-            className={styles.heroImage}
-            width={100}
-            height={100}
-            priority={false}
-          />
-        </picture>
-        <div className={styles.heroContent}>
-          <h1>
-            <span>Stay</span>
-            <span>Curious.</span>
-          </h1>
+      <section className={styles.heroMainContainer}>
+        <div className={styles.heroContainer}>
+          <div className={styles.heroContent}>
+            <h1>
+              <div>Stay</div>
+              <div>updated.</div>
+              <div>Stay Curious.</div>
+            </h1>
+          </div>
+          <div className={styles.heroImage}>
+            <Image
+              src="https://ik.imagekit.io/94nzrpaat/images/hero-image.png?updatedAt=1718275230144"
+              alt="hero image"
+              className={styles.heroImage}
+              width={100}
+              height={100}
+              unoptimized
+              priority={false}
+            />
+          </div>
         </div>
       </section>
       <section className={styles.homePageSupremeContainer}>
@@ -105,6 +109,118 @@ export default function Main({ dailyArticles }) {
             dailyArticles.map((article, index) => (
               <ArticleCard article={article} key={index} />
             ))}
+        </div>
+      </section>
+      <section className={styles.categoriesMainContainer}>
+        <div className={styles.categoriesSubContainer}>
+          <div className={styles.categoriesHeadingContainer}>
+            <h2>What are you interested in?</h2>
+            <p>
+              Various articles are here to provide insights and help you stay
+              updated about your surroundings.
+            </p>
+          </div>
+          <div className={styles.categories}>
+            <Link href="/article-page?name=India-News" passHref>
+            <Image 
+            src="/india-icon.png"
+            alt="india icon"
+            className={styles.heroImage}
+            width={20}
+            height={20}
+            unoptimized
+            priority={false}/>
+              India News
+            </Link>
+            <Link href="/article-page?name=International-News" passHref>
+            <Image 
+            src="/world-icon.png"
+            alt="world icon"
+            className={styles.heroImage}
+            width={20}
+            height={20}
+            unoptimized
+            priority={false}/>
+              International News
+            </Link>
+            <Link href="/article-page?name=Politics" passHref>
+            <Image 
+            src="/politics-icon.png"
+            alt="politics icon"
+            className={styles.heroImage}
+            width={20}
+            height={20}
+            unoptimized
+            priority={false}/>
+              Politics
+            </Link>
+            <Link href="/article-page?name=Technology" passHref>
+            <Image 
+            src="/technology-icon.png"
+            alt="technology icon"
+            className={styles.heroImage}
+            width={20}
+            height={20}
+            unoptimized
+            priority={false}/>
+              Technology
+            </Link>
+            <Link href="/article-page?name=Markets" passHref>
+            <Image 
+            src="/market-icon.png"
+            alt="market icon"
+            className={styles.heroImage}
+            width={20}
+            height={20}
+            unoptimized
+            priority={false}/>
+              Markets
+            </Link>
+            <Link href="/article-page?name=Sports" passHref>
+            <Image 
+            src="/sports-icon.png"
+            alt="sports icon"
+            className={styles.heroImage}
+            width={20}
+            height={20}
+            unoptimized
+            priority={false}/>
+              Sports
+            </Link>
+            <Link href="/article-page?name=Railway" passHref>
+            <Image 
+            src="/railway-icon.png"
+            alt="railway icon"
+            className={styles.heroImage}
+            width={20}
+            height={20}
+            unoptimized
+            priority={false}/>
+              Railway
+            </Link>
+            <Link href="/article-page?name=Health" passHref>
+            <Image 
+            src="/health-icon.png"
+            alt="health icon"
+            className={styles.heroImage}
+            width={20}
+            height={20}
+            unoptimized
+            priority={false}/>
+              Health
+            </Link>
+            <Link href="/article-page?name=Education" passHref>
+            <Image 
+            src="/education-icon.png"
+            alt="education icon"
+            className={styles.heroImage}
+            width={20}
+            height={20}
+            unoptimized
+            priority={false}/>
+              Education
+            </Link>
+          </div>
         </div>
       </section>
     </div>

@@ -2,9 +2,7 @@
 
 .root {
     max-width: 100%;
-    background: rgb(250, 228, 212) 0%,;
-    background: radial-gradient(circle, rgb(250, 228, 212) 0%, hsla(0, 0%, 100%, 1) 100%);
-    background: -webkit-radial-gradient(circle, rgb(250, 228, 212) 0%, hsla(0, 0%, 100%, 1) 100%);
+    background-color: rgb(250,247,243);
   }
   
   .main {

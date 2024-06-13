@@ -1,25 +1,6 @@
 .articlePageSupremeContainer {
   width: 100%;
-  background: rgb(250, 228, 212) 0%;
-
-  background: radial-gradient(
-    circle,
-    rgb(250, 228, 212) 0%,
-    hsla(0, 0%, 100%, 1) 100%
-  );
-
-  background: -moz-radial-gradient(
-    circle,
-    rgb(250, 228, 212) 0%,
-    hsla(0, 0%, 100%, 1) 100%
-  );
-
-  background: -webkit-radial-gradient(
-    circle,
-    rgb(250, 228, 212) 0%,
-    hsla(0, 0%, 100%, 1) 100%
-  );
-  background-repeat: no-repeat;
+  background-color: rgb(242,239,235);
 }
 
 .articleMainContainer {
@@ -51,6 +32,7 @@
 .creatorDetailsContainer{
   display: flex;
   flex-direction: column;
+  gap: 0.25rem;
 }
 .creatorDetailsContainer > h6{
   text-overflow: ellipsis;

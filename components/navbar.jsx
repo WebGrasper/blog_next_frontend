@@ -47,7 +47,8 @@ function Navbar() {
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
-      if (isHome && window.scrollY >= window.innerHeight - 80) {
+      if (isHome && window.scrollY >= 1) {
+      // if (isHome && window.scrollY >= window.innerHeight - 80) {
         setOffset(true);
       } else {
         setOffset(false);
@@ -113,7 +114,7 @@ function Navbar() {
               src={`${
                 !isHome || isOffset
                   ? "/searchButtonBlack.svg"
-                  : "/searchButtonWhite.svg"
+                  : "/searchButtonBlack.svg"
               }`}
               fetchpriority="high"
               alt="search icon"
@@ -123,7 +124,7 @@ function Navbar() {
               src={`${
                 !isHome || isOffset
                   ? "/closeButtonBlack.svg"
-                  : "/closeButtonWhite.svg"
+                  : "/closeButtonBlack.svg"
               }`}
               fetchpriority="high"
               alt="close button"
@@ -147,7 +148,7 @@ function Navbar() {
               src={`${
                 !isHome || isOffset
                   ? "/menuButtonBlack.svg"
-                  : "/menuButtonWhite.svg"
+                  : "/menuButtonBlack.svg"
               }`}
               fetchpriority="high"
               alt="menu button"
@@ -235,7 +236,7 @@ function Navbar() {
             !isHome || isOffset ? styles.activeBottomSearchBar : ""
           }`}
           id="container2SearchBox"
-          placeholder="Ideas, topics & more..."
+          placeholder="Search"
           onChange={(e) => {
             handleSearchBlogs(e.target.value || null);
           }}

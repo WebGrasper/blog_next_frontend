@@ -1,72 +1,37 @@
+.heroMainContainer {
+  max-width: 100%;
+  background-color: rgb(250, 247, 243);
+}
+
 .heroContainer {
-  overflow-x: clip;
-  position: relative;
+  max-width: 60rem;
   height: 100svh;
-}
-
-.heroImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top;
-  filter: blur(6px);
-  position: absolute;
-  overflow: hidden;
-  z-index: -1;
-  scale: 1 1;
-  background-color: black;
-  transform-origin: bottom;
-  animation: scale-up-hero-image linear forwards;
-  animation-timeline: view();
-  animation-range: exit;
-}
-
-@keyframes scale-up-hero-image {
-  to {
-    scale: 2 2;
-  }
-}
-
-.heroContent {
+  margin: 0 auto;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  width: 100%;
+  gap: 1rem;
+  padding-top: 4rem;
+  padding-inline: 1rem;
+}
+
+.heroContent > h1 {
+  color: #242424;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-align: left;
+  line-height: 1.25;
+  font-size: clamp(3rem, 8vw, 5rem);
+  text-transform: capitalize;
+}
+
+.heroImage > img {
+  width: clamp(22rem, 30vw, 25rem);
   height: 100%;
-}
-
-.heroContainer h1 {
-  display: grid;
-  font-family: "Dancing Script", cursive !important;
-  grid-template-columns: repeat(2);
-  grid-template-rows: repeat(2);
-  line-height: 1;
-  color: white;
-  font-size: clamp(3rem, calc(12vw + 2rem), 12rem);
-  animation: fade-in 2s ease;
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.heroContainer h1 span:first-child {
-  grid-column: 1;
-  grid-row: 1;
-}
-
-.heroContainer h1 span:last-child {
-  grid-column: 2;
-  grid-row: 2;
 }
 
 .homePageSupremeContainer {
-  background-color: white;
+  background-color: rgb(250, 247, 243);
   width: 100%;
   padding-top: 1rem;
 }
@@ -95,7 +60,6 @@
   padding-left: 1rem;
   text-overflow: unset;
   overflow: unset;
-  text-transform: capitalize;
   display: block;
   -webkit-box-orient: unset;
   font-size: 1rem;
@@ -105,6 +69,68 @@
   text-transform: uppercase;
 }
 
+.categoriesMainContainer {
+  max-width: 100%;
+  background-color: rgb(242, 239, 235);
+}
+
+.categoriesSubContainer {
+  max-width: 50rem;
+  padding: 5rem 1rem;
+  margin-inline: auto;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.categoriesHeadingContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.categoriesHeadingContainer > h2 {
+  display: block;
+  -webkit-box-orient: unset;
+  font-size: 2rem;
+  font-weight: 700;
+  color: transparent;
+  color: black;
+  text-align: center;
+}
+
+.categoriesHeadingContainer > p {
+  display: block;
+  -webkit-box-orient: unset;
+  text-align: center;
+  color: rgb(126, 126, 126);
+}
+
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  column-gap: 2rem;
+  row-gap: 1rem;
+}
+
+.categories a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 2rem;
+  border-radius: 26px;
+  background-color: white;
+  color: rgb(20, 20, 20);
+  transition: box-shadow 0.3s ease;
+}
+
+.categories a:hover {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
 
 @media only screen and (max-width: 802px) {
   .dailyArticlesMainContainer {
@@ -112,13 +138,20 @@
   }
 }
 
-@media only screen and (max-width: 495px) {
-  .heroContainer h1 {
-    font-size: clamp(3.75rem, calc(13vw + 1rem), 12rem);
+@media only screen and (max-width: 766px) {
+  .heroContainer {
+    max-width: 100%;
+    flex-direction: column;
+    justify-content: left;
+    align-items: flex-start;
+    padding-top: 6rem;
+    height: 100%;
   }
-}
-@media only screen and (max-width: 328px) {
   .heroContainer h1 {
-    font-size: clamp(3rem, calc(13vw + 1rem), 12rem);
+    font-size: clamp(3rem, 13vw, 12rem);
+  }
+  .heroImage > img {
+    width: 100%;
+    height: 100%;
   }
 }

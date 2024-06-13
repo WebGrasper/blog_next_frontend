@@ -12,10 +12,15 @@ function ArticleCard({ article }) {
     setDescription(JSON.parse(article?.description));
   }, [article]);
 
+  // Custom function to create a clean URL slug by removing special characters and replacing spaces with hyphens
+  const createSlug = (title) => {
+    return title.replace(/\s+/g, '-'); // Replace spaces with hyphens
+  };
+
   return (
     <Link
       href="/article/[title]"
-      as={`/article/${encodeURIComponent(article.title.replace(/\s+/g, "-"))}`}
+      as={`/article/${createSlug(article.title)}`}
       className={styles.ArticleCardContainer}
     >
       <div className={styles.imageContainer}>

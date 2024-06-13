@@ -1,25 +1,6 @@
 .heroContainer {
   height: 100svh;
-  background: rgb(250, 228, 212) 0%,;
-
-  background: radial-gradient(
-    circle,
-    rgb(250, 228, 212) 0%,
-    hsla(0, 0%, 100%, 1) 100%
-  );
-
-  background: -moz-radial-gradient(
-    circle,
-    rgb(250, 228, 212) 0%,
-    hsla(0, 0%, 100%, 1) 100%
-  );
-
-  background: -webkit-radial-gradient(
-    circle,
-    rgb(250, 228, 212) 0%,
-    hsla(0, 0%, 100%, 1) 100%
-  );
-  background-repeat: no-repeat;
+  background-color: rgb(250,247,243);
   max-width: 100%;
   display: flex;
   justify-content: center;
