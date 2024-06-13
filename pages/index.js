@@ -6,8 +6,10 @@ import ArticleCard from "@/components/articleCard";
 import moment from "moment";
 
 export const getServerSideProps = async (context) => {
-  let data = null;
-  let dailyArticlesLimit = 8;
+  let dailyArticlesdata = null;
+  let dailyArticles = undefined;
+  let dailyArticlesLimit = 4;
+
   try {
     let response = await fetch(
       `https://blog-zo8s.vercel.app/app/v2/dailyArticles?` +
@@ -26,31 +28,72 @@ export const getServerSideProps = async (context) => {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    data = await response.json();
+    dailyArticlesdata = await response.json();
+
+    let { success, articles } = dailyArticlesdata;
+
+    // Check if article is not undefined and is an array before mapping
+    if (articles && Array.isArray(articles)) {
+      dailyArticles = articles.map((art) => ({
+        ...art,
+        formattedDate: moment(art.createdAt).fromNow(), // Format the date using moment
+      }));
+    } else {
+      dailyArticles = []; // Set article to an empty array if it's undefined or not an array
+    }
+    
   } catch (error) {
     console.error("Error fetching data:", error);
   }
-  let { success, articles } = data;
 
-  // Check if article is not undefined and is an array before mapping
-  let dailyArticles = undefined;
-  if (articles && Array.isArray(articles)) {
-    dailyArticles = articles.map((art) => ({
-      ...art,
-      formattedDate: moment(art.createdAt).fromNow(), // Format the date using moment
-    }));
-  } else {
-    dailyArticles = []; // Set article to an empty array if it's undefined or not an array
+  let trendingArticlesData = null;
+  let trendingArticles = undefined;
+  let trendingArticlesLimit = 4;
+
+  try {
+    let response = await fetch(
+      `https://blog-zo8s.vercel.app/app/v2/trendingArticles?` +
+        new URLSearchParams({
+          limit: trendingArticlesLimit,
+        }),
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    trendingArticlesData = await response.json();
+
+    let { success, articles } = trendingArticlesData;
+
+    // Check if article is not undefined and is an array before mapping
+    if (articles && Array.isArray(articles)) {
+      trendingArticles = articles.map((art) => ({
+        ...art,
+        formattedDate: moment(art.createdAt).fromNow(), // Format the date using moment
+      }));
+    } else {
+      trendingArticles = []; // Set article to an empty array if it's undefined or not an array
+    }
+  } catch (error) {
+    console.error("Error fetching data:", error);
   }
 
   return {
     props: {
       dailyArticles,
+      trendingArticles,
     },
   };
 };
 
-export default function Main({ dailyArticles }) {
+export default function Main({ dailyArticles, trendingArticles }) {
   return (
     <div className={styles.root}>
       <Head>
@@ -83,13 +126,13 @@ export default function Main({ dailyArticles }) {
           <div className={styles.heroContent}>
             <h1>
               <div>Stay</div>
-              <div>updated.</div>
-              <div>Stay Curious.</div>
+              <div><span>updated.</span></div>
+              <div>Stay <span>Curious.</span></div>
             </h1>
           </div>
           <div className={styles.heroImage}>
             <Image
-              src="https://ik.imagekit.io/94nzrpaat/images/hero-image.png?updatedAt=1718275230144"
+              src="https://ik.imagekit.io/94nzrpaat/images/pixelcut-export%20(4).png?updatedAt=1718291940561"
               alt="hero image"
               className={styles.heroImage}
               width={100}
@@ -111,6 +154,17 @@ export default function Main({ dailyArticles }) {
             ))}
         </div>
       </section>
+      <section className={styles.homePageSupremeContainer}>
+        <div className={styles.trendingArticleHeadingContainer}>
+          <h1>Trendings</h1>
+        </div>
+        <div className={styles.trendingArticlesMainContainer}>
+          {trendingArticles &&
+            trendingArticles.map((article, index) => (
+              <ArticleCard article={article} key={index} />
+            ))}
+        </div>
+      </section>
       <section className={styles.categoriesMainContainer}>
         <div className={styles.categoriesSubContainer}>
           <div className={styles.categoriesHeadingContainer}>
@@ -122,102 +176,111 @@ export default function Main({ dailyArticles }) {
           </div>
           <div className={styles.categories}>
             <Link href="/article-page?name=India-News" passHref>
-            <Image 
-            src="/india-icon.png"
-            alt="india icon"
-            className={styles.heroImage}
-            width={20}
-            height={20}
-            unoptimized
-            priority={false}/>
+              <Image
+                src="/india-icon.png"
+                alt="india icon"
+                className={styles.heroImage}
+                width={20}
+                height={20}
+                unoptimized
+                priority={false}
+              />
               India News
             </Link>
             <Link href="/article-page?name=International-News" passHref>
-            <Image 
-            src="/world-icon.png"
-            alt="world icon"
-            className={styles.heroImage}
-            width={20}
-            height={20}
-            unoptimized
-            priority={false}/>
+              <Image
+                src="/world-icon.png"
+                alt="world icon"
+                className={styles.heroImage}
+                width={20}
+                height={20}
+                unoptimized
+                priority={false}
+              />
               International News
             </Link>
             <Link href="/article-page?name=Politics" passHref>
-            <Image 
-            src="/politics-icon.png"
-            alt="politics icon"
-            className={styles.heroImage}
-            width={20}
-            height={20}
-            unoptimized
-            priority={false}/>
+              <Image
+                src="/politics-icon.png"
+                alt="politics icon"
+                className={styles.heroImage}
+                width={20}
+                height={20}
+                unoptimized
+                priority={false}
+              />
               Politics
             </Link>
             <Link href="/article-page?name=Technology" passHref>
-            <Image 
-            src="/technology-icon.png"
-            alt="technology icon"
-            className={styles.heroImage}
-            width={20}
-            height={20}
-            unoptimized
-            priority={false}/>
+              <Image
+                src="/technology-icon.png"
+                alt="technology icon"
+                className={styles.heroImage}
+                width={20}
+                height={20}
+                unoptimized
+                priority={false}
+              />
               Technology
             </Link>
             <Link href="/article-page?name=Markets" passHref>
-            <Image 
-            src="/market-icon.png"
-            alt="market icon"
-            className={styles.heroImage}
-            width={20}
-            height={20}
-            unoptimized
-            priority={false}/>
+              <Image
+                src="/market-icon.png"
+                alt="market icon"
+                className={styles.heroImage}
+                width={20}
+                height={20}
+                unoptimized
+                priority={false}
+              />
               Markets
             </Link>
             <Link href="/article-page?name=Sports" passHref>
-            <Image 
-            src="/sports-icon.png"
-            alt="sports icon"
-            className={styles.heroImage}
-            width={20}
-            height={20}
-            unoptimized
-            priority={false}/>
+              <Image
+                src="/sports-icon.png"
+                alt="sports icon"
+                className={styles.heroImage}
+                width={20}
+                height={20}
+                unoptimized
+                priority={false}
+              />
               Sports
             </Link>
             <Link href="/article-page?name=Railway" passHref>
-            <Image 
-            src="/railway-icon.png"
-            alt="railway icon"
-            className={styles.heroImage}
-            width={20}
-            height={20}
-            unoptimized
-            priority={false}/>
+              <Image
+                src="/railway-icon.png"
+                alt="railway icon"
+                className={styles.heroImage}
+                width={20}
+                height={20}
+                unoptimized
+                priority={false}
+              />
               Railway
             </Link>
             <Link href="/article-page?name=Health" passHref>
-            <Image 
-            src="/health-icon.png"
-            alt="health icon"
-            className={styles.heroImage}
-            width={20}
-            height={20}
-            unoptimized
-            priority={false}/>
+              <Image
+                src="/health-icon.png"
+                alt="health icon"
+                className={styles.heroImage}
+                width={20}
+                height={20}
+                unoptimized
+                priority={false}
+              />
               Health
             </Link>
             <Link href="/article-page?name=Education" passHref>
-            <Image 
-            src="/education-icon.png"
-            alt="education icon"
-            className={styles.heroImage}
-            width={20}
-            height={20}
-            unoptimized
-            priority={false}/>
+              <Image
+                src="/education-icon.png"
+                alt="education icon"
+                className={styles.heroImage}
+                width={20}
+                height={20}
+                unoptimized
+                priority={false}
+              />
               Education
             </Link>
           </div>

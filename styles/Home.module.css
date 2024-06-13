@@ -16,13 +16,25 @@
 }
 
 .heroContent > h1 {
-  color: #242424;
   text-overflow: ellipsis;
   overflow: hidden;
   text-align: left;
-  line-height: 1.25;
+  font-weight: 300;
+  line-height: 1.5;
   font-size: clamp(3rem, 8vw, 5rem);
   text-transform: capitalize;
+}
+
+.heroContent > h1 > div:nth-child(1), .heroContent > h1 > div:nth-child(3){
+  color: #A16666 !important;
+}
+
+.heroContent > h1 > div:nth-child(2) > span, .heroContent > h1 > div:nth-child(3) > span{
+  border: 1px solid black;
+  padding: 0 0.5rem;
+  color: #FAF7F3;
+  background-color: #242424;
+  width: fit-content;
 }
 
 .heroImage > img {
@@ -36,7 +48,7 @@
   padding-top: 1rem;
 }
 
-.dailyArticlesMainContainer {
+.dailyArticlesMainContainer, .trendingArticlesMainContainer {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   max-width: 70rem;
@@ -50,13 +62,13 @@
   row-gap: 2rem;
 }
 
-.dailyArticleHeadingContainer {
+.dailyArticleHeadingContainer, .trendingArticleHeadingContainer {
   max-width: 70rem;
   padding-block: 0.5rem;
   margin-inline: auto;
 }
 
-.dailyArticleHeadingContainer > h1 {
+.dailyArticleHeadingContainer > h1, .trendingArticleHeadingContainer > h1 {
   padding-left: 1rem;
   text-overflow: unset;
   overflow: unset;
@@ -133,7 +145,7 @@
 }
 
 @media only screen and (max-width: 802px) {
-  .dailyArticlesMainContainer {
+  .dailyArticlesMainContainer, .trendingArticlesMainContainer {
     grid-template-columns: repeat(1, 1fr);
   }
 }
@@ -146,9 +158,10 @@
     align-items: flex-start;
     padding-top: 6rem;
     height: 100%;
+
   }
   .heroContainer h1 {
-    font-size: clamp(3rem, 13vw, 12rem);
+    font-size: clamp(2.5rem, 13vw, 12rem);
   }
   .heroImage > img {
     width: 100%;
