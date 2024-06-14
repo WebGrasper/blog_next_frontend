@@ -156,10 +156,6 @@ function Article({ article, final_comments_res, final_article_creator }) {
     }
   };
 
-  useEffect(()=>{
-
-  })
-
   useEffect(() => {
     const timeout = setTimeout(async() => {
       const response = await fetch(

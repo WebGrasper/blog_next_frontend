@@ -1,83 +1,139 @@
-.ArticleCardContainer {
-    display: flex;
-    flex-direction: row-reverse;
-    column-gap: 0.75rem;
-    color: black;
-    border-radius: 10px;
-    cursor: pointer;
-    /* opacity: 0;
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  color: black;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 1rem;
+  background-color: rgb(242,239,235);
+  /* opacity: 0;
     animation: visible ease forwards;
     animation-timeline: view();
     animation-range-start: cover 10%;
     animation-range-end: cover 50%; */
-  }
-  
-  /* @keyframes visible {
+}
+
+/* @keyframes visible {
     to {
       opacity: 1;
     }
   } */
-  
-  .imageContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .articleImage {
-    border-radius: 3px;
-    object-fit: cover;
-    max-width: clamp(7rem, 15vw, 11rem);
-    height: min(7rem);
-  }
-  
-  .TitleContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    row-gap: 0.5rem;
-  }
-  
-  .title {
-    -webkit-box-orient: vertical;
-    display: -webkit-box;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    font-size: 1.25rem;
-    line-height: 1.2;
-    font-weight: 900;
-    color: rgba(0, 0, 0, 1);
-    -webkit-line-clamp: 2;
-    z-index: 1;
-    width: 100%;
-    word-break: break-word;
-  }
-  
-  .description {
-    -webkit-box-orient: vertical;
-    display: -webkit-box;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    font-size: 1rem;
-    line-height: 1.2;
-    color: rgba(0, 0, 0, 0.8);
-    -webkit-line-clamp: 2;
-    z-index: 1;
-    width: 100%;
-    word-break: break-word;
-  }
-  
-  .dateContainer {
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: flex-end;
-    gap: 1rem;
-  }
-  
-  .date,
-  .category {
-    color: rgba(0, 0, 0, 0.6);
-    font-size: 0.9rem;
-    font-weight: normal;
-  }
-  
+
+.creatorMainContainer {
+  display: flex;
+  flex-direction: column;
+}
+.creatorContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.75rem;
+}
+.creatorImage {
+  border-radius: 50%;
+}
+.creatorDetailsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+.creatorDetailsContainer > h6 {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 1rem;
+  text-align: left;
+  font-weight: 400;
+  color: #242424;
+  width: 100%;
+  word-break: break-word;
+}
+.articleTimePeriod {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+.articleTimePeriod > p:first-child {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-align: left;
+  font-size: 0.6rem;
+  font-weight: 300;
+  color: #242424;
+  word-break: break-word;
+}
+.articleTimePeriod > p:first-child > span {
+  text-decoration: underline;
+}
+
+.ArticleCardContainer {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 0.75rem;
+  color: black;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.imageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.articleImage {
+  border-radius: 6px;
+  object-fit: cover;
+  max-width: clamp(7rem, 15vw, 11rem);
+  height: min(7rem);
+}
+
+.TitleContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  row-gap: 0.5rem;
+}
+
+.title {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 1.25rem;
+  line-height: 1.2;
+  font-weight: 900;
+  color: rgba(0, 0, 0, 1);
+  -webkit-line-clamp: 2;
+  z-index: 1;
+  width: 100%;
+  word-break: break-word;
+}
+
+.description {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 1rem;
+  line-height: 1.2;
+  color: rgba(0, 0, 0, 0.8);
+  -webkit-line-clamp: 2;
+  z-index: 1;
+  width: 100%;
+  word-break: break-word;
+}
+
+.dateContainer {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  gap: 2rem;
+}
+
+.date,
+.category {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 0.9rem;
+  font-weight: normal;
+}

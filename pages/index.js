@@ -4,8 +4,33 @@ import Image from "next/image";
 import Head from "next/head";
 import ArticleCard from "@/components/articleCard";
 import moment from "moment";
+import { useEffect } from "react";
 
 export const getServerSideProps = async (context) => {
+  const fetchCreators = async (creators) => {
+    try {
+      let response = await fetch(
+        `https://blog-zo8s.vercel.app/app/v1/getArticlesCreators`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ creators }),
+        }
+      );
+      response = await response.json();
+      return response?.creators_data;
+    } catch (error) {
+      console.log("Home: Fetch creators: ", error);
+    }
+  };
+
+  const extractCreators = async (articles, fetchCreators) => {
+    let creators = articles.map((article) => article?.createdBy);
+    return fetchCreators(creators);
+  };
+
   let dailyArticlesdata = null;
   let dailyArticles = undefined;
   let dailyArticlesLimit = 4;
@@ -38,10 +63,21 @@ export const getServerSideProps = async (context) => {
         ...art,
         formattedDate: moment(art.createdAt).fromNow(), // Format the date using moment
       }));
+
+      let creators = await extractCreators(dailyArticles, fetchCreators);
+      // Map creators to their respective articles
+      dailyArticles = dailyArticles.map((article) => {
+        const creator = creators.find(
+          (creator) => creator._id === article.createdBy
+        );
+        return {
+          ...article,
+          creator,
+        };
+      });
     } else {
       dailyArticles = []; // Set article to an empty array if it's undefined or not an array
     }
-    
   } catch (error) {
     console.error("Error fetching data:", error);
   }
@@ -78,6 +114,19 @@ export const getServerSideProps = async (context) => {
         ...art,
         formattedDate: moment(art.createdAt).fromNow(), // Format the date using moment
       }));
+
+      let creators = await extractCreators(trendingArticles, fetchCreators);
+      // Map creators to their respective articles
+      trendingArticles = trendingArticles.map((article) => {
+        const creator = creators.find(
+          (creator) => creator._id === article.createdBy
+        );
+        return {
+          ...article,
+          creator,
+        };
+      });
+
     } else {
       trendingArticles = []; // Set article to an empty array if it's undefined or not an array
     }
@@ -94,6 +143,11 @@ export const getServerSideProps = async (context) => {
 };
 
 export default function Main({ dailyArticles, trendingArticles }) {
+
+  useEffect(()=>{
+    console.log(dailyArticles, trendingArticles);
+  },[]);
+
   return (
     <div className={styles.root}>
       <Head>
@@ -126,8 +180,12 @@ export default function Main({ dailyArticles, trendingArticles }) {
           <div className={styles.heroContent}>
             <h1>
               <div>Stay</div>
-              <div><span>updated.</span></div>
-              <div>Stay <span>Curious.</span></div>
+              <div>
+                <span>updated.</span>
+              </div>
+              <div>
+                Stay <span>Curious.</span>
+              </div>
             </h1>
           </div>
           <div className={styles.heroImage}>
@@ -156,7 +214,7 @@ export default function Main({ dailyArticles, trendingArticles }) {
       </section>
       <section className={styles.homePageSupremeContainer}>
         <div className={styles.trendingArticleHeadingContainer}>
-          <h1>Trendings</h1>
+          <h1>Trending</h1>
         </div>
         <div className={styles.trendingArticlesMainContainer}>
           {trendingArticles &&
