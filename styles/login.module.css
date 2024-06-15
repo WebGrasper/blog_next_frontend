@@ -1,5 +1,5 @@
 .heroContainer {
-  height: 100svh;
+  padding: 2.5rem 0.5rem;
   background-color: rgb(250,247,243);
   max-width: 100%;
   display: flex;
@@ -18,11 +18,12 @@
 }
 
 .loginFormSubContainer {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   background-color: white;
   padding: 2rem 2rem 2.75rem 2rem;
   margin: 0.75rem;
-  border-radius: 4px;
-  width: clamp(18rem, 60vw, 25rem);
+  border-radius: 16px;
+  width: clamp(20rem, 60vw, 25rem);
 }
 
 .formContainer {
@@ -116,11 +117,8 @@
   color: white;
 }
 
-@media only screen and (max-width: 426px) {
-  /* .loginFormSubContainer{
+@media only screen and (max-width: 641px) {
+  .loginFormSubContainer {
     padding: 1rem 1rem 1.75rem 1rem;
-  } */
-  .inputFieldContainer input {
-    /* max-width: 18rem; */
   }
 }

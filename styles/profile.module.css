@@ -1,4 +1,4 @@
-.profile_supreme_container {
+.leftProfileSupremeContainer {
   width: 100%;
   min-height: 400px;
   display: flex;
@@ -9,142 +9,261 @@
   background-color: rgb(250,247,243);
 }
 
-.profileMainContainer {
+.leftProfileMainContainer {
   display: grid;
-  grid-template-columns: 3fr 6fr;
-  width: 80%;
+  grid-template-columns: 3fr 5fr;
+  max-width: 80rem;
   gap: 1.25rem;
   padding: 1rem;
   border-radius: 10px;
-  background-color: rgb(237, 237, 237);
+  background-color: rgb(242,239,235);
 }
 
-.profile_container {
+.leftProfileContainer {
   display: flex;
   flex-direction: column;
   padding: 1rem;
-  row-gap: 0.25rem;
-  height: 100%;
-  border-radius: 10px;
+  gap: 1rem;
+  height: fit-content;
+  border-radius: 20px;
   background-color: white;
 }
 
-.profileFormContainer {
+.leftProfileImageContainer {
   display: flex;
-  flex-wrap: nowrap;
-  padding-inline: 1.5rem;
-  padding-block: 1.5rem;
-  gap: 4rem;
-  height: 100%;
-  background-color: white;
-  color: #283032;
-  border-radius: 10px;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
-.personal_details_container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  /* row-gap: 0.25rem; */
-}
-
-.profile_image_container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.profile_image {
+.leftProfileImage {
   border-radius: 50%;
-  width: 7rem;
-  height: 7rem;
+  width: 6rem;
+  height: 6rem;
   object-fit: cover;
 }
 
-.name_container,
-.gmail_container,
-.bio_container,
-.address_container {
-  color: black;
+.adminPanelLink{
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
+  gap: 0.25rem;
+  background-color: rgb(161, 102, 102);
+  padding: 0.5rem 0.75rem;
+  border-radius: 16px;
+  font-size: small;
+  font-weight: 200;
 }
 
-.name_container > p {
-  font-size: 2.25rem;
-  font-weight: bold;
+.adminIcon{
+  width: 1rem;
+  height: 1rem;
+  object-fit: cover;
 }
 
-.name__container, .gmail__container{
+.leftProfileDetailsContainer {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
   gap: 0.25rem;
 }
 
-.name__container > p:first-child, .gmail__container>p:first-child{
-  font-weight: bold;
-}
-.name__container >p:last-child, .gmail__container >p:last-child{
-  padding-left: 0.25rem;
-  opacity: 0.8;
+.leftNameContainer{
+  color: #283032;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
-.address_container {
+.leftNameContainer > p {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.leftAddressContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.25rem;
+  color: #2c3639;
+}
+
+.locationIcon, .bioIcon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.bioIcon{
+  position: relative;
+  top: 2.5px;
+}
+
+.leftBioContainer{
+  display: flex;
+  justify-content: flex-start;
+  align-items: first baseline;
+  color: #2c3639;
+  gap: 0.25rem;
+}
+
+
+.logout_button {
+  width: 50px;
+  height: 35px;
   display: flex;
   justify-content: center;
   align-items: center;
-  column-gap: 0.25rem;
-  margin-bottom: 1.5rem;
-}
-
-.address_container > img {
-  width: 1rem;
-  height: 1rem;
-  opacity: 0.5;
-}
-
-.address_container > p {
-  font-weight: bold;
-  opacity: 0.5;
-}
-
-.bio_container > p {
-  font-style: italic;
-  opacity: 0.75;
-}
-
-.profile_head2 {
-  color: black;
-  margin-right: 1rem;
-}
-
-.admin_panel_container {
-  margin-top: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.admin_panel_link {
-  color: black;
-  font-weight: bold;
-}
-
-.logout_button {
-  font-size: large;
-  padding: 0.75rem 4rem;
-  border-radius: 25px;
-  width: 100%;
-  margin-top: 1.25rem;
+  outline: inherit;
+  border: none;
+  margin-top: 2rem;
+  border-radius: 8px;
   background-color: #2c3639;
-  border: 2px solid #2c3639;
   cursor: pointer;
   color: white;
   transition: background-color 0.2s linear;
 }
 
+
 .logout_button:hover {
   background-color: #283032;
 }
+
+
+/* ---------------------------------------------------- */
+
+.rightProfileFormMainContainer {
+  padding-inline: 1.5rem;
+  padding-block: 1.5rem;
+  height: fit-content;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: white;
+  color: #283032;
+  border-radius: 20px;
+}
+
+.rightProfileFormMainContainer::-webkit-scrollbar{
+  display: none;
+}
+
+.rightProfileMainEditableFormContainer{
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.rightEditButtonContainer{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.rightEditButtonContainer > h3{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #242424;
+  width: 100%;
+  word-break: break-word;
+  text-transform: uppercase;
+}
+
+.rightEditButtonContainer > img{
+  cursor: pointer;
+  transition: scale 0.25s ease;
+}
+
+.rightEditButtonContainer > img:hover{
+  scale: 1.1;
+}
+
+.rightProfileFormContainer, .rightProfileEditableFormContainer{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.rightDetailContainer{
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.rightDetailHeading{
+  font-weight: 600;
+  color: #242424;
+}
+
+.rightDetailValue{
+  color: #242424;
+  opacity: 0.8;
+}
+
+.rightDetailInputBox {
+  background-color: transparent;
+  border: 0;
+  color: black;
+  letter-spacing: 1px;
+  border-bottom: 2px solid black;
+  padding-bottom: 0.25rem;
+  font-size: small;
+  width: 100%;
+  transition: border-bottom 0.2s linear;
+}
+.rightDetailInputBox:focus,
+.rightDetailInputBox:active {
+  outline: none;
+  border-bottom: 2px solid rgb(161, 102, 102);
+  transform-origin: left;
+}
+.rightDetailInputBox::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.rightEditableFormSaveButton {
+  width: 90px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: inherit;
+  gap: 0.25rem;
+  font-weight: 300;
+  font-size: medium;
+  border: none;
+  border-radius: 8px;
+  background-color: rgb(161, 102, 102);
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.2s linear;
+}
+
+.rightEditableFormSaveButton:hover {
+  background-color: rgb(137, 88, 88);
+}
+
+.errorText {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+}
+
+@media only screen and (max-width:781px){
+  .rightProfileFormContainer, .rightProfileEditableFormContainer{
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+@media only screen and (max-width:751px){
+  .leftProfileMainContainer{
+    grid-template-columns: repeat(1, 1fr);
+    width: 100%;
+  }
+}
+

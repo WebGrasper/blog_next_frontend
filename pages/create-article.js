@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router"; // Import useRouter
 import Cookies from "js-cookie";
 import Image from "next/image";
+import Spinner from "@/components/spinner";
 
 export default function Home() {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -19,6 +20,7 @@ export default function Home() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [titleError, setTitleError] = useState("");
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const [markDisabled, setDisabled] = useState(false);
 
   const [isAdmin, setAdmin] = useState(null);
   const router = useRouter();
@@ -455,7 +457,9 @@ export default function Home() {
                     Please add a description with at least 300 words.
                   </p>
                 )}
-                <button type="submit">Submit</button>
+                <button type="submit">{markDisabled ? 
+                  <Spinner /> : "Add"
+                }</button>
               </div>
             </form>
           </div>

@@ -9,6 +9,7 @@ import { useRouter } from "next/router"; // Import useRouter
 import Cookies from "js-cookie";
 import { useCookies } from "react-cookie";
 import { profile } from "@/store/profileSlice";
+import Spinner from "@/components/spinner";
 
 export default function Login() {
   const state = useSelector((state) => state.login);
@@ -120,7 +121,7 @@ export default function Login() {
             <Link href="/forgetPassword" className={styles.forgetPasswordLink}>
               Forget password?
             </Link>
-            <button type="submit" disabled={markDisabled}>{markDisabled ? 'Login...' : 'Login'}</button>
+            <button type="submit" disabled={markDisabled}>{markDisabled ? <Spinner/> : 'Login'}</button>
             <button type="button" disabled={markDisabled} onClick={(e)=>{
               e.preventDefault();
               router.push('/register');

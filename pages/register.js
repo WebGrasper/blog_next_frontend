@@ -9,6 +9,7 @@ import {
   confirmRegistration,
   resetConfirmRegisterState,
 } from "@/store/confirmRegistrationSlice";
+import Spinner from "@/components/spinner";
 
 export default function Register() {
   const passwordMatchMessageRef = useRef(null);
@@ -140,7 +141,7 @@ export default function Register() {
                       required
                     />
                   </div>
-                  <button type="submit" disabled={markDisabled}>{markDisabled ? 'Verify...':'Verify'}</button>
+                  <button type="submit" disabled={markDisabled}>{markDisabled ? <Spinner/> :'Verify'}</button>
                   <button type="reset" onClick={(e)=>{
                     e.preventDefault();
                     dispatch(resetRegisterState());
@@ -209,7 +210,7 @@ export default function Register() {
                       style={{ color: "red" }}
                     ></div>
                   </div>
-                  <button type="submit" disabled={markDisabled}>{markDisabled ? 'Register...' : 'Register'}</button>
+                  <button type="submit" disabled={markDisabled}>{markDisabled ? <Spinner/> : 'Register'}</button>
                 </form>
               </>
             )}

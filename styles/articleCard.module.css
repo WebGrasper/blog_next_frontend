@@ -5,7 +5,7 @@
   color: black;
   border-radius: 10px;
   cursor: pointer;
-  padding: 1rem;
+  padding: 1rem 0.75rem;
   background-color: rgb(242,239,235);
   /* opacity: 0;
     animation: visible ease forwards;
@@ -131,9 +131,8 @@
   gap: 2rem;
 }
 
-.date,
-.category {
+.date {
   color: rgba(0, 0, 0, 0.6);
-  font-size: 0.9rem;
+  font-size: 0.6rem;
   font-weight: normal;
 }

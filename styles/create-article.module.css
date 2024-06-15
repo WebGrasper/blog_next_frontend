@@ -27,7 +27,7 @@
   
   .container > h1{
     font-size: clamp(1.75rem, 4.5vw, 2rem);
-    color: #283032;
+    color: rgb(161,102,102);
     text-align: left;
     margin-block: 1rem;
   }

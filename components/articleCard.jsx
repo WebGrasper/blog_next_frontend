@@ -39,6 +39,7 @@ function ArticleCard({ article }) {
               <p>
                 Published in <span>{article?.category}</span>
               </p>
+              <h3 className={styles.date}>{article.formattedDate}</h3>
             </div>
           </div>
         </div>
@@ -59,10 +60,6 @@ function ArticleCard({ article }) {
           <h1 className={styles.title}>{article.title}</h1>
           <p className={styles.description}>{description[0]?.data}</p>
         </div>
-      </div>
-      <div className={styles.dateContainer}>
-        <h3 className={styles.date}>{article.formattedDate}</h3>
-        <h4 className={styles.category}>{article.category}</h4>
       </div>
     </Link>
   );

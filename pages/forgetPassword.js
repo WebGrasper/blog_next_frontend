@@ -6,6 +6,7 @@ import { useSnackbar } from "notistack";
 import { useRouter } from "next/router"; // Import useRouter
 import { forgetPassword, resetFPState } from "@/store/forgetPassSlice";
 import { resetPassword, resetRPState } from "@/store/resetPassSlice";
+import Spinner from "@/components/spinner";
 
 export default function ForgetPassword() {
   const passwordMatchMessageRef = useRef(null);
@@ -171,7 +172,7 @@ export default function ForgetPassword() {
                     style={{ color: "red" }}
                   ></div>
                   <button type="submit" disabled={markDisabled}>
-                    {markDisabled ? "Verify..." : "Verify"}
+                    {markDisabled ? <Spinner/> : "Verify"}
                   </button>
                   <button
                     type="reset"
@@ -203,7 +204,7 @@ export default function ForgetPassword() {
                     />
                   </div>
                   <button type="submit" disabled={markDisabled}>
-                    {markDisabled ? "Submit..." : "Submit"}
+                    {markDisabled ? <Spinner/> : "Submit"}
                   </button>
                   <button
                     type="button"
