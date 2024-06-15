@@ -122,7 +122,7 @@ export default function Profile() {
     try {
       setFormSubmit(true);
       const response = await fetch(
-        `http://localhost:7860/app/v1/updateMyDetails?` +
+        `https://blog-zo8s.vercel.app/app/v1/updateMyDetails?` +
           new URLSearchParams({
             token: token,
           }),
