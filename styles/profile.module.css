@@ -1,12 +1,93 @@
-.leftProfileSupremeContainer {
+.profileSupremeContainer {
   width: 100%;
   min-height: 400px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
   padding-block: 2rem;
   background-color: rgb(250,247,243);
+}
+
+.imageUploadFormRoot{
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+.imageUploadForm{
+  background-color: white;
+  box-shadow: 0 8px 32px 0 rgba(50, 50, 50, 0.17);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: fit-content;
+  padding: 2rem 1.5rem;
+  border-radius: 16px;
+  z-index: 4;
+}
+
+.closeButtonContainer{
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.closeButtonContainer > img{
+  cursor: pointer;
+  transition: 0.25s scale ease;
+}
+.closeButtonContainer > img:hover{
+  scale: 1.2;
+}
+
+.inputFieldContainer{
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  max-width: 14rem;
+}
+
+.customFileInput {
+  border: none;
+  border-bottom: 0 !important;
+  font-size: 1rem;
+  color: #2c3639;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.customFileInput:hover {
+  border-color: #888;
+}
+
+.customFileInput:focus {
+  outline: none;
+  border-color: none;
+}
+
+.customFileInput::file-selector-button {
+  background-color: #CF8A0A;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px 0 0 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.4s ease;
+}
+
+.customFileInput::file-selector-button:hover {
+  background-color: #805608;
 }
 
 .leftProfileMainContainer {
@@ -35,6 +116,12 @@
   align-items: flex-start;
 }
 
+.leftProfileImageSubContainer{
+  /* border: 1px solid black; */
+  cursor: pointer;
+  position: relative;
+}
+
 .leftProfileImage {
   border-radius: 50%;
   width: 6rem;
@@ -42,19 +129,46 @@
   object-fit: cover;
 }
 
-.adminPanelLink{
+.leftUploadImageIconContainer{
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.25rem;
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  background-color: rgb(161, 102, 102);
+  width: fit-content;
+  padding: 0.25rem;
+  border-radius: 50%;
+  transition: scale 0.25s ease;
+}
+
+
+.leftUploadImageIconContainer:hover{
+  scale: 1.2;
+}
+
+.leftUploadImageIcon{
+  width: 16px;
+  height: 16px;
+}
+
+.adminPanelLink, .uploadButton{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
   background-color: rgb(161, 102, 102);
   padding: 0.5rem 0.75rem;
   border-radius: 16px;
+  outline: inherit;
+  border: none;
+  cursor: pointer;
   font-size: small;
   font-weight: 200;
 }
 
-.adminIcon{
+.adminIcon, .uploadIcon{
   width: 1rem;
   height: 1rem;
   object-fit: cover;
@@ -254,9 +368,13 @@
   word-break: break-word;
 }
 
+/* ------------------------------- */
 @media only screen and (max-width:781px){
   .rightProfileFormContainer, .rightProfileEditableFormContainer{
     grid-template-columns: repeat(1, 1fr);
+  }
+  .imageUploadFormRoot{
+    height: 100svh;
   }
 }
 

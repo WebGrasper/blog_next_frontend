@@ -27,23 +27,11 @@ export default function Home() {
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const state = useSelector((state) => state.profile);
 
-  useEffect(() => {
-    if (state?.data?.user?.role === "admin") {
-      setAdmin(true);
-    } else {
-      setAdmin(false);
+  useEffect(()=>{
+    if(cookies.token === undefined){
+      router.push('/');
     }
-  }, [state]);
-
-  useEffect(() => {
-    if (Cookies.get("token") === "" || isAdmin === false) {
-      router.push("/");
-      enqueueSnackbar("You're not authorize to access this page.", {
-        autoHideDuration: 1000,
-        variant: "error",
-      });
-    }
-  }, [isAdmin]);
+  },[]);
 
   const handleClick = () => {
     setIsExpanded(!isExpanded);
@@ -163,8 +151,6 @@ export default function Home() {
       newFormData.append("articleImage", selectedFile); // Append the file
     }
 
-    console.log([...newFormData.entries()]);
-
     let token = cookies?.token;
 
     let response = await fetch(
@@ -221,7 +207,7 @@ export default function Home() {
             <h1>Create Article</h1>
             <form className={styles.formContainer} onSubmit={submitHandle}>
               <div className={styles.inputFieldContainer}>
-                <label htmlFor="Email">Title*</label>
+                <label htmlFor="Title">Title*</label>
                 <input
                   type="text"
                   name="title"
@@ -232,7 +218,7 @@ export default function Home() {
                 {titleError && <p className={styles.warning}>{titleError}</p>}
               </div>
               <div className={styles.inputFieldContainer}>
-                <label htmlFor="Email">Image*</label>
+                <label htmlFor="Image">Image*</label>
                 <input
                   className={styles.customFileInput}
                   name="articleImage"
@@ -242,7 +228,7 @@ export default function Home() {
                 />
               </div>
               <div className={styles.inputFieldContainer}>
-                <label htmlFor="Email">Category*</label>
+                <label htmlFor="Category">Category*</label>
                 <div className={styles.customRadioGroup}>
                   <label
                     className={`${styles.customRadioLabel} ${
