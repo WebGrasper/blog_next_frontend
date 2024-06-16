@@ -175,7 +175,7 @@ export default function Profile() {
     if (selectedFile) {
       newFormData.append("avatar", selectedFile); // Append the file
     }
-    let token = cookies?.token;
+    let token = cookies.token;
     setImageUploading(true);
     let response = await fetch(
       `https://blog-zo8s.vercel.app/app/v1/updateMyAvatar?token=${token}`,

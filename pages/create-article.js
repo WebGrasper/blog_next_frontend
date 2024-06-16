@@ -27,11 +27,11 @@ export default function Home() {
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const state = useSelector((state) => state.profile);
 
-  useEffect(()=>{
-    if(cookies.token === undefined){
-      router.push('/');
+  useEffect(() => {
+    if (cookies.token === undefined) {
+      router.push("/");
     }
-  },[]);
+  }, []);
 
   const handleClick = () => {
     setIsExpanded(!isExpanded);
@@ -39,9 +39,15 @@ export default function Home() {
 
   const structures = [
     {
-      type: "h2",
+      type: "h3",
       selfClosing: "false",
-      className: "heading2",
+      className: "heading3",
+      data: "",
+    },
+    {
+      type: "h4",
+      selfClosing: "false",
+      className: "heading4",
       data: "",
     },
     {
@@ -55,16 +61,26 @@ export default function Home() {
       selfClosing: "true",
       className: "break",
     },
+    {
+      type: "hr",
+      selfClosing: "true",
+      className: "seperator",
+    },
   ];
 
-  const handleAddElement = (type) => {
+  const handleAddElement = async(type) => {
     let structure = structures.find((struct) => struct.type === type);
     const newElement = {
       id: uuidv4(),
       ...structure,
     };
-    setElements([...elements, newElement]);
+    setElements((prevElements) => [...prevElements, newElement]);
   };
+
+  useEffect(() => {
+    console.log(elements); // This will log the updated elements array whenever it changes
+  }, [elements]);
+  
 
   const handleDeleteElement = (id) => {
     setElements((prevElements) =>
@@ -322,7 +338,9 @@ export default function Home() {
                   </label>
                   <label
                     className={`${styles.customRadioLabel} ${
-                      selectedCategory === "International News" ? styles.selected : ""
+                      selectedCategory === "International News"
+                        ? styles.selected
+                        : ""
                     }`}
                   >
                     <input
@@ -390,20 +408,32 @@ export default function Home() {
                     <Image
                       width={40}
                       height={40}
-                      src="/heading-icon.png"
-                      alt="heading-icon"
+                      src="/h3.png"
+                      alt="main heading icon"
                       loading="lazy"
                       className={`${
                         isExpanded ? styles.showImg2 : styles.img2
                       }`}
                       id="img2"
-                      onClick={() => handleAddElement("h2")}
+                      onClick={() => handleAddElement("h3")}
+                    />
+                    <Image
+                      width={40}
+                      height={40}
+                      src="/h4.png"
+                      alt="sub heading icon"
+                      loading="lazy"
+                      className={`${
+                        isExpanded ? styles.showImg2 : styles.img2
+                      }`}
+                      id="img2"
+                      onClick={() => handleAddElement("h4")}
                     />
                     <Image
                       width={40}
                       height={40}
                       loading="lazy"
-                      src="/paragraph-icon.png"
+                      src="/p.png"
                       alt="paragraph-icon"
                       className={`${
                         isExpanded ? styles.showImg3 : styles.img3
@@ -411,23 +441,55 @@ export default function Home() {
                       id="img3"
                       onClick={() => handleAddElement("p")}
                     />
+                    <Image
+                      width={40}
+                      height={40}
+                      loading="lazy"
+                      src="/br.png"
+                      alt="break icon"
+                      className={`${
+                        isExpanded ? styles.showImg3 : styles.img3
+                      }`}
+                      id="img3"
+                      onClick={() => handleAddElement("br")}
+                    />
+                    <Image
+                      width={40}
+                      height={40}
+                      loading="lazy"
+                      src="/hr.png"
+                      alt="seperator icon"
+                      className={`${
+                        isExpanded ? styles.showImg3 : styles.img3
+                      }`}
+                      id="img3"
+                      onClick={() => handleAddElement("hr")}
+                    />
                   </div>
                 </div>
-                {elements.map((element) => (
+                {elements.map((element, index) => (
                   <div
                     key={element.id}
                     className={styles.dynamicInputContainer}
                   >
-                    <textarea
-                      key={element.id}
-                      type="text"
-                      className={styles.textarea}
-                      value={element.data}
-                      onChange={(e) =>
-                        handleInputChange(element.id, e.target.value)
-                      }
-                      placeholder={`Enter text for ${element.type}`}
-                    ></textarea>
+                    {element.type !== "br" && element.type !== "hr" ? (
+                      <>
+                        <textarea
+                          key={element.id}
+                          type="text"
+                          className={styles.textarea}
+                          value={element.data}
+                          onChange={(e) =>
+                            handleInputChange(element.id, e.target.value)
+                          }
+                          placeholder={`Enter text for ${element.type}`}
+                        ></textarea>
+                      </>
+                    ) : element.type === "br" ? (
+                      <div className={styles.breakIndicator}>Line Break</div>
+                    ) : (
+                      <div className={styles.hrIndicator}>Line Seperator</div>
+                    )}
                     <Image
                       width={24}
                       height={24}
@@ -443,9 +505,9 @@ export default function Home() {
                     Please add a description with at least 300 words.
                   </p>
                 )}
-                <button type="submit">{markDisabled ? 
-                  <Spinner /> : "Add"
-                }</button>
+                <button type="submit">
+                  {markDisabled ? <Spinner /> : "Add"}
+                </button>
               </div>
             </form>
           </div>

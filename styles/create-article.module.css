@@ -1,314 +1,325 @@
 /* Home.module.css */
 
 .root {
-    max-width: 100%;
-    background-color: rgb(250,247,243);
-  }
-  
-  .main {
-    max-width: 70rem;
-    margin: 0 auto;
-    padding: 4rem 0.75rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .container {
-    max-width: 30rem;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    border-radius: 16px;
-    background-color: white;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-  }
-  
-  .container > h1{
-    font-size: clamp(1.75rem, 4.5vw, 2rem);
-    color: rgb(161,102,102);
-    text-align: left;
-    margin-block: 1rem;
-  }
-  
-  .container1 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.25rem;
-  }
-  
-  .headingContainer h3 {
-    font-size: large;
-    font-weight: 700;
-    color: rgba(0, 0, 0, 0.8);
-  }
-  
-  .inputFieldContainer {
-    margin-bottom: 1.5rem;
-  }
-  
-  .customRadioGroup {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-  
-  .customRadioLabel {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    font-size: 1rem;
-    border: 1.5px solid rgb(198, 198, 198);
-    padding: 0.5rem;
-    border-radius: 6px;
-    color: #333;
-    transition: border 0.3s ease, border-color 0.3s ease;
-  }
-  
-  .customRadioLabel.selected {
-    border-color: #CF8A0A !important;
-  }
-  
-  .customRadioLabel input {
-    display: none;
-  }
-  
-  .customRadioLabel .customRadioButton {
-    width: .5rem;
-    height: .5rem;
-    border-radius: 50%;
-    border: 2px solid #ccc;
-    margin-right: 0.5rem;
-    transition: all 0.3s;
-  }
-  
-  .customRadioLabel input:checked + .customRadioButton {
-    background-color: #CF8A0A;
-    border-color: #CF8A0A;
-    box-shadow: 0 0 0 4px rgba(0, 112, 243, 0.2);
-  }
-  
-  .warning {
-    color: red;
-    margin-block: 0.5rem;
-    font-size: 0.875rem;
-  }
-  
-  
-  .addButton {
-    color: black;
-    display: flex;
-    gap: 0.25rem;
-  }
-  
-  .addButton img {
-    width: 2.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    height: 2.5rem;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .img2,
-  .img3,
-  .showImg2,
-  .showImg3 {
-    padding: 0.5rem;
-  }
-  
-  .img1 {
-    padding: 0.25rem;
-    z-index: 3;
-    cursor: pointer;
-  }
-  
-  .rotateClockwise {
-    transform: rotate(90deg);
-    transition: transform 0.7s ease;
-  }
-  
-  .img2 {
-    position: relative;
-    right: 3rem;
-    opacity: 0;
-    z-index: 2;
-    pointer-events: none;
-    transition: right 0.5s ease, z-index 0.5s ease, opacity 0.5s ease;
-  }
-  
-  .img3 {
-    position: relative;
-    right: 5.5rem;
-    opacity: 0;
-    z-index: 1;
-    pointer-events: none;
-    transition: right 0.5s ease, z-index 0.5s ease, opacity 0.5s ease;
-  }
-  
-  .showImg2 {
-    position: relative;
-    right: 0;
-    opacity: 1;
-    z-index: 2;
-    pointer-events: all;
-    transition: right 0.5s ease, z-index 0.5s ease, opacity 0.5s ease;
-  }
-  
-  .showImg3 {
-    position: relative;
-    right: 0;
-    z-index: 1;
-    opacity: 1;
-    pointer-events: all;
-    transition: right 0.5s ease, z-index 0.5s ease, opacity 0.5s ease;
-  }
-  
-  .formContainer {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .inputFieldContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 0.5rem;
-    width: 100%;
-  }
-  
-  .inputFieldContainer label {
+  max-width: 100%;
+  background-color: rgb(250, 247, 243);
+}
+
+.main {
+  max-width: 70rem;
+  margin: 0 auto;
+  padding: 4rem 0.75rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  max-width: 30rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  border-radius: 16px;
+  background-color: white;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+.container > h1 {
+  font-size: clamp(1.75rem, 4.5vw, 2rem);
+  color: rgb(161, 102, 102);
+  text-align: left;
+  margin-block: 1rem;
+}
+
+.container1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+
+.headingContainer h3 {
+  font-size: large;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.inputFieldContainer {
+  margin-bottom: 1.5rem;
+}
+
+.customRadioGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.customRadioLabel {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1rem;
+  border: 1.5px solid rgb(198, 198, 198);
+  padding: 0.5rem;
+  border-radius: 6px;
+  color: #333;
+  transition: border 0.3s ease, border-color 0.3s ease;
+}
+
+.customRadioLabel.selected {
+  border-color: #cf8a0a !important;
+}
+
+.customRadioLabel input {
+  display: none;
+}
+
+.customRadioLabel .customRadioButton {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  margin-right: 0.5rem;
+  transition: all 0.3s;
+}
+
+.customRadioLabel input:checked + .customRadioButton {
+  background-color: #cf8a0a;
+  border-color: #cf8a0a;
+  box-shadow: 0 0 0 4px rgba(0, 112, 243, 0.2);
+}
+
+.warning {
+  color: red;
+  margin-block: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.addButton {
+  color: black;
+  display: flex;
+  gap: 0.25rem;
+}
+
+.addButton img {
+  width: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  height: 2.5rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.img2,
+.img3,
+.showImg2,
+.showImg3 {
+  padding: 0.5rem;
+}
+
+.img1 {
+  padding: 0.25rem;
+  z-index: 3;
+  cursor: pointer;
+}
+
+.rotateClockwise {
+  transform: rotate(90deg);
+  transition: transform 0.7s ease;
+}
+
+.img2 {
+  position: relative;
+  right: 3rem;
+  opacity: 0;
+  z-index: 2;
+  pointer-events: none;
+  transition: right 0.5s ease, z-index 0.5s ease, opacity 0.5s ease;
+}
+
+.img3 {
+  position: relative;
+  right: 5.5rem;
+  opacity: 0;
+  z-index: 1;
+  pointer-events: none;
+  transition: right 0.5s ease, z-index 0.5s ease, opacity 0.5s ease;
+}
+
+.showImg2 {
+  position: relative;
+  right: 0;
+  opacity: 1;
+  z-index: 2;
+  pointer-events: all;
+  transition: right 0.5s ease, z-index 0.5s ease, opacity 0.5s ease;
+}
+
+.showImg3 {
+  position: relative;
+  right: 0;
+  z-index: 1;
+  opacity: 1;
+  pointer-events: all;
+  transition: right 0.5s ease, z-index 0.5s ease, opacity 0.5s ease;
+}
+
+.breakIndicator, .hrIndicator {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #2c3639;
+  margin-top: 10px; 
+  font-size: small; 
+  color: #2c3639; 
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputFieldContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.inputFieldContainer label {
+  font-size: medium;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.inputFieldContainer input {
+  background-color: transparent;
+  border: 0;
+  color: black;
+  letter-spacing: 1px;
+  border-bottom: 2px solid black;
+  padding-bottom: 0.25rem;
+  padding-left: 4px;
+  font-size: medium;
+  width: 100%;
+  transition: border-bottom 0.2s linear;
+}
+.inputFieldContainer input:focus,
+.inputFieldContainer input:active {
+  outline: none;
+  border-bottom: 2px solid rgb(161, 102, 102);
+  transform-origin: left;
+}
+.inputFieldContainer input::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.customFileInput {
+  border: none;
+  border-bottom: 0 !important;
+  font-size: 1rem;
+  color: #333;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.customFileInput:hover {
+  border-color: #888;
+}
+
+.customFileInput:focus {
+  outline: none;
+  border-color: none;
+}
+
+.customFileInput::file-selector-button {
+  background-color: #cf8a0a;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px 0 0 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.4s ease;
+}
+
+.customFileInput::file-selector-button:hover {
+  background-color: #805608;
+}
+
+.dynamicInputContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.dynamicInputContainer > img {
+  width: 1.5rem;
+  height: 1.5rem;
+  scale: 1;
+  cursor: pointer;
+  transition: scale 0.3s ease;
+}
+
+.dynamicInputContainer > img:hover {
+  scale: 1.1;
+}
+
+.textarea {
+  background-color: transparent;
+  border: 0;
+  color: black;
+  letter-spacing: 1px;
+  border: 2px solid black;
+  padding-bottom: 0.25rem;
+  padding: 4px 6px;
+  font-size: medium;
+  border-radius: 6px;
+  resize: none;
+  width: 100%;
+  min-height: 8rem;
+  transition: border-bottom 0.2s linear;
+}
+.textarea:focus,
+.textarea:active {
+  outline: none;
+  border: 2px solid rgb(161, 102, 102);
+  transform-origin: left;
+}
+.textarea::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+.textarea::-webkit-scrollbar {
+  display: none;
+}
+
+.formContainer button {
+  font-size: medium;
+  padding: 0.75rem 0;
+  margin-top: 0.5rem;
+  border-radius: 25px;
+  width: 7rem;
+  background-color: #2c3639;
+  border: 2px solid #2c3639;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.2s linear;
+}
+.formContainer button:hover {
+  background-color: #283032;
+}
+
+@media only screen and (max-width: 321px) {
+  .headingContainer > h3 {
     font-size: medium;
-    font-weight: bold;
-    color: rgba(0, 0, 0, 0.8);
   }
-  
-  .inputFieldContainer input {
-    background-color: transparent;
-    border: 0;
-    color: black;
-    letter-spacing: 1px;
-    border-bottom: 2px solid black;
-    padding-bottom: 0.25rem;
-    padding-left: 4px;
-    font-size: medium;
-    width: 100%;
-    transition: border-bottom 0.2s linear;
-  }
-  .inputFieldContainer input:focus,
-  .inputFieldContainer input:active {
-    outline: none;
-    border-bottom: 2px solid rgb(161, 102, 102);
-    transform-origin: left;
-  }
-  .inputFieldContainer input::placeholder {
-    color: rgba(0, 0, 0, 0.5);
-  }
-  
-  .customFileInput {
-    border: none;
-    border-bottom: 0 !important;
-    font-size: 1rem;
-    color: #333;
-    cursor: pointer;
-    border-radius: 4px;
-  }
-  
-  .customFileInput:hover {
-    border-color: #888;
-  }
-  
-  .customFileInput:focus {
-    outline: none;
-    border-color: none;
-  }
-  
-  .customFileInput::file-selector-button {
-    background-color: #CF8A0A;
-    color: white;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 4px 0 0 4px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.4s ease;
-  }
-  
-  .customFileInput::file-selector-button:hover {
-    background-color: #805608;
-  }
-  
-  .dynamicInputContainer{
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 0.5rem;
-    width: 100%;
-  }
-  
-  .dynamicInputContainer > img{
-    width: 1.5rem;
-    height: 1.5rem;
-    scale: 1;
-    cursor: pointer;
-    transition: scale 0.3s ease;
-  }
-  
-  .dynamicInputContainer > img:hover{
-    scale: 1.1;
-  }
-  
-  .textarea {
-    background-color: transparent;
-    border: 0;
-    color: black;
-    letter-spacing: 1px;
-    border: 2px solid black;
-    padding-bottom: 0.25rem;
-    padding: 4px 6px;
-    font-size: medium;
-    border-radius: 6px;
-    resize: none;
-    width: 100%;
-    min-height: 8rem;
-    transition: border-bottom 0.2s linear;
-  }
-  .textarea:focus,
-  .textarea:active {
-    outline: none;
-    border: 2px solid rgb(161, 102, 102);
-    transform-origin: left;
-  }
-  .textarea::placeholder {
-    color: rgba(0, 0, 0, 0.5);
-  }
-  .textarea::-webkit-scrollbar {
-    display: none;
-  }
-  
-  .formContainer button {
-    font-size: medium;
-    padding: 0.75rem 0;
-    margin-top: 0.5rem;
-    border-radius: 25px;
-    width: 7rem;
-    background-color: #2c3639;
-    border: 2px solid #2c3639;
-    cursor: pointer;
-    color: white;
-    transition: background-color 0.2s linear;
-  }
-  .formContainer button:hover {
-    background-color: #283032;
-  }
-  
-  
-  @media only screen and (max-width:321px){
-    .headingContainer > h3{
-      font-size: medium;
-    }
-  }
+}
