@@ -60,11 +60,13 @@ export default function Home() {
       type: "br",
       selfClosing: "true",
       className: "break",
+      data: "",
     },
     {
       type: "hr",
       selfClosing: "true",
       className: "seperator",
+      data: "",
     },
   ];
 
@@ -99,7 +101,7 @@ export default function Home() {
   const calculateTotalWordCount = (filteredElements) => {
     let totalWordCount = 0;
     for (const element of filteredElements) {
-      totalWordCount += element.data.trim().split(/\s+/).length;
+      totalWordCount += element?.data?.trim().split(/\s+/).length;
     }
     return totalWordCount;
   };
@@ -132,7 +134,7 @@ export default function Home() {
 
     /* Remove empty elements */
     const filteredElements = elements.filter(
-      (element) => element.data.trim() !== ""
+      (element) => element?.data?.trim() !== ""
     );
     setElements(filteredElements);
 
@@ -152,7 +154,7 @@ export default function Home() {
 
     const totalWordCount = await calculateTotalWordCount(filteredElements);
 
-    if (totalWordCount <= 299) {
+    if (totalWordCount <= 1) {
       setDescriptionWarning(true);
       return;
     } else {
@@ -169,8 +171,10 @@ export default function Home() {
 
     let token = cookies?.token;
 
+    setDisabled(true);
+
     let response = await fetch(
-      `https://blog-zo8s.vercel.app/app/v2/createArticle?token=${token}`,
+      `http://localhost:7860/app/v2/createArticle?token=${token}`,
       {
         method: "POST",
         body: newFormData,
@@ -182,12 +186,14 @@ export default function Home() {
         autoHideDuration: 2000,
         variant: "error",
       });
+      setDisabled(false);
       return;
     }
     enqueueSnackbar(data?.message, {
       autoHideDuration: 2000,
       variant: "success",
     });
+    setDisabled(false);
   };
 
   return (

@@ -1,8 +1,11 @@
 import ArticleCard from "@/components/articleCard";
+import Spinner from "@/components/spinner";
 import styles from "@/styles/article-page.module.css";
 import moment from "moment";
 import Head from "next/head";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export const getServerSideProps = async (context) => {
   const name = context.query.name;
@@ -32,8 +35,8 @@ export const getServerSideProps = async (context) => {
   };
 
   let articlesData = null;
-  let final_articles = undefined;
-  let final_success = undefined;
+  let final_articles = [];
+  let final_success = null;
 
   try {
     const response = await fetch(
@@ -52,6 +55,7 @@ export const getServerSideProps = async (context) => {
 
     articlesData = await response.json();
     let { success, articles } = articlesData;
+    console.log(articles);
     final_success = success;
 
     // Check if article is not undefined and is an array before mapping
@@ -89,6 +93,11 @@ export const getServerSideProps = async (context) => {
 };
 
 function ArticlePage({ success, articles, name }) {
+
+  const [markDisabled, setDisabled] = useState(false);
+
+  const router = useRouter();
+
   return (
     <main className={styles.rootArticlePage}>
       <Head>
@@ -142,16 +151,27 @@ function ArticlePage({ success, articles, name }) {
             <p>Results for: </p>
             <h2>{decodeURIComponent(name.replace(/-/g, " "))}</h2>
           </div>
-          <Image
-            src={
-              "https://ik.imagekit.io/94nzrpaat/images/noDataIcon.svg?updatedAt=1709222605789"
-            }
-            width={150}
-            height={150}
-            loading="lazy"
-            unoptimized
-            alt="not found image"
-          />
+          <div className={styles.notFoundImageContainer}>
+            <Image
+              src={
+                "https://ik.imagekit.io/94nzrpaat/images/gold-logo-with-title-wg_853558-2748-N6dN8fcsA-transformed_1%20(1).png?updatedAt=1708801314331"
+              }
+              width={100}
+              height={50}
+              loading="lazy"
+              unoptimized
+              alt="not found image"
+            />
+            <div className={styles.notFoundContent}>
+              <h2>No article is found.</h2>
+              <p>Please return to the home page.</p>
+            </div>
+            <button type="button" onClick={(e)=>{
+              e.preventDefault();
+              setDisabled(true);
+              router.push('/');
+            }}>{markDisabled ? <Spinner/> : 'Home'}</button>
+          </div>
         </section>
       )}
     </main>
