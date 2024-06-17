@@ -7,8 +7,11 @@ import { useEffect, useState } from "react";
 function ArticleCard({ article }) {
   const [description, setDescription] = useState([]);
 
+  //Rendering always first paragraph.
   useEffect(() => {
-    setDescription(JSON.parse(article?.description));
+    const parsedDescription = JSON.parse(article?.description);
+    const firstParagraph = parsedDescription.find((desc) => desc.type === "p");
+    setDescription(firstParagraph ? [firstParagraph] : []);
   }, [article]);
 
   // Custom function to create a clean URL slug by removing special characters and replacing spaces with hyphens

@@ -70,7 +70,7 @@ export default function Home() {
     },
   ];
 
-  const handleAddElement = async(type) => {
+  const handleAddElement = async (type) => {
     let structure = structures.find((struct) => struct.type === type);
     const newElement = {
       id: uuidv4(),
@@ -78,11 +78,6 @@ export default function Home() {
     };
     setElements((prevElements) => [...prevElements, newElement]);
   };
-
-  useEffect(() => {
-    console.log(elements); // This will log the updated elements array whenever it changes
-  }, [elements]);
-  
 
   const handleDeleteElement = (id) => {
     setElements((prevElements) =>
@@ -101,7 +96,9 @@ export default function Home() {
   const calculateTotalWordCount = (filteredElements) => {
     let totalWordCount = 0;
     for (const element of filteredElements) {
-      totalWordCount += element?.data?.trim().split(/\s+/).length;
+      if (element.type !== "hr" && element.type !== "br") {
+        totalWordCount += element?.data?.trim().split(/\s+/).length;
+      }
     }
     return totalWordCount;
   };
@@ -134,7 +131,10 @@ export default function Home() {
 
     /* Remove empty elements */
     const filteredElements = elements.filter(
-      (element) => element?.data?.trim() !== ""
+      (element) =>
+        element.data.trim() !== "" ||
+        element.type === "hr" ||
+        element.type === "br"
     );
     setElements(filteredElements);
 
@@ -173,27 +173,39 @@ export default function Home() {
 
     setDisabled(true);
 
-    let response = await fetch(
-      `http://localhost:7860/app/v2/createArticle?token=${token}`,
-      {
-        method: "POST",
-        body: newFormData,
+    try {
+      let response = await fetch(
+        `https://blog-zo8s.vercel.app/app/v2/createArticle?token=${token}`,
+        {
+          method: "POST",
+          body: newFormData,
+        }
+      );
+      let data = await response.json();
+      if (!data?.success) {
+        enqueueSnackbar(data?.message, {
+          autoHideDuration: 2000,
+          variant: "error",
+        });
+        setDisabled(false);
+        return;
       }
-    );
-    let data = await response.json();
-    if (!data?.success) {
       enqueueSnackbar(data?.message, {
         autoHideDuration: 2000,
-        variant: "error",
+        variant: "success",
       });
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar(
+        "Failed to connect to the server. Please try again later.",
+        {
+          autoHideDuration: 2000,
+          variant: "error",
+        }
+      );
+    } finally {
       setDisabled(false);
-      return;
     }
-    enqueueSnackbar(data?.message, {
-      autoHideDuration: 2000,
-      variant: "success",
-    });
-    setDisabled(false);
   };
 
   return (
