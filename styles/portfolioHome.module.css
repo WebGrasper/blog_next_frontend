@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Gugi&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Outfit:wght@100..900&display=swap');
+
 .main {
   display: flex;
   flex-direction: column;
@@ -5,7 +7,7 @@
   align-items: center;
   background: rgb(0, 0, 0);
 
-  background: radial-gradient(
+  /* background: radial-gradient(
       circle,
       rgba(0, 36, 128, 0.4) 0%,
       hsla(0, 0%, 0%, 1) 100%
@@ -23,9 +25,10 @@
       rgba(0, 36, 128, 0.4) 0%,
       hsla(0, 0%, 0%, 1) 100%
     )
-    fixed;
+    fixed; */
   width: 100%;
   padding: 1rem;
+  font-family: "Outfit", sans-serif;
 }
 
 .subMain {
@@ -516,16 +519,17 @@
     width: 100%;
     filter: blur(0);
   }
-
+  
   .section4ProjectContainer:not(.expanded) {
     -webkit-backdrop-filter: blur(0);
     border-radius: 6px;
     border: 1px solid white;
   }
-
-  .section4ProjectContainer.expanded .projectDescription,
+  .section4ProjectContainer:not(.expanded) * {
+    opacity: 1 !important;
+  }
   .section4ProjectContainer:not(.expanded) .projectDescription {
-    color: black;
+    color: rgba(255, 255, 255, 0.8) !important;
   }
 }
 

@@ -56,9 +56,24 @@
   ],
   "projects": [
     {
-      "name": "Delta line",
-      "description": "Get your stabilizers, power transformers and E Panels from us at Delta Line. Where quality and performance meet in our top notch products.",
-      "link": "https://www.delta-line.in/"
+      "name": "Yameen Corporation [ In Progress ]",
+      "description": "An E-commerce platform to show the diverse variety of metal handicrafts.",
+      "link": "https://yameen-corporation.vercel.app/"
+    },
+    {
+      "name": "Attar Electronics",
+      "description": "Get your stabilizers, power transformers and E Panels from us. Where quality and performance meet in our top notch products.",
+      "link": "https://www.attarelectronics.com/"
+    },
+    {
+      "name": "FA Handicrafts",
+      "description": "Exporter of handmade metal furniture: coffee, console, side tables, and lifestyle accessories.",
+      "link": "https://www.fahandicrafts.com/"
+    },
+    {
+      "name": "Code Classico",
+      "description": "Elevate your coding with our React-based online editor. Seamless, collaborative, and feature-rich for efficient development. Join us now!",
+      "link": "https://code-editor-murex.vercel.app/"
     },
     {
       "name": "Sarte Living",
@@ -69,16 +84,6 @@
       "name": "Compressify",
       "description": "Optimize your images effortlessly with ImageCompressify. A seamless web app for efficient image compression and fast loading.",
       "link": "https://image-compression-one.vercel.app/"
-    },
-    {
-      "name": "Code Classico",
-      "description": "Elevate your coding with our React-based online editor. Seamless, collaborative, and feature-rich for efficient development. Join us now!",
-      "link": "https://code-editor-murex.vercel.app/"
-    },
-    {
-      "name": "Self Care [Desktop only]",
-      "description": "A platform where one can search for mental health-related conditions and access corresponding remedies. Your well-being, our priority!",
-      "link": "https://mohdamaan570.github.io/Self-Care/"
     }
   ]
 }

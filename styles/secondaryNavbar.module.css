@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Gugi&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Outfit:wght@100..900&display=swap');
+
 .secondaryNavbarSupremeContainer {
     display: flex;
     justify-content: center;
@@ -8,6 +10,7 @@
     position: sticky;
     top: 0;
     z-index: 9;
+    font-family: "Outfit", sans-serif;
 }
 
 .secondaryNavbarContainer {
