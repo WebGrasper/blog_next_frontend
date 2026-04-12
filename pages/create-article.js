@@ -10,10 +10,14 @@ import { useRouter } from "next/router"; // Import useRouter
 import Cookies from "js-cookie";
 import Image from "next/image";
 import Spinner from "@/components/spinner";
+import dynamic from "next/dynamic";
+
+const MediumEditor = dynamic(() => import("@/components/MediumEditor"), {
+  ssr: false,
+});
 
 export default function Home() {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [elements, setElements] = useState([]);
+  const [articleHtml, setArticleHtml] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [showWarning, setShowWarning] = useState(false);
   const [descriptionWarning, setDescriptionWarning] = useState(false);
@@ -33,74 +37,12 @@ export default function Home() {
     }
   }, []);
 
-  const handleClick = () => {
-    setIsExpanded(!isExpanded);
-  };
-
-  const structures = [
-    {
-      type: "h3",
-      selfClosing: "false",
-      className: "heading3",
-      data: "",
-    },
-    {
-      type: "h4",
-      selfClosing: "false",
-      className: "heading4",
-      data: "",
-    },
-    {
-      type: "p",
-      selfClosing: "false",
-      className: "paragraph",
-      data: "",
-    },
-    {
-      type: "br",
-      selfClosing: "true",
-      className: "break",
-      data: "",
-    },
-    {
-      type: "hr",
-      selfClosing: "true",
-      className: "seperator",
-      data: "",
-    },
-  ];
-
-  const handleAddElement = async (type) => {
-    let structure = structures.find((struct) => struct.type === type);
-    const newElement = {
-      id: uuidv4(),
-      ...structure,
-    };
-    setElements((prevElements) => [...prevElements, newElement]);
-  };
-
-  const handleDeleteElement = (id) => {
-    setElements((prevElements) =>
-      prevElements.filter((element) => element.id !== id)
-    );
-  };
-
-  const handleInputChange = (id, value) => {
-    setElements((prevElements) =>
-      prevElements.map((element) =>
-        element.id === id ? { ...element, data: value } : element
-      )
-    );
-  };
-
-  const calculateTotalWordCount = (filteredElements) => {
-    let totalWordCount = 0;
-    for (const element of filteredElements) {
-      if (element.type !== "hr" && element.type !== "br") {
-        totalWordCount += element?.data?.trim().split(/\s+/).length;
-      }
-    }
-    return totalWordCount;
+  const calculateTotalWordCount = (html) => {
+    if (!html) return 0;
+    // Strip HTML tags for word count
+    const text = html.replace(/<[^>]+>/g, ' ');
+    const count = text.trim().split(/\s+/).filter(word => word.length > 0).length;
+    return count;
   };
 
   const handleFileChange = (event) => {
@@ -129,15 +71,6 @@ export default function Home() {
       setTitleError("");
     }
 
-    /* Remove empty elements */
-    const filteredElements = elements.filter(
-      (element) =>
-        element.data.trim() !== "" ||
-        element.type === "hr" ||
-        element.type === "br"
-    );
-    setElements(filteredElements);
-
     /* category validation */
     if (!selectedCategory) {
       setShowWarning(true);
@@ -147,12 +80,12 @@ export default function Home() {
     }
 
     /* description validation */
-    if (filteredElements.length === 0) {
+    if (!articleHtml || articleHtml.trim() === '') {
       setDescriptionWarning(true);
       return;
     }
 
-    const totalWordCount = await calculateTotalWordCount(filteredElements);
+    const totalWordCount = calculateTotalWordCount(articleHtml);
 
     if (totalWordCount <= 1) {
       setDescriptionWarning(true);
@@ -163,7 +96,7 @@ export default function Home() {
 
     let newFormData = new FormData(); // Create a new FormData object
     newFormData.append("title", event.target.title.value);
-    newFormData.append("description", JSON.stringify(filteredElements)); // Convert to JSON string
+    newFormData.append("description", JSON.stringify(articleHtml)); // Store HTML string as JSON string for safety
     newFormData.append("category", selectedCategory);
     if (selectedFile) {
       newFormData.append("articleImage", selectedFile); // Append the file
@@ -407,117 +340,11 @@ export default function Home() {
                 )}
               </div>
               <div className={styles.inputFieldContainer}>
-                <div className={styles.container1}>
-                  <div className={styles.headingContainer}>
-                    <h3>Add description*</h3>
-                  </div>
-                  <div className={styles.addButton} onClick={handleClick}>
-                    <Image
-                      width={40}
-                      height={40}
-                      loading="lazy"
-                      src="/add-icon.png"
-                      alt="add-icon"
-                      className={`${styles.img1} ${
-                        isExpanded ? styles.rotateClockwise : ""
-                      }`}
-                      id="img1"
-                    />
-                    <Image
-                      width={40}
-                      height={40}
-                      src="/h3.png"
-                      alt="main heading icon"
-                      loading="lazy"
-                      className={`${
-                        isExpanded ? styles.showImg2 : styles.img2
-                      }`}
-                      id="img2"
-                      onClick={() => handleAddElement("h3")}
-                    />
-                    <Image
-                      width={40}
-                      height={40}
-                      src="/h4.png"
-                      alt="sub heading icon"
-                      loading="lazy"
-                      className={`${
-                        isExpanded ? styles.showImg2 : styles.img2
-                      }`}
-                      id="img2"
-                      onClick={() => handleAddElement("h4")}
-                    />
-                    <Image
-                      width={40}
-                      height={40}
-                      loading="lazy"
-                      src="/p.png"
-                      alt="paragraph-icon"
-                      className={`${
-                        isExpanded ? styles.showImg3 : styles.img3
-                      }`}
-                      id="img3"
-                      onClick={() => handleAddElement("p")}
-                    />
-                    <Image
-                      width={40}
-                      height={40}
-                      loading="lazy"
-                      src="/br.png"
-                      alt="break icon"
-                      className={`${
-                        isExpanded ? styles.showImg3 : styles.img3
-                      }`}
-                      id="img3"
-                      onClick={() => handleAddElement("br")}
-                    />
-                    <Image
-                      width={40}
-                      height={40}
-                      loading="lazy"
-                      src="/hr.png"
-                      alt="seperator icon"
-                      className={`${
-                        isExpanded ? styles.showImg3 : styles.img3
-                      }`}
-                      id="img3"
-                      onClick={() => handleAddElement("hr")}
-                    />
-                  </div>
+                <div className={styles.headingContainer} style={{ marginBottom: "1rem" }}>
+                  <label>Content*</label>
                 </div>
-                {elements.map((element, index) => (
-                  <div
-                    key={element.id}
-                    className={styles.dynamicInputContainer}
-                  >
-                    {element.type !== "br" && element.type !== "hr" ? (
-                      <>
-                        <textarea
-                          key={element.id}
-                          type="text"
-                          className={styles.textarea}
-                          value={element.data}
-                          onChange={(e) =>
-                            handleInputChange(element.id, e.target.value)
-                          }
-                          placeholder={`Enter text for ${element.type}`}
-                        ></textarea>
-                      </>
-                    ) : element.type === "br" ? (
-                      <div className={styles.breakIndicator}>Line Break</div>
-                    ) : (
-                      <div className={styles.hrIndicator}>Line Seperator</div>
-                    )}
-                    <Image
-                      width={24}
-                      height={24}
-                      src="/delete-icon.svg"
-                      alt="delete icon"
-                      className={styles.deleteIcon}
-                      onClick={() => handleDeleteElement(element.id)}
-                    />
-                  </div>
-                ))}
+                
+                <MediumEditor onChange={(html) => setArticleHtml(html)} />
                 {descriptionWarning && (
                   <p className={styles.warning}>
                     Please add a description with at least 300 words.
