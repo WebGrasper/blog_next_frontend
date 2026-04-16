@@ -267,7 +267,7 @@ export default function Home() {
                   {titleError && <p className={styles.warning}>{titleError}</p>}
                 </div>
                 
-                <div style={{ width: '100%', display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
+                <div className={styles.descriptionWrapper}>
                   <span className={styles.sectionLabel}>DESCRIPTION</span>
                   <div className={styles.editorContainerBox}>
                     <MediumEditor onChange={(html) => setArticleHtml(html)} />

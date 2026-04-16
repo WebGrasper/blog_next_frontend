@@ -21,6 +21,21 @@
   transition: border-color 0.2s ease-in-out;
 }
 
+@media (max-width: 1024px) {
+  .editorContainer {
+    height: auto;
+    min-height: 400px;
+    overflow-y: visible;
+  }
+}
+
+@media (max-width: 768px) {
+  .editorContainer {
+    padding: 1.5rem 1rem;
+    font-size: 1rem;
+  }
+}
+
 .editorContainer:focus-within {
   outline: none;
 }
@@ -56,6 +71,15 @@
   margin-top: 0.25em;
   margin-bottom: 0.25em;
   line-height: 1.2;
+}
+
+@media (max-width: 768px) {
+  .editorContainer :global(h2) {
+    font-size: 1.75em;
+  }
+  .editorContainer :global(h3) {
+    font-size: 1.25em;
+  }
 }
 
 .editorContainer :global(h4) {
