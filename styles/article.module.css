@@ -1,18 +1,40 @@
 .articlePageSupremeContainer {
     width: 100%;
     background-color: rgb(242, 239, 235);
+    min-height: 100vh;
 }
+
+/* No @media heights here, let it flow naturally */
 
 .articleMainContainer {
     position: relative;
-    max-width: 50rem;
+    max-width: 55rem;
     margin-inline: auto;
     padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 1200px) {
+    .articleMainContainer {
+        display: grid;
+        grid-template-columns: 1fr 380px;
+        max-width: 85rem;
+        gap: 3rem;
+        align-items: start;
+    }
 }
 
 .articleContainer {
     display: flex;
     flex-direction: column;
+    min-width: 0;
+}
+
+@media (min-width: 1200px) {
+    .articleContainer {
+        max-width: 55rem;
+    }
 }
 
 .creatorMainContainer {
@@ -170,231 +192,312 @@
 
 /* ── TipTap HTML output (new editor) ─────────────────────────── */
 .dynamicHtmlContent {
-  font-family: "Source Serif 4", Georgia, serif;
-  color: #242424;
-  line-height: 1.75;
-  font-size: 1.125rem;
-  letter-spacing: -0.003em;
-  word-break: break-word;
+    font-family: "Source Serif 4", Georgia, serif;
+    color: #242424;
+    line-height: 1.75;
+    font-size: 1.125rem;
+    letter-spacing: -0.003em;
+    word-break: break-word;
 }
 
 .dynamicHtmlContent h3 {
-  font-size: 1.6rem;
-  font-weight: 700;
-  margin-block: 1.5rem 0.5rem;
-  color: #111;
-  line-height: 1.2;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-block: 1.5rem 0.5rem;
+    color: #111;
+    line-height: 1.2;
 }
 
 .dynamicHtmlContent p {
-  margin-block: 0.75rem;
+    margin-block: 0.75rem;
 }
 
 .dynamicHtmlContent strong {
-  font-weight: 700;
-  color: #111;
+    font-weight: 700;
+    color: #111;
 }
 
 .dynamicHtmlContent em {
-  font-style: italic;
+    font-style: italic;
 }
 
 .dynamicHtmlContent mark {
-  background-color: #fef08a;
-  border-radius: 3px;
-  padding: 0 2px;
+    background-color: #fef08a;
+    border-radius: 3px;
+    padding: 0 2px;
 }
 
 .dynamicHtmlContent a {
-  color: #1a8917;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+    color: #1a8917;
+    text-decoration: underline;
+    text-underline-offset: 3px;
 }
+
 .dynamicHtmlContent a:hover {
-  color: #0f5e0e;
+    color: #0f5e0e;
 }
 
 .dynamicHtmlContent blockquote {
-  border-left: 4px solid #3a3d3e;
-  margin: 1.5rem 0;
-  padding: 0.5rem 0 0.5rem 1.25rem;
-  color: #555;
-  font-style: italic;
+    border-left: 4px solid #3a3d3e;
+    margin: 1.5rem 0;
+    padding: 0.5rem 0 0.5rem 1.25rem;
+    color: #555;
+    font-style: italic;
 }
 
 .dynamicHtmlContent pre {
-  background-color: #1e1e1e;
-  color: #d4d4d4;
-  border-radius: 8px;
-  padding: 1.25rem 1.5rem;
-  overflow-x: auto;
-  margin-block: 1.25rem;
-  font-family: "Fira Code", "Courier New", monospace;
-  font-size: 0.9rem;
-  line-height: 1.6;
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    overflow-x: auto;
+    margin-block: 1.25rem;
+    font-family: "Fira Code", "Courier New", monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
 }
 
 .dynamicHtmlContent code {
-  font-family: "Fira Code", "Courier New", monospace;
-  font-size: 0.875rem;
-  background-color: #f3f4f6;
-  border-radius: 4px;
-  padding: 2px 6px;
-  color: #be185d;
+    font-family: "Fira Code", "Courier New", monospace;
+    font-size: 0.875rem;
+    background-color: #f3f4f6;
+    border-radius: 4px;
+    padding: 2px 6px;
+    color: #be185d;
 }
 
 .dynamicHtmlContent pre code {
-  background: none;
-  padding: 0;
-  color: inherit;
-  font-size: inherit;
-  border-radius: 0;
+    background: none;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+    border-radius: 0;
 }
 
 .dynamicHtmlContent img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-  margin-block: 1.25rem;
-  display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-block: 1.25rem;
+    display: block;
 }
 
 .dynamicHtmlContent ul,
 .dynamicHtmlContent ol {
-  padding-left: 1.75rem;
-  margin-block: 0.75rem;
+    padding-left: 1.75rem;
+    margin-block: 0.75rem;
 }
 
 .dynamicHtmlContent li {
-  margin-block: 0.35rem;
+    margin-block: 0.35rem;
 }
+
 /* ────────────────────────────────────────────────────────────── */
 
 
 .commentsContainer {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    padding: 1.5rem;
-    margin-block: 1rem;
-    border-radius: 16px;
-    background-color: white;
-    background: rgba(255, 255, 255, 0.5);
-    box-shadow: 0 8px 32px 0 rgba(50, 50, 50, 0.17);
-    backdrop-filter: blur(10.5px);
-    -webkit-backdrop-filter: blur(10.5px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    padding: 2rem;
+    background-color: #ffffff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eee;
+    border-radius: 12px;
+    margin-top: 3rem;
 }
 
-/* .commentsContainer.center{
-  position: fixed;
-  bottom: 0;
-  transform: translateX(-50%);
-  left: 50%;
-  z-index: 5;
-  width: 50rem;
-} */
-
-.commentsContainer>* {
-    color: black;
+@media (min-width: 1200px) {
+    .commentsContainer {
+        margin-top: 0;
+        position: sticky;
+        top: 100px;
+    }
 }
 
-.commentsContainer>h5 {
-    font-size: 1.25rem;
-    font-weight: 400;
-}
-
-.commenterContainer {
+.commentsHeading {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
 }
 
-.commenterImage>img {
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-    border-radius: 50%;
+.commentsHeading h5 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111;
+    margin: 0;
 }
 
-.commenterDetails {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    width: 100%;
-}
-
-.commenterSubDetails {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 3rem;
-}
-
-.commenterName {
-    font-size: large;
-    font-weight: 300;
-}
-
-.commentTime {
-    font-size: 0.75rem;
-    opacity: 0.75;
-}
-
-.comment {
-    color: brown;
-    text-overflow: ellipsis;
-    font-size: 1rem;
-    line-height: 1.4;
-    z-index: 1;
-    width: 100%;
-    word-break: break-word;
+.commentCountBadge {
+    background-color: #f3f4f6;
+    color: #4b5563;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-weight: 600;
 }
 
 .commentForm {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    padding-top: 1rem;
+    margin-bottom: 2.5rem;
 }
 
-.commentForm input {
-    background-color: transparent;
-    border: 0;
-    color: black;
-    letter-spacing: 1px;
-    border-bottom: 2px solid black;
-    padding-bottom: 0.25rem;
-    padding-left: 4px;
-    font-size: medium;
+.commentTextArea {
     width: 100%;
-    transition: border-bottom 0.2s linear;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.5;
+    background-color: #f9fafb;
+    color: #111;
+    resize: none;
+    transition: all 0.2s ease;
 }
 
-.commentForm input:focus,
-.commentForm input:active {
+.commentTextArea:focus {
     outline: none;
-    border-bottom: 2px solid rgb(161, 102, 102);
-    transform-origin: left;
+    border-color: #1a1a1a;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05);
 }
 
-.commentForm input::placeholder {
-    color: rgba(0, 0, 0, 0.5);
+.formActions {
+    display: flex;
+    justify-content: flex-end;
 }
 
-.commentForm>button {
-    font-size: small;
-    padding: 0.5rem;
-    border-radius: 25px;
-    letter-spacing: 1px;
-    max-width: 6rem;
-    background-color: #2c3639;
-    border: 2px solid #2c3639;
-    cursor: pointer;
+.submitBtn {
+    display: flex;
+    align-items: center;
+    background-color: #1a1a1a;
     color: white;
-    transition: background-color 0.2s linear;
+    border: none;
+    padding: 0.6rem 1.5rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
 }
 
-.commentForm button:hover {
-    background-color: #3a3d3e;
+.submitBtn:hover {
+    background-color: #333;
+}
+
+.commentDivider {
+    height: 1px;
+    background-color: #eee;
+    margin-bottom: 2.5rem;
+}
+
+.commentList {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-height: calc(100vh - 480px);
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+.commentList::-webkit-scrollbar {
+    width: 4px;
+}
+
+.commentList::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.commentList::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+}
+
+.commentList::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.15);
+}
+
+.commenterContainer {
+    display: flex;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.commenterContainer:last-child {
+    border-bottom: none;
+}
+
+.commenterImage img {
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.commenterDetails {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.commenterSubDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.commenterName {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #111;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.commentTime {
+    font-size: 0.75rem;
+    color: #9ca3af;
+}
+
+.comment {
+    font-size: 1.125rem;
+    color: #374151;
+    word-break: break-word;
+    margin: 0;
+}
+
+
+@media (max-width: 1024px) {
+    .articleMainContainer {
+        max-width: 100%;
+        padding: 2rem 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .commentsContainer {
+        padding: 1.5rem 1rem;
+        margin-top: 2rem;
+    }
+
+    .commenterContainer {
+        gap: 0.85rem;
+    }
+
+    .commenterImage img {
+        width: 32px;
+        height: 32px;
+    }
+
+    .commenterName {
+        font-size: 0.95rem;
+    }
+
+    .comment {
+        font-size: 0.95rem;
+    }
 }

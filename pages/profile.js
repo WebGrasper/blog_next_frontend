@@ -11,6 +11,20 @@ import { useCookies } from "react-cookie";
 import { resetLoginState } from "@/store/loginSlice";
 import Spinner from "@/components/spinner";
 import PLSpinner from "@/components/pageLoadingSpinner";
+import { 
+  User, 
+  Mail, 
+  MapPin, 
+  Calendar, 
+  Edit3, 
+  LogOut, 
+  PlusCircle, 
+  Camera,
+  X,
+  Save,
+  Globe,
+  Briefcase
+} from "lucide-react";
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -27,6 +41,7 @@ export default function Profile() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [isImageUploading, setImageUploading] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState("home"); // "home" or "about"
 
   const state = useSelector((state) => state.profile);
 
@@ -59,11 +74,12 @@ export default function Profile() {
 
   const handleLogout = async () => {
     setDisabled(true);
-    await router.push("/");
     removeCookie("token");
     removeCookie("username");
     removeCookie("avatar");
     dispatch(resetProfileState());
+    dispatch(resetLoginState());
+    await router.push("/");
     setDisabled(false);
   };
 
@@ -215,429 +231,195 @@ export default function Profile() {
   return (
     <div>
       <Head>
-        <title>Profile: WebGrasper</title>
-        <meta
-          name="description"
-          content="Login page to access profile. If profile not existing then create new one!"
-        />
+        <title>Profile | WebGrasper</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-        <meta property="og:title" content="Login: WebGrasper" />
-        <meta
-          property="og:description"
-          content="Login page to access profile. If profile not existing then create new one!"
-        />
-        <link rel="canonical" href="https://webgrasper.vercel.app/login" />
-
-        <meta
-          property="og:image"
-          content="https://webgrasper.vercel.app/favicon.jpg"
-        />
-        <meta name="twitter:card" content="summary_large_image" />
-        <link rel="icon" href="/favicon.jpg" sizes="any" />
+        <link rel="icon" href="/favicon.jpg" />
       </Head>
+
       <section className={styles.profileSupremeContainer}>
-        {loading ? ( // Show spinner if loading is true
+        {loading ? (
           <PLSpinner />
         ) : (
-          <>
-            {imageUploadFormState && (
-              <div className={styles.imageUploadFormRoot}>
-                <form
-                  className={styles.imageUploadForm}
-                  onSubmit={handleImageUpload}
+          <div className={styles.centeredColumn}>
+            {/* Identity Header */}
+            <header className={styles.identityHeader}>
+              <div className={styles.avatarContainer}>
+                <img
+                  className={styles.avatar}
+                  src={state?.data?.user?.avatar || "https://ik.imagekit.io/94nzrpaat/images/default-avatar.png"}
+                  alt="Profile"
+                  onClick={handleFormState}
+                />
+                <div className={styles.avatarEditHint} onClick={handleFormState}>
+                  <Camera size={14} />
+                </div>
+              </div>
+
+              <div className={styles.userInfo}>
+                <h1 className={styles.username}>{state?.data?.user?.username}</h1>
+                <p className={styles.bio}>{state?.data?.user?.bio || "No bio added yet."}</p>
+              </div>
+
+              <div className={styles.headerActions}>
+                {isAdmin && (
+                  <Link href="/create-article" className={styles.actionBtn}>
+                    <PlusCircle size={18} />
+                    <span>Write</span>
+                  </Link>
+                )}
+                <button className={styles.actionBtn} onClick={handleEditableForm}>
+                  {isEditableFormOpen ? <X size={18} /> : <Edit3 size={18} />}
+                  <span>{isEditableFormOpen ? "Cancel" : "Edit Profile"}</span>
+                </button>
+                <button 
+                  className={styles.logoutBtn} 
+                  onClick={handleLogout}
+                  disabled={markDisabled}
                 >
-                  <div className={styles.closeButtonContainer}>
-                    <Image
-                      src={"/closeButtonBlack.svg"}
-                      width={20}
-                      height={20}
-                      alt="close icon"
-                      onClick={handleFormState}
-                    />
-                  </div>
-                  <div className={styles.inputFieldContainer}>
-                    <input
-                      className={styles.customFileInput}
-                      name="avatar"
-                      type="file"
-                      onChange={handleFileChange}
-                      required
-                    />
-                  </div>
-                  <button className={styles.uploadButton} type="submit">
-                    {isImageUploading ? (
-                      <Spinner />
-                    ) : (
-                      <>
-                        <img
-                          className={styles.uploadIcon}
-                          src={"/upload-icon.png"}
-                          alt="upload icon"
-                        />
-                        <span>Upload</span>
-                      </>
-                    )}
-                  </button>
-                </form>
+                  <LogOut size={18} />
+                </button>
               </div>
-            )}
-            <div className={styles.leftProfileMainContainer}>
-              <div className={styles.leftProfileContainer}>
-                <div className={styles.leftProfileImageContainer}>
-                  <div className={styles.leftProfileImageSubContainer}>
-                    <img
-                      className={styles.leftProfileImage}
-                      src={state?.data?.user?.avatar}
-                      alt="Profile image"
-                    />
-                    <div
-                      className={styles.leftUploadImageIconContainer}
-                      onClick={handleFormState}
-                    >
-                      <img
-                        className={styles.leftUploadImageIcon}
-                        src={"/edit.png"}
-                        alt="upload image icon"
-                      />
-                    </div>
-                  </div>
-                  {isAdmin && (
-                    <div className={styles.adminPanelContainer}>
-                      <Link
-                        className={styles.adminPanelLink}
-                        href={"/create-article"}
-                      >
-                        <img
-                          className={styles.adminIcon}
-                          src={"/admin-icon.png"}
-                          alt="administrator icon"
-                        />
-                        <span>Admin panel</span>
-                      </Link>
-                    </div>
-                  )}
+            </header>
+
+            {/* Navigation Tabs */}
+            <nav className={styles.tabNav}>
+              <button 
+                className={activeTab === 'home' ? styles.activeTab : ''} 
+                onClick={() => setActiveTab('home')}
+              >
+                Home
+              </button>
+              <button 
+                className={activeTab === 'about' ? styles.activeTab : ''} 
+                onClick={() => setActiveTab('about')}
+              >
+                About
+              </button>
+            </nav>
+
+            <div className={styles.tabContent}>
+              {activeTab === 'home' ? (
+                <div className={styles.storiesFeed}>
+                   <div className={styles.placeholderContainer}>
+                     <h3>Your story history will appear here.</h3>
+                     <p>Manage your published and draft articles efficiently from this unified feed.</p>
+                     <Link href="/create-article" className={styles.miniCreateBtn}>Start writing</Link>
+                   </div>
                 </div>
-                <div className={styles.leftProfileDetailsContainer}>
-                  <div className={styles.leftNameContainer}>
-                    <p>{state?.data?.user?.username}</p>
-                  </div>
-                  <div className={styles.leftAddressContainer}>
-                    <img
-                      className={styles.locationIcon}
-                      src="/location-icon.png"
-                      alt="location icon"
-                    />
-                    <p>
-                      {state?.data?.user?.street || "(Add Street)"},{" "}
-                      {state?.data?.user?.city || "(Add city)"}
-                    </p>
-                  </div>
-                  <div className={styles.leftBioContainer}>
-                    <img
-                      className={styles.bioIcon}
-                      src="/bio-icon.png"
-                      alt="bio icon"
-                    />
-                    <p>{state?.data?.user?.bio || "(Add bio)"}</p>
-                  </div>
-                  <button
-                    onClick={handleLogout}
-                    className={styles.logout_button}
-                  >
-                    {markDisabled ? (
-                      <Spinner />
-                    ) : (
-                      <Image
-                        src={"/logout-icon.png"}
-                        width={20}
-                        height={20}
-                        alt="logout icon"
-                      />
-                    )}
-                  </button>
-                </div>
-              </div>
-              <div className={styles.rightProfileFormMainContainer}>
-                <div className={styles.rightEditButtonContainer}>
-                  <h3>Edit details</h3>
-                  {!isEditableFormOpen ? (
-                    <Image
-                      src={"/edit-icon.png"}
-                      width={25}
-                      height={25}
-                      alt="edit icon"
-                      onClick={handleEditableForm}
-                    />
-                  ) : (
-                    <Image
-                      src={"/closeButtonBlack.svg"}
-                      width={25}
-                      height={25}
-                      alt="close icon"
-                      onClick={handleEditableForm}
-                    />
-                  )}
-                </div>
-                {!isEditableFormOpen ? (
-                  <div className={styles.rightProfileFormContainer}>
-                    <div className={styles.rightDetailContainer}>
-                      <p className={styles.rightDetailHeading}>Name*: </p>
-                      <p className={styles.rightDetailValue}>
-                        {state?.data?.user?.username}
-                      </p>
-                    </div>
-                    <div className={styles.rightDetailContainer}>
-                      <p className={styles.rightDetailHeading}>Email*: </p>
-                      <p className={styles.rightDetailValue}>
-                        {state?.data?.user?.email}
-                      </p>
-                    </div>
-                    <div className={styles.rightDetailContainer}>
-                      <p className={styles.rightDetailHeading}>Bio: </p>
-                      <p className={styles.rightDetailValue}>
-                        {state?.data?.user?.bio || "N/A"}
-                      </p>
-                    </div>
-                    <div className={styles.rightDetailContainer}>
-                      <p className={styles.rightDetailHeading}>
-                        Date of birth:{" "}
-                      </p>
-                      <p className={styles.rightDetailValue}>
-                        {state?.data?.user?.dob || "N/A"}
-                      </p>
-                    </div>
-                    <div className={styles.rightDetailContainer}>
-                      <p className={styles.rightDetailHeading}>Street: </p>
-                      <p className={styles.rightDetailValue}>
-                        {state?.data?.user?.street || "N/A"}
-                      </p>
-                    </div>
-                    <div className={styles.rightDetailContainer}>
-                      <p className={styles.rightDetailHeading}>City: </p>
-                      <p className={styles.rightDetailValue}>
-                        {state?.data?.user?.city || "N/A"}
-                      </p>
-                    </div>
-                    <div className={styles.rightDetailContainer}>
-                      <p className={styles.rightDetailHeading}>State: </p>
-                      <p className={styles.rightDetailValue}>
-                        {state?.data?.user?.state || "N/A"}
-                      </p>
-                    </div>
-                    <div className={styles.rightDetailContainer}>
-                      <p className={styles.rightDetailHeading}>Country: </p>
-                      <p className={styles.rightDetailValue}>
-                        {state?.data?.user?.country || "N/A"}
-                      </p>
-                    </div>
-                  </div>
-                ) : (
-                  <form
-                    className={styles.rightProfileMainEditableFormContainer}
-                    onSubmit={handleFormSubmit}
-                  >
-                    <div className={styles.rightProfileEditableFormContainer}>
-                      <div className={styles.rightDetailContainer}>
-                        <p className={styles.rightDetailHeading}>Name*: </p>
+              ) : (
+                <div className={styles.aboutPanel}>
+                  {isEditableFormOpen ? (
+                    <form onSubmit={handleFormSubmit} className={styles.editForm}>
+                      <div className={styles.formGroup}>
+                        <label>Name</label>
                         <input
                           type="text"
-                          className={styles.rightDetailInputBox}
-                          placeholder="Enter name"
                           value={profileData?.user?.username}
                           name="username"
+                          onChange={(e) => setProfileData({...profileData, user: {...profileData.user, username: e.target.value}})}
                           required
-                          onChange={(e) => {
-                            setProfileData({
-                              ...profileData,
-                              user: {
-                                ...profileData.user,
-                                username: e.target.value,
-                              },
-                            });
-                          }}
                         />
                       </div>
-                      <div className={styles.rightDetailContainer}>
-                        <p className={styles.rightDetailHeading}>Email*: </p>
+                      <div className={styles.formGroup}>
+                        <label>Email</label>
                         <input
                           type="email"
-                          className={styles.rightDetailInputBox}
-                          placeholder="Enter email"
                           value={profileData?.user?.email}
                           name="email"
+                          onChange={(e) => setProfileData({...profileData, user: {...profileData.user, email: e.target.value}})}
                           required
-                          onChange={(e) => {
-                            setProfileData({
-                              ...profileData,
-                              user: {
-                                ...profileData.user,
-                                email: e.target.value,
-                              },
-                            });
-                          }}
                         />
                       </div>
-                      <div className={styles.rightDetailContainer}>
-                        <p className={styles.rightDetailHeading}>Bio: </p>
-                        <input
-                          type="text"
-                          className={styles.rightDetailInputBox}
-                          placeholder="Write about you"
+                      <div className={styles.formGroup}>
+                        <label>Bio</label>
+                        <textarea
+                          rows={3}
                           value={profileData?.user?.bio || ""}
                           name="bio"
-                          onChange={(e) => {
-                            setProfileData({
-                              ...profileData,
-                              user: {
-                                ...profileData.user,
-                                bio: e.target.value,
-                              },
-                            });
-                          }}
+                          onChange={(e) => setProfileData({...profileData, user: {...profileData.user, bio: e.target.value}})}
                         />
-                        {errors?.bio && (
-                          <p className={styles.errorText}>{errors?.bio}</p>
-                        )}
+                        {errors?.bio && <span className={styles.error}>{errors.bio}</span>}
                       </div>
-                      <div className={styles.rightDetailContainer}>
-                        <p className={styles.rightDetailHeading}>
-                          Date of birth:{" "}
-                        </p>
-                        <input
-                          type="text"
-                          className={styles.rightDetailInputBox}
-                          value={profileData?.user?.dob}
-                          name="dob"
-                          placeholder="dd/mm/yyyy"
-                          onChange={(e) => {
-                            setProfileData({
-                              ...profileData,
-                              user: {
-                                ...profileData.user,
-                                dob: e.target.value,
-                              },
-                            });
-                          }}
-                        />
-                        {errors?.dob && (
-                          <p className={styles.errorText}>{errors?.dob}</p>
-                        )}
+                      <div className={styles.formRow}>
+                        <div className={styles.formGroup}>
+                          <label>Birthday</label>
+                          <input
+                            type="text"
+                            placeholder="dd/mm/yyyy"
+                            value={profileData?.user?.dob}
+                            name="dob"
+                            onChange={(e) => setProfileData({...profileData, user: {...profileData.user, dob: e.target.value}})}
+                          />
+                        </div>
+                        <div className={styles.formGroup}>
+                          <label>City</label>
+                          <input
+                            type="text"
+                            value={profileData?.user?.city}
+                            name="city"
+                            onChange={(e) => setProfileData({...profileData, user: {...profileData.user, city: e.target.value}})}
+                          />
+                        </div>
                       </div>
-                      <div className={styles.rightDetailContainer}>
-                        <p className={styles.rightDetailHeading}>Street: </p>
-                        <input
-                          type="text"
-                          className={styles.rightDetailInputBox}
-                          placeholder="Enter street"
-                          value={profileData?.user?.street}
-                          name="street"
-                          onChange={(e) => {
-                            setProfileData({
-                              ...profileData,
-                              user: {
-                                ...profileData.user,
-                                street: e.target.value,
-                              },
-                            });
-                          }}
-                        />
-                        {errors?.street && (
-                          <p className={styles.errorText}>{errors?.street}</p>
-                        )}
+                      <button type="submit" className={styles.saveBtn} disabled={markFormSubmit}>
+                        {markFormSubmit ? <Spinner /> : <><Save size={18} /> Save</>}
+                      </button>
+                    </form>
+                  ) : (
+                    <div className={styles.detailsList}>
+                      <div className={styles.detailItem}>
+                        <label>Email</label>
+                        <p>{state?.data?.user?.email}</p>
                       </div>
-                      <div className={styles.rightDetailContainer}>
-                        <p className={styles.rightDetailHeading}>City: </p>
-                        <input
-                          type="text"
-                          className={styles.rightDetailInputBox}
-                          placeholder="Enter city"
-                          value={profileData?.user?.city}
-                          name="city"
-                          onChange={(e) => {
-                            setProfileData({
-                              ...profileData,
-                              user: {
-                                ...profileData.user,
-                                city: e.target.value,
-                              },
-                            });
-                          }}
-                        />
-                        {errors?.city && (
-                          <p className={styles.errorText}>{errors?.city}</p>
-                        )}
+                      <div className={styles.detailItem}>
+                        <label>Location</label>
+                        <p>{state?.data?.user?.city || "Unknown City"}, {state?.data?.user?.country || "Earth"}</p>
                       </div>
-                      <div className={styles.rightDetailContainer}>
-                        <p className={styles.rightDetailHeading}>State: </p>
-                        <input
-                          type="text"
-                          className={styles.rightDetailInputBox}
-                          placeholder="Enter state"
-                          value={profileData?.user?.state}
-                          name="state"
-                          onChange={(e) => {
-                            setProfileData({
-                              ...profileData,
-                              user: {
-                                ...profileData.user,
-                                state: e.target.value,
-                              },
-                            });
-                          }}
-                        />
-                        {errors?.state && (
-                          <p className={styles.errorText}>{errors?.state}</p>
-                        )}
-                      </div>
-                      <div className={styles.rightDetailContainer}>
-                        <p className={styles.rightDetailHeading}>Country: </p>
-                        <input
-                          type="text"
-                          className={styles.rightDetailInputBox}
-                          placeholder="Enter country"
-                          value={profileData?.user?.country}
-                          name="country"
-                          onChange={(e) => {
-                            setProfileData({
-                              ...profileData,
-                              user: {
-                                ...profileData.user,
-                                country: e.target.value,
-                              },
-                            });
-                          }}
-                        />
-                        {errors?.country && (
-                          <p className={styles.errorText}>{errors?.country}</p>
-                        )}
+                      {state?.data?.user?.dob && (
+                        <div className={styles.detailItem}>
+                          <label>Birthday</label>
+                          <p>{state?.data?.user?.dob}</p>
+                        </div>
+                      )}
+                      <div className={styles.detailItem}>
+                        <label>Street Address</label>
+                        <p>{state?.data?.user?.street || "Not provided."}</p>
                       </div>
                     </div>
-                    <button
-                      className={styles.rightEditableFormSaveButton}
-                      type="submit"
-                    >
-                      {markFormSubmit ? (
-                        <Spinner />
-                      ) : (
-                        <>
-                          <Image
-                            src={"/save-icon.png"}
-                            width={20}
-                            height={15}
-                            alt="save icon"
-                          />
-                          <span>Save</span>
-                        </>
-                      )}
-                    </button>
-                  </form>
-                )}
-              </div>
+                  )}
+                </div>
+              )}
             </div>
-          </>
+          </div>
+        )}
+
+        {/* Modal Overlay */}
+        {imageUploadFormState && (
+          <div className={styles.modalOverlay}>
+            <div className={styles.modalBox}>
+              <div className={styles.modalHeader}>
+                <h3>Update Photo</h3>
+                <button onClick={handleFormState}><X size={20} /></button>
+              </div>
+              <form onSubmit={handleImageUpload} className={styles.uploadForm}>
+                <input type="file" onChange={handleFileChange} required />
+                <button type="submit" disabled={isImageUploading}>
+                  {isImageUploading ? <Spinner /> : "Upload"}
+                </button>
+              </form>
+            </div>
+          </div>
         )}
       </section>
+      {/* Frosted Logout Overlay */}
+      {markDisabled && (
+        <div className={styles.logoutOverlay}>
+          <div className={styles.logoutOverlayContent}>
+            <Spinner />
+            <h3>Signing you out...</h3>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

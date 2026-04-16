@@ -19,17 +19,19 @@ Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
 
+import AuthModal from "@/components/AuthModal";
+
 function App({ Component, pageProps }) {
   const router = useRouter();
   const [notAtPortfolioPage, setNotAtPortfolioPage] = useState(true);
 
-  useEffect(()=>{
-    if(router.pathname === '/portfolio'){
+  useEffect(() => {
+    if (router.pathname === '/portfolio') {
       setNotAtPortfolioPage(false);
     } else {
       setNotAtPortfolioPage(true)
     }
-  },[router.pathname])
+  }, [router.pathname])
   return (
     <Provider store={store}>
       <CookiesProvider defaultSetOptions={{ path: '/' }}>
@@ -44,6 +46,7 @@ function App({ Component, pageProps }) {
             {notAtPortfolioPage && <Navbar />}
             <Component {...pageProps} />
             {notAtPortfolioPage && <Footer />}
+            <AuthModal />
           </div>
         </SnackbarProvider>
       </CookiesProvider>

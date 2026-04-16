@@ -1,247 +1,176 @@
-/* eslint-disable @next/next/no-img-element */
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import styles from "../styles/navbar.module.css";
 import Link from "next/link";
-import { debounce, replace } from "lodash";
+import { debounce } from "lodash";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { openModal } from "@/store/authUISlice";
+import { User, X } from "lucide-react";
 
 function Navbar() {
-  const [isSeachChechBoxChecked, setSeachChechBoxChecked] = useState(false);
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const pathname = usePathname();
 
+  // --- States ---
+  const [isSeachChechBoxChecked, setSeachChechBoxChecked] = useState(false);
+  const [isMenuOpen, setMenuOpen] = useState(false);
+  const [isToken, setToken] = useState(false);
+  const [isOffset, setOffset] = useState(false);
+  const [isHome, setIsHome] = useState(true);
+  const [atPortfolio, setAtPortfolio] = useState(false);
+
+  // --- Logic Helpers ---
+  const categories = [
+    { name: "Politics", slug: "Politics" },
+    { name: "India news", slug: "India-News" },
+    { name: "International news", slug: "International-News" },
+    { name: "Sports", slug: "Sports" },
+    { name: "Technology", slug: "Technology" }
+  ];
+
+  const searchInputRef = useRef(null);
+
+  const handleLinkClick = () => setMenuOpen(false);
   const handleSearchCheckBox = () => {
     setSeachChechBoxChecked(!isSeachChechBoxChecked);
   };
 
-  // New state for menu visibility
-  const [isMenuOpen, setMenuOpen] = useState(false);
-  const handleLinkClick = () => {
-    setMenuOpen(false);
-  };
-  // Close the menu when a link is clicked
-
-  //search bar functionality(Started)
-  const router = useRouter();
-  const handleSearchBlogs = debounce(async (title) => {
-    if (title !== null) {
+  const handleSearchBlogs = debounce((title) => {
+    if (title) {
       router.push(`/article-page?name=${title}`);
+      setSeachChechBoxChecked(false); // Close modal on search
     }
   }, 1000);
 
-  //search bar functionality(Ended)
+  const closeSearch = () => setSeachChechBoxChecked(false);
 
-  const [isOffset, setOffset] = useState(false);
-  const [isHome, setIsHome] = useState(true);
-
-  const pathname = usePathname();
+  // --- Effects ---
   useEffect(() => {
-    if (pathname !== "/") {
-      setIsHome(false);
-    } else {
-      setIsHome(true);
+    if (isSeachChechBoxChecked && searchInputRef.current) {
+      searchInputRef.current.focus();
     }
-    console.log(isHome);
+  }, [isSeachChechBoxChecked]);
+
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === "Escape") closeSearch();
+    };
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, []);
+
+  // --- Effects ---
+  useEffect(() => {
+    setIsHome(pathname === "/");
+    setAtPortfolio(pathname === "/portfolio");
+    setToken(!!Cookies.get("token"));
   }, [pathname]);
 
   useEffect(() => {
-    window.addEventListener("scroll", () => {
-      if (isHome && window.scrollY >= 1) {
-      // if (isHome && window.scrollY >= window.innerHeight - 80) {
-        setOffset(true);
-      } else {
-        setOffset(false);
-      }
-    });
-  });
+    const handleScroll = () => {
+      setOffset(isHome && window.scrollY >= 1);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isHome]);
 
-  const [atPortfolio, setAtPortfolio] = useState(false);
-  useEffect(() => {
-    if (pathname === "/portfolio") {
-      setAtPortfolio(true);
-    } else {
-      setAtPortfolio(false);
-    }
-  });
-
-  //Check for token presence
-  const [isToken, setToken] = useState(false);
-  useEffect(() => {
-    if (Cookies.get("token")) {
-      setToken(true);
-    } else {
-      setToken(false);
-    }
-  },[Cookies.get("token")]);
+  const activeModeClass = !isHome || isOffset ? styles.linkActiveOffset : "";
 
   return (
-    <div
-      className={`${
-        isHome
-          ? styles.navbarSupremeContainer
-          : styles.activeNotHomeNavbarSupremeContainer
-      } ${isOffset ? styles.activeOffset : ""} ${
-        atPortfolio ? styles.activeAtPortfolio : ""
-      }`}
-    >
-      <div>
-        <nav className={`${styles.navbar}`}>
-          <div className={`${styles.container1}`}>
-            <Link href={"/"}>
-              <div className={styles.container1H1}>
-                <Image
-                  src="https://ik.imagekit.io/94nzrpaat/images/gold-logo-with-title-wg_853558-2748-N6dN8fcsA-transformed_1%20(1).png?updatedAt=1708801310085"
-                  alt="logo"
-                  width={70}
-                  priority={true}
-                  height={35}
-                />
-                <span>
-                  Web<span>Grasper</span>
-                </span>
-              </div>
-            </Link>
-          </div>
-          <div className={`${styles.container2}`}>
-            <input
-              type="checkbox"
-              className={styles.searchCheckBox}
-              onClick={handleSearchCheckBox}
-            />
-            <img
-              className={styles.searchButton}
-              src={`${
-                !isHome || isOffset
-                  ? "/searchButtonBlack.svg"
-                  : "/searchButtonBlack.svg"
-              }`}
-              fetchpriority="high"
-              alt="search icon"
-            />
-            <img
-              className={styles.searchCloseButton}
-              src={`${
-                !isHome || isOffset
-                  ? "/closeButtonBlack.svg"
-                  : "/closeButtonBlack.svg"
-              }`}
-              fetchpriority="high"
-              alt="close button"
-            />
-          </div>
-          <div className={`${styles.containerButton}`}>
-            <input
-              type="checkbox"
-              className={styles.checkBox}
-              checked={isMenuOpen}
-              onChange={() => setMenuOpen(!isMenuOpen)}
-            />
-            <img
-              className={styles.closeButton}
-              src="/closeButtonBlack.svg"
-              alt="close button"
-              fetchpriority="high"
-            />
-            <img
-              className={styles.menuButton}
-              src={`${
-                !isHome || isOffset
-                  ? "/menuButtonBlack.svg"
-                  : "/menuButtonBlack.svg"
-              }`}
-              fetchpriority="high"
-              alt="menu button"
-            />
-            <div className={styles.container3Navbar}>
-              <Link
-                href="/article-page?name=Politics"
-                passHref
-                onClick={handleLinkClick}
-              >
-                <span
-                  className={`${styles.link} ${
-                    !isHome || isOffset ? styles.linkActiveOffset : ""
-                  }`}
-                >
-                  Politics
-                </span>
-              </Link>
-              <Link
-                href="/article-page?name=India-News"
-                passHref
-                onClick={handleLinkClick}
-              >
-                <span
-                  className={`${styles.link} ${
-                    !isHome || isOffset ? styles.linkActiveOffset : ""
-                  }`}
-                >
-                  India news
-                </span>
-              </Link>
-              <Link
-                href="/article-page?name=International-News"
-                passHref
-                onClick={handleLinkClick}
-              >
-                <span
-                  className={`${styles.link} ${
-                    !isHome || isOffset ? styles.linkActiveOffset : ""
-                  }`}
-                >
-                  International news
-                </span>
-              </Link>
-              <Link href="/article-page?name=Sports" passHref onClick={handleLinkClick}>
-                <span
-                  className={`${styles.link} ${
-                    !isHome || isOffset ? styles.linkActiveOffset : ""
-                  }`}
-                >
-                  Sports
-                </span>
-              </Link>
-              <Link href="/article-page?name=Technology" passHref onClick={handleLinkClick}>
-                <span
-                  className={`${styles.link} ${
-                    !isHome || isOffset ? styles.linkActiveOffset : ""
-                  }`}
-                >
-                  Technology
-                </span>
-              </Link>
-              <Link href={isToken ? "/profile" : "/login"} passHref onClick={handleLinkClick}>
-                <span
-                  className={`${styles.profileButton} ${
-                    !isHome || isOffset ? styles.profileButtonActiveOffset : ""
-                  }`}
-                >
-                  {isToken ? <>Profile</> : <>Login</>}
-                </span>
-              </Link>
+    <div className={`
+      ${isHome ? styles.navbarSupremeContainer : styles.activeNotHomeNavbarSupremeContainer} 
+      ${isOffset ? styles.activeOffset : ""} 
+      ${atPortfolio ? styles.activeAtPortfolio : ""}
+    `}>
+      <nav className={styles.navbar}>
+        {/* LOGO (LEFT) */}
+        <div className={styles.container1}>
+          <Link href="/">
+            <div className={styles.container1H1}>
+              <Image 
+                src="https://ik.imagekit.io/94nzrpaat/images/gold-logo-with-title-wg_853558-2748-N6dN8fcsA-transformed_1%20(1).png?updatedAt=1708801310085"
+                alt="logo" width={70} height={35} priority 
+              />
+              <span>Web<span>Grasper</span></span>
             </div>
+          </Link>
+        </div>
+
+        {/* MIDDLE SECTION (Links on Desktop) */}
+        <div className={styles.containerButton}>
+          <input type="checkbox" className={styles.checkBox} checked={isMenuOpen} onChange={() => setMenuOpen(!isMenuOpen)} />
+          <img className={styles.closeButton} src="/closeButtonBlack.svg" alt="close" />
+          <img className={styles.menuButton} src="/menuButtonBlack.svg" alt="menu" />
+          
+          <div className={styles.container3Navbar}>
+            {categories.map((cat) => (
+              <Link key={cat.slug} href={`/article-page?name=${cat.slug}`} onClick={handleLinkClick}>
+                <span className={`${styles.link} ${activeModeClass}`}>{cat.name}</span>
+              </Link>
+            ))}
           </div>
-        </nav>
-      </div>
-      <form
-        className={`${styles.bottomSearchBarContainer} ${
-          isSeachChechBoxChecked ? styles.show : ""
-        }`}
-        method="GET"
+        </div>
+
+        {/* ACTION SECTION (Far Right) */}
+        <div className={styles.container2}>
+          <div className={styles.searchTriggerUnit}>
+            <input 
+              type="checkbox" 
+              className={styles.searchCheckBox} 
+              checked={isSeachChechBoxChecked}
+              onChange={handleSearchCheckBox} 
+            />
+            <img className={styles.searchButton} src="/searchButtonBlack.svg" alt="search" />
+            <img className={styles.searchCloseButton} src="/closeButtonBlack.svg" alt="close" />
+          </div>
+
+          <div className={styles.authTriggerContainer}>
+            {!isToken ? (
+              <button className={styles.iconButton} onClick={() => dispatch(openModal('login'))} title="Login">
+                <User size={24} color="#000" />
+              </button>
+            ) : (
+              <Link href="/profile" className={styles.avatarLink}>
+                <img 
+                  src={Cookies.get("avatar") || "https://ik.imagekit.io/94nzrpaat/images/resize.jpg"} 
+                  alt="profile" className={styles.navAvatar} 
+                />
+              </Link>
+            )}
+          </div>
+        </div>
+      </nav>
+
+      {/* SEARCH OVERLAY (Full Screen Modal) */}
+      <div 
+        className={`${styles.bottomSearchBarContainer} ${isSeachChechBoxChecked ? styles.show : ""}`}
+        onClick={closeSearch}
       >
-        <input
-          type="search"
-          className={`${styles.bottomSearchBar} ${
-            !isHome || isOffset ? styles.activeBottomSearchBar : ""
-          }`}
-          id="container2SearchBox"
-          placeholder="Search"
-          onChange={(e) => {
-            handleSearchBlogs(e.target.value || null);
+        <form 
+          className={styles.searchForm} 
+          method="GET" 
+          onSubmit={(e) => { 
+            e.preventDefault(); 
+            const value = searchInputRef.current?.value;
+            if (value) handleSearchBlogs(value); 
+            closeSearch(); 
           }}
-        />
-      </form>
+          onClick={(e) => e.stopPropagation()}
+        >
+          <input
+            ref={searchInputRef}
+            name="search"
+            type="search"
+            className={`${styles.bottomSearchBar}`}
+            placeholder="Type your search..."
+            onChange={(e) => handleSearchBlogs(e.target.value)}
+          />
+        </form>
+      </div>
     </div>
   );
 }

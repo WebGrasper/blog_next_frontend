@@ -4,44 +4,46 @@
   position: fixed;
   top: 0;
   z-index: 9999;
-  transition: all 0.3s ease; 
-}
-
-.activeOffset{
-  border-bottom: 1px solid rgba(0,0,0,0.12);
-  background-color: rgb(250,247,243) !important;
   transition: all 0.3s ease;
 }
 
-.activeNotHomeNavbarSupremeContainer{
+.activeOffset {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  background-color: rgb(250, 247, 243) !important;
+  transition: all 0.3s ease;
+  height: 4.5rem; /* Match taller nav */
+}
+
+.activeNotHomeNavbarSupremeContainer {
   width: 100%;
   padding: 1rem;
   position: sticky;
   position: -webkit-sticky;
   top: 0;
-  background-color: rgb(250,247,243) !important;
-  border-bottom: 1px solid rgba(0,0,0,0.12);
+  background-color: rgb(250, 247, 243) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   z-index: 9999;
   transition: all 0.3s ease;
 }
 
-.activeAtPortfolio{
+.activeAtPortfolio {
   width: 100%;
   padding: 1rem;
   position: static;
   top: 0;
-  background-color: rgb(250,247,243) !important;
-  border-bottom: 1px solid rgba(0,0,0,0.12);
+  background-color: rgb(250, 247, 243) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   z-index: 9999;
   transition: all 0.3s ease;
 }
 
 .navbar {
   display: grid;
-  grid-template-columns: auto auto 4rem;
-  height: 3rem;
+  grid-template-columns: auto 1fr auto;
+  height: 4rem;
   max-width: 70rem;
   margin: 0 auto;
+  align-items: center;
 }
 
 .container1 {
@@ -59,66 +61,127 @@
   font-weight: bold;
 }
 
-.container1H1 span{
+.container1H1 span {
   display: none;
 
 }
 
-.container1H1 > img {
+.container1H1>img {
   margin-right: 8px;
 }
 
 .container2 {
   display: flex;
-  justify-content: right;
-  padding: 0 1rem;
+  justify-content: flex-end;
   align-items: center;
   grid-column: 3;
-  grid-row: 1;
+  gap: 1.25rem;
+  padding: 0 0.5rem;
+}
+
+.authTriggerContainer {
+  display: flex;
+  align-items: center;
+}
+
+.iconButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: inherit;
+  transition: opacity 0.2s;
+}
+
+.iconButton:hover {
+  opacity: 0.7;
+}
+
+.avatarLink {
+  display: flex;
+  align-items: center;
+}
+
+.navAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.navAvatar:hover {
+  transform: scale(1.05);
 }
 
 /* search button (start) */
 
 .bottomSearchBarContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  z-index: 10001;
   display: flex;
-  justify-content: flex-end;
-  opacity: 0;
-  height: 0;
-  pointer-events: none;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  max-width: 70rem;
-  padding-right: 0.8rem;
-  margin-inline: auto;
-  transition: opacity 0.4s ease-in-out, height 0.6s ease-in-out;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer; /* Hint that clicking anywhere closes the search */
+}
+
+.bottomSearchBarContainer.show {
+  opacity: 1;
+  pointer-events: all;
+  visibility: visible;
+}
+
+.searchForm {
+  width: 90%;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: default; /* Search area itself shouldn't show pointer */
 }
 
 .bottomSearchBar {
-  width: 50%;
-  height: 2.8rem;
-  border-radius: 9999px;
-  background: rgba(28, 28, 28, 0.1);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  font-size: 1rem;
-  line-height: 1.5rem;
-  font-weight: 400;
-  color: rgba(0, 0, 0, 0.8);
-  cursor: pointer;
-  text-indent: 1.5rem;
-  transition: opacity 0.6s ease-in-out;
+  width: 100%;
+  background: transparent;
+  border: none;
+  font-size: 3.5rem;
+  font-weight: 300;
+  color: #000;
+  text-align: center;
+  padding: 2rem;
+  transition: all 0.3s ease;
 }
 
-.bottomSearchBar::placeholder{
+.bottomSearchBar:focus {
+  outline: none;
+}
+
+.bottomSearchBar::placeholder {
   color: rgba(0, 0, 0, 0.8);
 }
 
 .bottomSearchBar::-webkit-search-cancel-button,
-.activeBottomSearchBar::-webkit-search-cancel-button{
+.activeBottomSearchBar::-webkit-search-cancel-button {
   display: none;
 }
 
-.activeBottomSearchBar{
+.activeBottomSearchBar {
   background: rgba(230, 230, 230, 0.8);
   border: 1px solid rgba(0, 0, 0, 0.1);
   color: rgba(0, 0, 0, 0.75);
@@ -128,7 +191,7 @@
   color: rgba(0, 0, 0, 0.5);
 }
 
-.activeBottomSearchBar::placeholder{
+.activeBottomSearchBar::placeholder {
   color: rgba(0, 0, 0, 0.5);
 }
 
@@ -136,22 +199,23 @@
   outline: none;
 }
 
-.bottomSearchBarContainer.show {
-  height: 2.8rem;
-  opacity: 1;
-  pointer-events: all;
-}
-.searchCheckBoxContainer{
+
+
+.searchTriggerUnit {
   position: relative;
+  width: 1.75rem;
+  height: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
 .searchButton,
 .searchCheckBox,
-.searchCloseButton{
+.searchCloseButton {
   position: absolute;
-}
-.searchCheckBox,
-.searchButton,
-.searchCloseButton{
+  top: 0;
+  left: 0;
   width: 1.75rem;
   height: 1.75rem;
 }
@@ -159,29 +223,33 @@
 .searchCheckBox {
   opacity: 0;
   z-index: 9999;
+  cursor: pointer;
 }
 
-.searchCloseButton{
+.searchCloseButton {
   opacity: 0;
+  pointer-events: none;
 }
 
-.searchCheckBox:checked ~ .searchButton {
+.searchCheckBox:checked~.searchButton {
   opacity: 0;
   transition: all 0.4s ease;
+  pointer-events: none;
 }
 
-.searchCheckBox:checked ~ .searchCloseButton {
-  opacity: 1;
-  transition: all 0.4s ease;
+.searchCheckBox:checked~.searchCloseButton {
+  opacity: 0; /* Keep hidden as per request for 'no extra button' */
+  pointer-events: none;
 }
 
 /* search button (end) */
 
 .containerButton {
-  display: grid;
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center links on desktop */
   grid-column: 2;
-  grid-row: 1;
+  height: 100%;
 }
 
 
@@ -194,34 +262,39 @@
 .container3Navbar {
   width: 100%;
   display: flex;
-  gap: 3rem;
-  justify-content: flex-end;
+  gap: 2.5rem;
+  justify-content: center;
   align-items: center;
+  height: 100%;
 }
 
 .link {
-  color: rgba(0,0,0,0.8);
-  font-size: small;
+  color: rgba(0, 0, 0, 0.8);
+  font-size: 0.9rem;
+  font-weight: 500;
   position: relative;
-  transition: color 0.6s ease; /* Add a transition for color change */
+  transition: color 0.6s ease;
+  padding: 0.5rem 0;
 }
 
-.container3Navbar a:last-child{
+.container3Navbar a:last-child {
   padding-right: 2rem;
 }
 
-.linkActiveOffset{
-  color: rgba(0,0,0,0.8) !important;
+.linkActiveOffset {
+  color: rgba(0, 0, 0, 0.8) !important;
 }
 
 .link::before {
   content: "";
   position: absolute;
   left: 0;
-  bottom: -5px; /* Adjust the gap between text and border */
+  bottom: -5px;
+  /* Adjust the gap between text and border */
   width: 100%;
-  height: 2px; /* Adjust the thickness of the border */
-  background-color: rgba(0,0,0,0.8);
+  height: 2px;
+  /* Adjust the thickness of the border */
+  background-color: rgba(0, 0, 0, 0.8);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s ease;
@@ -232,70 +305,56 @@
   transform: scaleX(1);
 }
 
-.profileButton {
-  padding: 0.25rem 0.6rem;
-  font-size: small;
-  color: rgba(0,0,0,0.8);
-  cursor: pointer;
-  border: 2px solid rgba(0,0,0,0.8);
-  transition: background-color 0.3s linear, color 0.3s linear;
-}
 
-.profileButton:hover,
-.profileButton:focus-visible{
-  color: white !important;
-  background-color: rgba(0,0,0,0.8);
-}
-
-.profileButtonActiveOffset{
-  padding: 0.25rem 0.6rem;
-  font-size: small;
-  color: rgba(0,0,0,0.8) !important;
-  cursor: pointer;
-  border: 2px solid rgba(0,0,0,0.8);
-  transition: background-color 0.3s linear, color 0.3s linear;
-}
-
-.profileButtonActiveOffset:hover,
-.profileButtonActiveOffset:focus-visible{
-  color: white !important;
-  background-color: rgba(0,0,0,0.8);
-}
 
 
 @media only screen and (max-width: 962px) {
   .navbarSupremeContainer {
     padding: 1rem 1rem;
   }
+
   .navbar {
-    grid-template-columns: auto auto 3rem;
-    height: 3rem;
-  }
-  .container2{
-    grid-column: 2;
-  }
-  .container2SeachCheckBox {
-    justify-content: space-between;
-    padding: 0 0.5rem;
-  }
-  .container2Span {
-    display: none;
-  }
-  .containerButton{
-    grid-column: 3;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: 1fr; /* Force single row */
+    height: 4rem;
+    gap: 0.5rem; /* Tighter gap for small screens */
+    align-items: center;
   }
 
-   .checkBox{
+  .container1 {
+    grid-column: 1;
+    grid-row: 1;
+    height: 100%;
+  }
+
+  .container2 {
+    grid-column: 2;
+    grid-row: 1;
+    height: 100%;
+    justify-content: flex-end;
+    gap: 1rem; /* Adjust gap for mobile */
+  }
+
+  .containerButton {
+    grid-column: 3;
+    grid-row: 1;
+    height: 100%;
+    width: auto;
+    min-width: 2.5rem;
+  }
+
+  .checkBox {
     opacity: 0;
     z-index: 999999;
   }
-   
+
   .containerButton {
     align-items: center;
     display: flex;
     justify-content: center;
     width: 2rem;
   }
+
   .menuButton,
   .checkBox {
     display: block;
@@ -303,13 +362,13 @@
     width: 2rem;
     height: 2rem;
   }
-  
-  .checkBox:checked ~ .menuButton {
+
+  .checkBox:checked~.menuButton {
     opacity: 0;
     transition: all 0.4s ease;
   }
 
-  .checkBox:checked ~ .closeButton {
+  .checkBox:checked~.closeButton {
     display: block;
     position: absolute;
     width: 2rem;
@@ -328,101 +387,60 @@
     left: 0;
     position: fixed;
     z-index: 99;
-    background-color: rgb(250,247,243);
+    background-color: rgb(250, 247, 243);
     height: -webkit-fill-available;
     width: 100%;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.6s ease-in-out;
   }
-  .container3Navbar a:last-child{
+
+  .container3Navbar a:last-child {
     padding-right: 0;
   }
-  .checkBox:checked ~ .container3Navbar {
+
+  .checkBox:checked~.container3Navbar {
     pointer-events: all;
     opacity: 1;
   }
+
   .link {
     color: black;
     font-size: large;
   }
-  .profileButton, .profileButtonActiveOffset{
+
+  .profileButton,
+  .profileButtonActiveOffset {
     font-size: large;
     color: rgba(0, 0, 0, 0.8) !important;
     border: 2px solid rgba(0, 0, 0, 0.8);
     transition: background-color 0.3s linear, color 0.3s linear;
   }
-  
+
   .profileButton:hover,
   .profileButtonActiveOffset:hover,
   .profileButton:focus-visible,
-  .profileButtonActiveOffset:focus-visible{
+  .profileButtonActiveOffset:focus-visible {
     color: rgb(255, 255, 255) !important;
     background-color: rgba(0, 0, 0, 0.8);
   }
 }
 
-@media only screen and (max-width: 641px){
-  .bottomSearchBar{
+@media only screen and (max-width: 641px) {
+  .searchForm {
     width: 100%;
   }
 }
 
 @media only screen and (max-width: 426px) {
   .navbarSupremeContainer {
-    padding: 1rem 0.5rem;
-  }
-  .navbar {
-    grid-template-columns: 8rem auto 2.5rem;
-  }
-  .container2SearchBox {
-    width: 75.5vw;
-    font-size: small;
-    height: 2.5rem;
-  }
-  .searchButton,
-  .searchCheckBox,
-  .searchCloseButton {
-    margin-right: 0.75rem;
-  }
-  .container2SearchBox::placeholder {
-    font-size: small;
-  }
-  .buttomSearchBarContainer{
-    padding-right: 0;
+    padding: 0.8rem 0.5rem;
   }
 }
 
-@media only screen and (max-width: 376px) {
-  .container2SearchBox {
-    width: 72.5vw;
-  }
-  .searchButton,
-  .searchCheckBox,
-  .searchCloseButton {
-    margin-right: 0.5rem;
-  }
-}
+
 
 @media only screen and (max-width: 321px) {
-  .navbar {
-    grid-template-columns: 8rem auto 2rem;
-  }
-  .container2SearchBox {
-    width: 70vw;
-  }
-  .searchCheckBox,
-  .searchButton {
-    width: 1.5rem;
-    height: 1.5rem;
-    margin-right: 0;
-  }
-
-  .searchCloseButton {
-    width: 1.5rem !important;
-    height: 1.5rem !important;
-    margin-right: 0 !important;
-  }
   .menuButton,
   .closeButton,
   .checkBox {

@@ -1,7 +1,11 @@
 import styles from "@/styles/page-loading-spinner.module.css";
 
 const PLSpinner = () => {
-  return <span className={styles.loader}></span>;
+  return (
+    <div className={styles.container}>
+      <span className={styles.loader}></span>
+    </div>
+  );
 };
 
 export default PLSpinner;

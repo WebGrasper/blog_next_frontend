@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import moment from "moment";
 import { v4 as uuidv4 } from "uuid"; // Import uuid to generate unique IDs for comments
+import { Send } from "lucide-react";
 
 export const getServerSideProps = async (context) => {
     const { title } = context.query;
@@ -165,7 +166,9 @@ function Article({ article, final_comments_res, final_article_creator }) {
                 };
 
                 setComments((prevComments) => [newComment, ...prevComments]);
+                event.target.reset(); // Reset form fields
             }
+            setSubmit(false); // End loading state
         }
     };
 
@@ -319,40 +322,57 @@ function Article({ article, final_comments_res, final_article_creator }) {
                         </div>
                     </div>
                     <div className={styles.commentsContainer}>
-                        <h5>Comments</h5>
-                        {comments.map((comment) => (
-                            <div key={comment._id} className={styles.commenterContainer}>
-                                <Link href={"#"} className={styles.commenterImage}>
-                                    <Image
-                                        width={40}
-                                        height={40}
-                                        loading="lazy"
-                                        src={comment.commenterImage}
-                                        alt="commenters profile image"
-                                    />
-                                </Link>
-                                <div className={styles.commenterDetails}>
-                                    <div className={styles.commenterSubDetails}>
-                                        <h6 className={styles.commenterName}>
-                                            {comment.commenterName}
-                                        </h6>
-                                        <p className={styles.commentTime}>{comment.timeAgo}</p>
-                                    </div>
-                                    <p className={styles.comment}>{comment.commentBody}</p>
-                                </div>
-                            </div>
-                        ))}
+                        <div className={styles.commentsHeading}>
+                            <h5>Comments</h5>
+                            <span className={styles.commentCountBadge}>{comments?.length}</span>
+                        </div>
+
                         <form className={styles.commentForm} onSubmit={handleSubmit}>
-                            <input
-                                type="text"
-                                className="form__field"
-                                placeholder="Leave your comment"
+                            <textarea
+                                className={styles.commentTextArea}
+                                placeholder="What are your thoughts?"
                                 name="commentBody"
                                 id="commentBody"
                                 required={isToken ? true : false}
+                                rows={3}
                             />
-                            <button type="submit">{isToken ? "Submit" : "Login"}</button>
+                            <div className={styles.formActions}>
+                                <button type="submit" className={styles.submitBtn}>
+                                    {isToken ? (
+                                        <>
+                                            Submit <Send size={14} style={{ marginLeft: '6px' }} />
+                                        </>
+                                    ) : "Login to comment"}
+                                </button>
+                            </div>
                         </form>
+
+                        <div className={styles.commentDivider} />
+
+                        <div className={styles.commentList}>
+                            {comments.map((comment) => (
+                                <div key={comment._id} className={styles.commenterContainer}>
+                                    <Link href={"#"} className={styles.commenterImage}>
+                                        <Image
+                                            width={40}
+                                            height={40}
+                                            loading="lazy"
+                                            src={comment.commenterImage || 'https://ik.imagekit.io/94nzrpaat/images/default-avatar.png'}
+                                            alt="commenters profile image"
+                                        />
+                                    </Link>
+                                    <div className={styles.commenterDetails}>
+                                        <div className={styles.commenterSubDetails}>
+                                            <h6 className={styles.commenterName}>
+                                                {comment.commenterName}
+                                            </h6>
+                                            <p className={styles.commentTime}>{comment.timeAgo}</p>
+                                        </div>
+                                        <p className={styles.comment}>{comment.commentBody}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
