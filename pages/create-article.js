@@ -11,6 +11,7 @@ import Cookies from "js-cookie";
 import Image from "next/image";
 import Spinner from "@/components/spinner";
 import dynamic from "next/dynamic";
+import { Send } from "lucide-react";
 
 const MediumEditor = dynamic(() => import("@/components/MediumEditor"), {
   ssr: false,
@@ -170,192 +171,116 @@ export default function Home() {
       </Head>
       <div className={styles.root}>
         <main className={`${styles.main}`}>
-          <div className={styles.container}>
-            <h1>Create Article</h1>
-            <form className={styles.formContainer} onSubmit={submitHandle}>
-              <div className={styles.inputFieldContainer}>
-                <label htmlFor="Title">Title*</label>
-                <input
-                  type="text"
-                  name="title"
-                  id="title"
-                  placeholder="Add main heading"
-                  required
-                />
-                {titleError && <p className={styles.warning}>{titleError}</p>}
-              </div>
-              <div className={styles.inputFieldContainer}>
-                <label htmlFor="Image">Image*</label>
-                <input
-                  className={styles.customFileInput}
-                  name="articleImage"
-                  type="file"
-                  onChange={handleFileChange}
-                  required
-                />
-              </div>
-              <div className={styles.inputFieldContainer}>
-                <label htmlFor="Category">Category*</label>
-                <div className={styles.customRadioGroup}>
-                  <label
-                    className={`${styles.customRadioLabel} ${
-                      selectedCategory === "Politics" ? styles.selected : ""
-                    }`}
-                  >
+          <form className={styles.formContainer} onSubmit={submitHandle}>
+            <div className={styles.twoColumnContainer}>
+              <div className={styles.leftColumn}>
+                
+                <div className={styles.inputFieldContainer} style={{ marginBottom: 0 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+                    <span className={styles.sectionLabel} style={{ marginBottom: 0 }}>Hero Image</span>
+                    <button type="submit" className={styles.sendPublishButton} title="Publish Article" disabled={markDisabled}>
+                      {markDisabled ? <Spinner /> : <Send size={16} />}
+                    </button>
+                  </div>
+                  <label className={styles.imageUploadBox}>
+                    {selectedFile ? (
+                      <>
+                        <img src={URL.createObjectURL(selectedFile)} alt="Preview" className={styles.imagePreview} />
+                        <div className={styles.imageUploadBtn} style={{backgroundColor: 'rgba(17,17,17,0.8)'}}>Change image</div>
+                      </>
+                    ) : (
+                      <>
+                        <svg className={styles.svgIcon} width="80" height="60" viewBox="0 0 100 80" fill="none" stroke="#d5cba8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <circle cx="30" cy="25" r="8" fill="#d5cba8" stroke="none" />
+                          <polyline points="10 65 35 40 55 60 75 40 90 60"></polyline>
+                        </svg>
+                        <div className={styles.imageUploadBtn}>Upload image</div>
+                      </>
+                    )}
                     <input
-                      type="radio"
-                      name="category"
-                      value="Politics"
-                      checked={selectedCategory === "Politics"}
-                      onChange={(e) => setSelectedCategory(e.target.value)}
+                      className={styles.customFileInput}
+                      name="articleImage"
+                      type="file"
+                      onChange={handleFileChange}
+                      required
+                      accept="image/*"
                     />
-                    <span className={styles.customRadioButton}></span>
-                    Politics
-                  </label>
-                  <label
-                    className={`${styles.customRadioLabel} ${
-                      selectedCategory === "Technology" ? styles.selected : ""
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name="category"
-                      value="Technology"
-                      checked={selectedCategory === "Technology"}
-                      onChange={(e) => setSelectedCategory(e.target.value)}
-                    />
-                    <span className={styles.customRadioButton}></span>
-                    Technology
-                  </label>
-                  <label
-                    className={`${styles.customRadioLabel} ${
-                      selectedCategory === "Railway" ? styles.selected : ""
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name="category"
-                      value="Railway"
-                      checked={selectedCategory === "Railway"}
-                      onChange={(e) => setSelectedCategory(e.target.value)}
-                    />
-                    <span className={styles.customRadioButton}></span>
-                    Railway
-                  </label>
-                  <label
-                    className={`${styles.customRadioLabel} ${
-                      selectedCategory === "Sports" ? styles.selected : ""
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name="category"
-                      value="Sports"
-                      checked={selectedCategory === "Sports"}
-                      onChange={(e) => setSelectedCategory(e.target.value)}
-                    />
-                    <span className={styles.customRadioButton}></span>
-                    Sports
-                  </label>
-                  <label
-                    className={`${styles.customRadioLabel} ${
-                      selectedCategory === "Markets" ? styles.selected : ""
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name="category"
-                      value="Markets"
-                      checked={selectedCategory === "Markets"}
-                      onChange={(e) => setSelectedCategory(e.target.value)}
-                    />
-                    <span className={styles.customRadioButton}></span>
-                    Markets
-                  </label>
-                  <label
-                    className={`${styles.customRadioLabel} ${
-                      selectedCategory === "India News" ? styles.selected : ""
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name="category"
-                      value="India News"
-                      checked={selectedCategory === "India News"}
-                      onChange={(e) => setSelectedCategory(e.target.value)}
-                    />
-                    <span className={styles.customRadioButton}></span>
-                    India News
-                  </label>
-                  <label
-                    className={`${styles.customRadioLabel} ${
-                      selectedCategory === "International News"
-                        ? styles.selected
-                        : ""
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name="category"
-                      value="International News"
-                      checked={selectedCategory === "International News"}
-                      onChange={(e) => setSelectedCategory(e.target.value)}
-                    />
-                    <span className={styles.customRadioButton}></span>
-                    International News
-                  </label>
-                  <label
-                    className={`${styles.customRadioLabel} ${
-                      selectedCategory === "Health" ? styles.selected : ""
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name="category"
-                      value="Health"
-                      checked={selectedCategory === "Health"}
-                      onChange={(e) => setSelectedCategory(e.target.value)}
-                    />
-                    <span className={styles.customRadioButton}></span>
-                    Health
-                  </label>
-                  <label
-                    className={`${styles.customRadioLabel} ${
-                      selectedCategory === "Education" ? styles.selected : ""
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name="category"
-                      value="Education"
-                      checked={selectedCategory === "Education"}
-                      onChange={(e) => setSelectedCategory(e.target.value)}
-                    />
-                    <span className={styles.customRadioButton}></span>
-                    Education
                   </label>
                 </div>
-                {showWarning && (
-                  <p className={styles.warning}>Please select a category.</p>
-                )}
+
+                <div className={styles.categoriesContainer}>
+                  <span className={styles.sectionLabel}>Categories</span>
+                  <div className={styles.customRadioGroup}>
+                    {[
+                      "National",
+                      "World",
+                      "Politics",
+                      "Railway",
+                      "Markets",
+                      "Sports",
+                      "Health",
+                      "Education",
+                      "AI & Machine Learning",
+                      "Crypto & Web3",
+                      "Gadgets & Hardware",
+                      "Startups & VCs",
+                      "Finance",
+                      "Space Exploration",
+                      "Climate Tech",
+                      "EVs & Mobility"
+                    ].map((category) => (
+                      <label
+                        key={category}
+                        className={`${styles.customRadioLabel} ${
+                          selectedCategory === category ? styles.selected : ""
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name="category"
+                          value={category}
+                          checked={selectedCategory === category}
+                          onChange={(e) => setSelectedCategory(e.target.value)}
+                        />
+                        <span className={styles.customRadioButton}></span>
+                        {category}
+                      </label>
+                    ))}
+                  </div>
+                  {showWarning && (
+                    <p className={styles.warning}>Please select a category.</p>
+                  )}
+                </div>
               </div>
-              <div className={styles.inputFieldContainer}>
-                <div className={styles.headingContainer} style={{ marginBottom: "1rem" }}>
-                  <label>Content*</label>
+
+              <div className={styles.rightColumn}>
+                <div style={{ width: '100%' }}>
+                  <span className={styles.sectionLabel}>TITLE</span>
+                  <input
+                    type="text"
+                    name="title"
+                    id="title"
+                    className={styles.mediumTitleInput}
+                    placeholder="Write your headline..."
+                    required
+                  />
+                  {titleError && <p className={styles.warning}>{titleError}</p>}
                 </div>
                 
-                <MediumEditor onChange={(html) => setArticleHtml(html)} />
-                {descriptionWarning && (
-                  <p className={styles.warning}>
-                    Please add a description with at least 300 words.
-                  </p>
-                )}
-                <button type="submit">
-                  {markDisabled ? <Spinner /> : "Add"}
-                </button>
+                <div style={{ width: '100%', display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
+                  <span className={styles.sectionLabel}>DESCRIPTION</span>
+                  <div className={styles.editorContainerBox}>
+                    <MediumEditor onChange={(html) => setArticleHtml(html)} />
+                  </div>
+                  {descriptionWarning && (
+                    <p className={styles.warning}>
+                      Please add a description with at least 300 words.
+                    </p>
+                  )}
+                </div>
               </div>
-            </form>
-          </div>
+            </div>
+          </form>
         </main>
       </div>
     </>

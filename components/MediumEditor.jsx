@@ -5,12 +5,14 @@ import StarterKit from '@tiptap/starter-kit';
 import ImageExtension from '@tiptap/extension-image';
 import Highlight from '@tiptap/extension-highlight';
 import LinkExtension from '@tiptap/extension-link';
-import { 
-  Bold, Italic, Highlighter, Quote, 
+import Placeholder from '@tiptap/extension-placeholder';
+import {
+  Bold, Italic, Highlighter, Quote,
   Image as ImageIcon, Code, Plus, Link as LinkIcon
 } from 'lucide-react';
 import styles from './MediumEditor.module.css';
 import { useSnackbar } from 'notistack';
+import Spinner from './spinner';
 
 export default function MediumEditor({ onChange }) {
   const { enqueueSnackbar } = useSnackbar();
@@ -31,6 +33,9 @@ export default function MediumEditor({ onChange }) {
           levels: [3],
         },
       }),
+      Placeholder.configure({
+        placeholder: 'Write your article...',
+      }),
       ImageExtension,
       Highlight,
       LinkExtension.configure({
@@ -49,7 +54,6 @@ export default function MediumEditor({ onChange }) {
     editorProps: {
       attributes: {
         class: 'ProseMirror',
-        'data-placeholder': 'Tell your story...',
       },
     },
   });
@@ -75,7 +79,7 @@ export default function MediumEditor({ onChange }) {
         });
 
         const data = await response.json();
-        
+
         if (data.success) {
           editor.chain().focus().setImage({ src: data.url }).run();
           enqueueSnackbar('Image injected successfully!', { variant: 'success' });
@@ -112,9 +116,9 @@ export default function MediumEditor({ onChange }) {
 
   return (
     <div className={styles.editorWrapper}>
-      <input 
-        type="file" 
-        accept="image/*" 
+      <input
+        type="file"
+        accept="image/*"
         style={{ display: 'none' }}
         ref={fileInputRef}
         onChange={handleImageUpload}
@@ -161,25 +165,25 @@ export default function MediumEditor({ onChange }) {
         >
           <Quote size={16} />
         </button>
-        
+
         <div className={styles.separator} />
-        
+
         <button type="button" onMouseDown={(e) => { e.preventDefault(); editor.chain().toggleHeading({ level: 3 }).run(); }} className={editor.isActive('heading', { level: 3 }) ? styles.isActive : ''}>H3</button>
       </BubbleMenu>}
 
       {editor && <FloatingMenu editor={editor} tippyOptions={{ duration: 100, placement: 'left' }}>
         <div className={styles.floatingMenu}>
-          <button 
+          <button
             type="button"
             className={`${styles.plusButton} ${isFloatingOpen ? styles.isOpen : ''}`}
             onClick={() => setIsFloatingOpen(!isFloatingOpen)}
           >
             <Plus size={20} />
           </button>
-          
+
           {isFloatingOpen && (
             <div className={styles.actions}>
-              <button 
+              <button
                 type="button"
                 className={styles.actionButton}
                 onClick={() => fileInputRef.current?.click()}
@@ -188,7 +192,7 @@ export default function MediumEditor({ onChange }) {
               >
                 <ImageIcon size={18} />
               </button>
-              <button 
+              <button
                 type="button"
                 className={styles.actionButton}
                 onClick={() => {
@@ -205,7 +209,21 @@ export default function MediumEditor({ onChange }) {
       </FloatingMenu>}
 
       <div className={styles.editorContainer}>
-        {isUploading && <p style={{ color: '#db2777', fontSize: '0.9em', marginBottom: '10px' }}>Uploading image to ImageKit...</p>}
+        {isUploading && (
+          <div style={{ 
+            position: 'absolute', 
+            top: 0, left: 0, right: 0, bottom: 0, 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            backgroundColor: 'rgba(255, 255, 255, 0.7)',
+            zIndex: 10
+          }}>
+            <div style={{ filter: 'invert(0.5)', transform: 'scale(1.5)' }}>
+              <Spinner />
+            </div>
+          </div>
+        )}
         <EditorContent editor={editor} />
       </div>
     </div>
