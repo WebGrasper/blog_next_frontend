@@ -8,7 +8,11 @@ function Footer() {
         <div className={styles.container1}>
           <Link href={"/"}>
             <div className={styles.footerLogo}>
-              <img src="/logo.png" alt="stashify logo" />
+              <img 
+                src="https://ik.imagekit.io/94nzrpaat/images/gold-logo-with-title-wg_853558-2748-N6dN8fcsA-transformed_1%20(1).png?updatedAt=1708801310085" 
+                alt="WebGrasper logo" 
+                style={{ width: '50px', height: 'auto' }}
+              />
               <span>
                 Web<span>Grasper</span>
               </span>

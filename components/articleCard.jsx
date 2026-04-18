@@ -48,9 +48,14 @@ function ArticleCard({ article }) {
     }
   }, [article]);
 
-  // Custom function to create a clean URL slug by removing special characters and replacing spaces with hyphens
+  // Custom function to create a URL slug consistent between server and client.
+  // Spaces → hyphens; pipe | → %7C (browsers auto-encode this, causing hydration mismatch if left raw).
   const createSlug = (title) => {
-    return title.replace(/\s+/g, "-"); // Replace spaces with hyphens
+    if (!title) return "article";
+    return title
+      .trim()
+      .replace(/\s+/g, "-")   // spaces to hyphens
+      .replace(/\|/g, "%7C"); // encode pipe so server & client agree
   };
 
   return (
@@ -65,8 +70,8 @@ function ArticleCard({ article }) {
           className={styles.articleImage}
           width={400}
           height={250}
-          src={article.articleImage[0]}
-          alt={article.title}
+          src={article.articleImage?.[0] || "https://ik.imagekit.io/94nzrpaat/images/pixelcut-export%20(4).png"}
+          alt={article.title || "article image"}
           quality={80}
           unoptimized={false}
         />
@@ -75,18 +80,18 @@ function ArticleCard({ article }) {
       <div className={styles.contentContainer}>
         <h1 className={styles.title}>{article.title}</h1>
         <p className={styles.description}>{description}</p>
-        
+
         <div className={styles.footer}>
           <Image
             className={styles.creatorImage}
             src={article?.creator?.avatar || "https://ik.imagekit.io/94nzrpaat/images/default-avatar.png"}
-            alt={article?.creator?.username}
+            alt={article?.creator?.username || "creator icon"}
             width={32}
             height={32}
             loading="lazy"
           />
           <div className={styles.creatorInfo}>
-            <span className={styles.creatorName}>{article?.creator?.username}</span>
+            <span className={styles.creatorName}>{article?.creator?.username || "Anonymous"}</span>
             <span className={styles.publishDate}>{article.formattedDate}</span>
           </div>
         </div>

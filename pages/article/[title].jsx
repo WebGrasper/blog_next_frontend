@@ -264,12 +264,12 @@ function Article({ article, final_comments_res, final_article_creator }) {
                             <div className={styles.creatorContainer}>
                                 <Image
                                     className={styles.creatorImage}
-                                    src={final_article_creator?.user?.avatar}
+                                    src={final_article_creator?.user?.avatar || "https://ik.imagekit.io/94nzrpaat/images/resize.jpg"}
                                     alt={"Article creator image"}
                                     width={44}
                                     loading="lazy"
                                     height={44}
-                                    objectFit="contain"
+                                    style={{ objectFit: 'contain' }}
                                 />
                                 <div className={styles.creatorDetailsContainer}>
                                     <h6>{final_article_creator?.user?.username}</h6>
@@ -290,7 +290,7 @@ function Article({ article, final_comments_res, final_article_creator }) {
                                         width={25}
                                         loading="lazy"
                                         height={25}
-                                        objectFit="contain"
+                                        style={{ objectFit: 'contain' }}
                                     />
                                     <p>{article?.impressions}</p>
                                 </div>
@@ -302,7 +302,7 @@ function Article({ article, final_comments_res, final_article_creator }) {
                                         width={25}
                                         loading="lazy"
                                         height={25}
-                                        objectFit="contain"
+                                        style={{ objectFit: 'contain' }}
                                     />
                                     <p>{comments?.length}</p>
                                 </div>
@@ -310,13 +310,12 @@ function Article({ article, final_comments_res, final_article_creator }) {
                         </div>
                         <Image
                             className={styles.articleImage}
-                            src={article.articleImage?.[0]}
-                            alt={article.title}
+                            src={article.articleImage?.[0] || "https://ik.imagekit.io/94nzrpaat/images/pixelcut-export%20(4).png"}
+                            alt={article.title || "article image"}
                             width={800}
                             loading="lazy"
                             height={600}
-                            layout="responsive"
-                            objectFit="cover"
+                            style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
                         />
                         <h2>Description</h2>
                         <div className={styles.dynamicHtmlContent}>
