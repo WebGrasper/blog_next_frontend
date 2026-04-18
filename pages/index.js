@@ -33,7 +33,7 @@ export const getServerSideProps = async (context) => {
 
   let dailyArticlesdata = null;
   let dailyArticles = undefined;
-  let dailyArticlesLimit = 4;
+  let dailyArticlesLimit = 6;
 
   try {
     let response = await fetch(
@@ -84,7 +84,7 @@ export const getServerSideProps = async (context) => {
 
   let trendingArticlesData = null;
   let trendingArticles = undefined;
-  let trendingArticlesLimit = 4;
+  let trendingArticlesLimit = 6;
 
   try {
     let response = await fetch(

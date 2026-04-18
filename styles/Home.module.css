@@ -15,7 +15,7 @@
   padding-inline: 1rem;
 }
 
-.heroContent > h1 {
+.heroContent>h1 {
   text-overflow: ellipsis;
   overflow: hidden;
   text-align: left;
@@ -25,11 +25,13 @@
   text-transform: capitalize;
 }
 
-.heroContent > h1 > div:nth-child(1), .heroContent > h1 > div:nth-child(3){
+.heroContent>h1>div:nth-child(1),
+.heroContent>h1>div:nth-child(3) {
   color: #A16666 !important;
 }
 
-.heroContent > h1 > div:nth-child(2) > span, .heroContent > h1 > div:nth-child(3) > span{
+.heroContent>h1>div:nth-child(2)>span,
+.heroContent>h1>div:nth-child(3)>span {
   border: 1px solid black;
   padding: 0 0.5rem;
   color: #FAF7F3;
@@ -37,47 +39,55 @@
   width: fit-content;
 }
 
-.heroImage > img {
+.heroImage>img {
   width: clamp(22rem, 30vw, 25rem);
   height: 100%;
 }
 
 .homePageSupremeContainer {
   background-color: rgb(250, 247, 243);
+  background-image: radial-gradient(rgba(0, 0, 0, 0.1) 1.5px, transparent 1.5px);
+  background-size: 25px 25px;
   width: 100%;
   padding-top: 1rem;
 }
 
-.dailyArticlesMainContainer, .trendingArticlesMainContainer {
+.dailyArticlesMainContainer,
+.trendingArticlesMainContainer {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  max-width: 70rem;
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  max-width: 75rem;
+  gap: 2.5rem;
   margin-inline: auto;
-  padding: 1rem 0.5rem;
-  background: rgba(255, 255, 255, 0.01);
-  backdrop-filter: blur(1px);
-  -webkit-backdrop-filter: blur(1px);
-  border-radius: 10px;
+  padding: 1.5rem 1rem 4rem 1rem;
 }
 
-.dailyArticleHeadingContainer, .trendingArticleHeadingContainer {
-  max-width: 70rem;
-  padding-block: 0.5rem;
+.dailyArticleHeadingContainer,
+.trendingArticleHeadingContainer {
+  max-width: 75rem;
+  padding: 3rem 1rem 1rem 1rem;
   margin-inline: auto;
 }
 
-.dailyArticleHeadingContainer > h1, .trendingArticleHeadingContainer > h1 {
-  padding-left: 1rem;
-  text-overflow: unset;
-  overflow: unset;
-  display: block;
-  -webkit-box-orient: unset;
-  font-size: 1rem;
+.dailyArticleHeadingContainer>h1,
+.trendingArticleHeadingContainer>h1 {
+  font-family: 'Source Serif 4', 'DM Serif Display', serif;
+  font-size: 2rem;
   font-weight: 700;
-  color: transparent;
-  color: black;
-  text-transform: uppercase;
+  color: #1a1a1a;
+  position: relative;
+  display: inline-block;
+}
+
+.dailyArticleHeadingContainer>h1::after,
+.trendingArticleHeadingContainer>h1::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 40px;
+  height: 3px;
+  background: #A16666;
 }
 
 .categoriesMainContainer {
@@ -101,7 +111,7 @@
   gap: 0.5rem;
 }
 
-.categoriesHeadingContainer > h2 {
+.categoriesHeadingContainer>h2 {
   display: block;
   -webkit-box-orient: unset;
   font-size: 2rem;
@@ -111,7 +121,7 @@
   text-align: center;
 }
 
-.categoriesHeadingContainer > p {
+.categoriesHeadingContainer>p {
   display: block;
   -webkit-box-orient: unset;
   text-align: center;
@@ -144,9 +154,7 @@
 }
 
 @media only screen and (max-width: 802px) {
-  .dailyArticlesMainContainer, .trendingArticlesMainContainer {
-    grid-template-columns: repeat(1, 1fr);
-  }
+  /* Dynamic grid handles this automatically now */
 }
 
 @media only screen and (max-width: 766px) {
@@ -159,11 +167,23 @@
     height: 100%;
 
   }
+
   .heroContainer h1 {
     font-size: clamp(2.5rem, 13vw, 12rem);
   }
-  .heroImage > img {
+
+  .heroImage>img {
     width: 100%;
     height: 100%;
+  }
+
+  .dailyArticlesMainContainer,
+  .trendingArticlesMainContainer {
+    gap: 1.5rem;
+  }
+
+  .dailyArticleHeadingContainer,
+  .trendingArticleHeadingContainer {
+    padding: 1rem 1rem 1rem 1rem;
   }
 }

@@ -59,43 +59,36 @@ function ArticleCard({ article }) {
       as={`/article/${createSlug(article.title)}`}
       className={styles.root}
     >
-      <div className={styles.creatorMainContainer}>
-        <div className={styles.creatorContainer}>
+      <div className={styles.imageContainer}>
+        <div className={styles.categoryBadge}>{article?.category}</div>
+        <Image
+          className={styles.articleImage}
+          width={400}
+          height={250}
+          src={article.articleImage[0]}
+          alt={article.title}
+          quality={80}
+          unoptimized={false}
+        />
+      </div>
+
+      <div className={styles.contentContainer}>
+        <h1 className={styles.title}>{article.title}</h1>
+        <p className={styles.description}>{description}</p>
+        
+        <div className={styles.footer}>
           <Image
             className={styles.creatorImage}
-            src={article?.creator?.avatar}
-            alt={"Article creator image"}
-            width={35}
+            src={article?.creator?.avatar || "https://ik.imagekit.io/94nzrpaat/images/default-avatar.png"}
+            alt={article?.creator?.username}
+            width={32}
+            height={32}
             loading="lazy"
-            height={35}
-            objectFit="contain"
           />
-          <div className={styles.creatorDetailsContainer}>
-            <h6>{article?.creator?.username}</h6>
-            <div className={styles.articleTimePeriod}>
-              <p>
-                Published in <span>{article?.category}</span>
-              </p>
-              <h3 className={styles.date}>{article.formattedDate}</h3>
-            </div>
+          <div className={styles.creatorInfo}>
+            <span className={styles.creatorName}>{article?.creator?.username}</span>
+            <span className={styles.publishDate}>{article.formattedDate}</span>
           </div>
-        </div>
-      </div>
-      <div className={styles.ArticleCardContainer}>
-        <div className={styles.imageContainer}>
-          <Image
-            className={styles.articleImage}
-            width={176}
-            height={112}
-            src={article.articleImage[0]}
-            alt={article.title}
-            quality={50}
-            priority={false}
-          />
-        </div>
-        <div className={styles.TitleContainer}>
-          <h1 className={styles.title}>{article.title}</h1>
-          <p className={styles.description}>{description}</p>
         </div>
       </div>
     </Link>
