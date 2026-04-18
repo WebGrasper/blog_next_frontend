@@ -12,6 +12,7 @@ import Image from "next/image";
 import Spinner from "@/components/spinner";
 import dynamic from "next/dynamic";
 import { Send } from "lucide-react";
+import SearchSelect from "@/components/SearchSelect";
 
 const MediumEditor = dynamic(() => import("@/components/MediumEditor"), {
   ssr: false,
@@ -21,6 +22,7 @@ export default function Home() {
   const [articleHtml, setArticleHtml] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [showWarning, setShowWarning] = useState(false);
+  const [showImageWarning, setShowImageWarning] = useState(false);
   const [descriptionWarning, setDescriptionWarning] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [titleError, setTitleError] = useState("");
@@ -48,6 +50,7 @@ export default function Home() {
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
+    setShowImageWarning(false);
   };
 
   const submitHandle = async (event) => {
@@ -80,8 +83,16 @@ export default function Home() {
       setShowWarning(false);
     }
 
+    /* image validation */
+    if (!selectedFile) {
+      setShowImageWarning(true);
+      return;
+    } else {
+      setShowImageWarning(false);
+    }
+
     /* description validation */
-    if (!articleHtml || articleHtml.trim() === '') {
+    if (!articleHtml || articleHtml.trim() === "") {
       setDescriptionWarning(true);
       return;
     }
@@ -172,16 +183,12 @@ export default function Home() {
       <div className={styles.root}>
         <main className={`${styles.main}`}>
           <form className={styles.formContainer} onSubmit={submitHandle}>
-            <div className={styles.twoColumnContainer}>
+            <div className={styles.mainContainer}>
+              {/* LEFT COLUMN (Metadata) */}
               <div className={styles.leftColumn}>
-                
-                <div className={styles.inputFieldContainer} style={{ marginBottom: 0 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-                    <span className={styles.sectionLabel} style={{ marginBottom: 0 }}>Hero Image</span>
-                    <button type="submit" className={styles.sendPublishButton} title="Publish Article" disabled={markDisabled}>
-                      {markDisabled ? <Spinner /> : <Send size={16} />}
-                    </button>
-                  </div>
+                {/* 2. IMAGE SECTION */}
+                <div className={styles.imageSection}>
+                  <span className={styles.sectionLabel}>Hero Image</span>
                   <label className={styles.imageUploadBox}>
                     {selectedFile ? (
                       <>
@@ -202,16 +209,19 @@ export default function Home() {
                       name="articleImage"
                       type="file"
                       onChange={handleFileChange}
-                      required
                       accept="image/*"
                     />
                   </label>
+                  {showImageWarning && (
+                    <p className={styles.warning}>Please upload a hero image.</p>
+                  )}
                 </div>
 
-                <div className={styles.categoriesContainer}>
-                  <span className={styles.sectionLabel}>Categories</span>
-                  <div className={styles.customRadioGroup}>
-                    {[
+                {/* 3. CATEGORY SECTION */}
+                <div className={styles.categorySection}>
+                  <span className={styles.sectionLabel}>Category</span>
+                  <SearchSelect
+                    options={[
                       "National",
                       "World",
                       "Politics",
@@ -228,34 +238,30 @@ export default function Home() {
                       "Space Exploration",
                       "Climate Tech",
                       "EVs & Mobility"
-                    ].map((category) => (
-                      <label
-                        key={category}
-                        className={`${styles.customRadioLabel} ${
-                          selectedCategory === category ? styles.selected : ""
-                        }`}
-                      >
-                        <input
-                          type="radio"
-                          name="category"
-                          value={category}
-                          checked={selectedCategory === category}
-                          onChange={(e) => setSelectedCategory(e.target.value)}
-                        />
-                        <span className={styles.customRadioButton}></span>
-                        {category}
-                      </label>
-                    ))}
-                  </div>
+                    ]}
+                    value={selectedCategory}
+                    onChange={(category) => {
+                      setSelectedCategory(category);
+                      setShowWarning(false);
+                    }}
+                    placeholder="Search or select category..."
+                  />
                   {showWarning && (
                     <p className={styles.warning}>Please select a category.</p>
                   )}
                 </div>
               </div>
 
+              {/* RIGHT COLUMN (Content) */}
               <div className={styles.rightColumn}>
-                <div style={{ width: '100%' }}>
-                  <span className={styles.sectionLabel}>TITLE</span>
+                {/* 1. TITLE SECTION */}
+                <div className={styles.titleSection}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span className={styles.sectionLabel}>TITLE</span>
+                    <button type="submit" className={styles.sendPublishButton} title="Publish Article" disabled={markDisabled}>
+                      {markDisabled ? <Spinner /> : <><Send size={16} style={{marginRight: '6px'}}/> Publish</>}
+                    </button>
+                  </div>
                   <input
                     type="text"
                     name="title"
@@ -266,8 +272,9 @@ export default function Home() {
                   />
                   {titleError && <p className={styles.warning}>{titleError}</p>}
                 </div>
-                
-                <div className={styles.descriptionWrapper}>
+
+                {/* 4. DESCRIPTION SECTION */}
+                <div className={styles.descriptionSection}>
                   <span className={styles.sectionLabel}>DESCRIPTION</span>
                   <div className={styles.editorContainerBox}>
                     <MediumEditor onChange={(html) => setArticleHtml(html)} />

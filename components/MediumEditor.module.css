@@ -9,7 +9,6 @@
 
 .editorContainer {
   position: relative;
-  border: 1px solid #e2e8f0;
   border-radius: 8px;
   padding: 2rem 1.5rem;
   height: 100%;
@@ -77,6 +76,7 @@
   .editorContainer :global(h2) {
     font-size: 1.75em;
   }
+
   .editorContainer :global(h3) {
     font-size: 1.25em;
   }

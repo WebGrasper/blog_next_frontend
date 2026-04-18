@@ -47,7 +47,7 @@ const AuthModal = () => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const { username, email, password, confirmPassword } = Object.fromEntries(formData.entries());
-    
+
     if (password !== confirmPassword) {
       setErrors({ confirmPassword: "Passwords do not match." });
       return;
@@ -68,7 +68,7 @@ const AuthModal = () => {
     e.preventDefault();
     const { otp, password, confirmPassword } = Object.fromEntries(new FormData(e.target).entries());
     setIsSubmitting(true);
-    
+
     if (otpContext === 'register') {
       dispatch(confirmRegistration(otp));
     } else {
@@ -158,7 +158,7 @@ const AuthModal = () => {
   // --- Render Helpers ---
 
   const renderHeader = () => {
-    switch(view) {
+    switch (view) {
       case 'register': return { title: 'Create account', subtitle: 'Join WebGrasper to share your stories.' };
       case 'forget': return { title: 'Reset password', subtitle: 'Enter your email to receive a reset code.' };
       case 'otp': return { title: 'Final step', subtitle: 'Check your email for the verification code.' };
@@ -171,7 +171,15 @@ const AuthModal = () => {
   if (!isModalOpen) return null;
 
   return (
-    <div className={styles.modalOverlay} onClick={() => dispatch(closeModal())}>
+    <div
+      className={styles.modalOverlay}
+      onClick={() => dispatch(closeModal())}
+      style={{
+        backdropFilter: 'blur(10px)',
+        WebkitBackdropFilter: 'blur(10px)',
+        background: 'rgba(255, 255, 255, 0.15)'
+      }}
+    >
       <div className={styles.modalCard} onClick={(e) => e.stopPropagation()}>
         <button className={styles.closeBtn} onClick={() => dispatch(closeModal())}>
           <X size={24} />

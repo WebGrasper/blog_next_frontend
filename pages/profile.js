@@ -25,6 +25,7 @@ import {
   Globe,
   Briefcase
 } from "lucide-react";
+import { delay } from "lodash";
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -74,13 +75,12 @@ export default function Profile() {
 
   const handleLogout = async () => {
     setDisabled(true);
-    removeCookie("token");
-    removeCookie("username");
-    removeCookie("avatar");
+    removeCookie("token", { path: '/' });
+    removeCookie("username", { path: '/' });
+    removeCookie("avatar", { path: '/' });
     dispatch(resetProfileState());
     dispatch(resetLoginState());
-    await router.push("/");
-    setDisabled(false);
+    router.push("/");
   };
 
   const handleEditableForm = () => {
@@ -413,7 +413,14 @@ export default function Profile() {
       </section>
       {/* Frosted Logout Overlay */}
       {markDisabled && (
-        <div className={styles.logoutOverlay}>
+        <div 
+          className={styles.logoutOverlay}
+          style={{ 
+            backdropFilter: "blur(10px)",
+            WebkitBackdropFilter: "blur(10px)",
+            background: "rgba(255, 255, 255, 0.15)"
+          }}
+        >
           <div className={styles.logoutOverlayContent}>
             <Spinner />
             <h3>Signing you out...</h3>

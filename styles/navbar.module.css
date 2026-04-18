@@ -1,6 +1,6 @@
 .navbarSupremeContainer {
   width: 100%;
-  padding: 1rem;
+  padding: 0.25rem 1rem;
   position: fixed;
   top: 0;
   z-index: 9999;
@@ -11,12 +11,13 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   background-color: rgb(250, 247, 243) !important;
   transition: all 0.3s ease;
-  height: 4.5rem; /* Match taller nav */
+  height: auto;
+  /* Match taller nav */
 }
 
 .activeNotHomeNavbarSupremeContainer {
   width: 100%;
-  padding: 1rem;
+  padding: 0.25rem 1rem;
   position: sticky;
   position: -webkit-sticky;
   top: 0;
@@ -126,10 +127,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(25px);
-  z-index: 10001;
+  z-index: 100001;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -137,14 +135,15 @@
   opacity: 0;
   pointer-events: none;
   visibility: hidden;
-  transition: all 0.3s ease-in-out;
-  cursor: pointer; /* Hint that clicking anywhere closes the search */
+  transition: all 0.4s ease-in-out;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0);
 }
 
-.bottomSearchBarContainer.show {
-  opacity: 1;
-  pointer-events: all;
-  visibility: visible;
+.show {
+  opacity: 1 !important;
+  pointer-events: all !important;
+  visibility: visible !important;
 }
 
 .searchForm {
@@ -153,7 +152,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  cursor: default; /* Search area itself shouldn't show pointer */
+  cursor: default;
+  /* Search area itself shouldn't show pointer */
 }
 
 .bottomSearchBar {
@@ -238,7 +238,8 @@
 }
 
 .searchCheckBox:checked~.searchCloseButton {
-  opacity: 0; /* Keep hidden as per request for 'no extra button' */
+  opacity: 0;
+  /* Keep hidden as per request for 'no extra button' */
   pointer-events: none;
 }
 
@@ -247,7 +248,8 @@
 .containerButton {
   display: flex;
   align-items: center;
-  justify-content: center; /* Center links on desktop */
+  justify-content: center;
+  /* Center links on desktop */
   grid-column: 2;
   height: 100%;
 }
@@ -309,15 +311,14 @@
 
 
 @media only screen and (max-width: 962px) {
-  .navbarSupremeContainer {
-    padding: 1rem 1rem;
-  }
 
   .navbar {
     grid-template-columns: auto 1fr auto;
-    grid-template-rows: 1fr; /* Force single row */
+    grid-template-rows: 1fr;
+    /* Force single row */
     height: 4rem;
-    gap: 0.5rem; /* Tighter gap for small screens */
+    gap: 0.5rem;
+    /* Tighter gap for small screens */
     align-items: center;
   }
 
@@ -332,7 +333,8 @@
     grid-row: 1;
     height: 100%;
     justify-content: flex-end;
-    gap: 1rem; /* Adjust gap for mobile */
+    gap: 1rem;
+    /* Adjust gap for mobile */
   }
 
   .containerButton {
@@ -432,15 +434,8 @@
   }
 }
 
-@media only screen and (max-width: 426px) {
-  .navbarSupremeContainer {
-    padding: 0.8rem 0.5rem;
-  }
-}
-
-
-
 @media only screen and (max-width: 321px) {
+
   .menuButton,
   .closeButton,
   .checkBox {

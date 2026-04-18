@@ -16,7 +16,7 @@ function Navbar() {
   const pathname = usePathname();
 
   // --- States ---
-  const [isSeachChechBoxChecked, setSeachChechBoxChecked] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isToken, setToken] = useState(false);
   const [isOffset, setOffset] = useState(false);
@@ -36,24 +36,24 @@ function Navbar() {
 
   const handleLinkClick = () => setMenuOpen(false);
   const handleSearchCheckBox = () => {
-    setSeachChechBoxChecked(!isSeachChechBoxChecked);
+    setIsSearchOpen(!isSearchOpen);
   };
 
   const handleSearchBlogs = debounce((title) => {
     if (title) {
       router.push(`/article-page?name=${title}`);
-      setSeachChechBoxChecked(false); // Close modal on search
+      setIsSearchOpen(false); // Close modal on search
     }
   }, 1000);
 
-  const closeSearch = () => setSeachChechBoxChecked(false);
+  const closeSearch = () => setIsSearchOpen(false);
 
   // --- Effects ---
   useEffect(() => {
-    if (isSeachChechBoxChecked && searchInputRef.current) {
+    if (isSearchOpen && searchInputRef.current) {
       searchInputRef.current.focus();
     }
-  }, [isSeachChechBoxChecked]);
+  }, [isSearchOpen]);
 
   useEffect(() => {
     const handleEsc = (e) => {
@@ -81,83 +81,90 @@ function Navbar() {
   const activeModeClass = !isHome || isOffset ? styles.linkActiveOffset : "";
 
   return (
-    <div className={`
-      ${isHome ? styles.navbarSupremeContainer : styles.activeNotHomeNavbarSupremeContainer} 
-      ${isOffset ? styles.activeOffset : ""} 
-      ${atPortfolio ? styles.activeAtPortfolio : ""}
-    `}>
-      <nav className={styles.navbar}>
-        {/* LOGO (LEFT) */}
-        <div className={styles.container1}>
-          <Link href="/">
-            <div className={styles.container1H1}>
-              <Image 
-                src="https://ik.imagekit.io/94nzrpaat/images/gold-logo-with-title-wg_853558-2748-N6dN8fcsA-transformed_1%20(1).png?updatedAt=1708801310085"
-                alt="logo" width={70} height={35} priority 
-              />
-              <span>Web<span>Grasper</span></span>
-            </div>
-          </Link>
-        </div>
-
-        {/* MIDDLE SECTION (Links on Desktop) */}
-        <div className={styles.containerButton}>
-          <input type="checkbox" className={styles.checkBox} checked={isMenuOpen} onChange={() => setMenuOpen(!isMenuOpen)} />
-          <img className={styles.closeButton} src="/closeButtonBlack.svg" alt="close" />
-          <img className={styles.menuButton} src="/menuButtonBlack.svg" alt="menu" />
-          
-          <div className={styles.container3Navbar}>
-            {categories.map((cat) => (
-              <Link key={cat.slug} href={`/article-page?name=${cat.slug}`} onClick={handleLinkClick}>
-                <span className={`${styles.link} ${activeModeClass}`}>{cat.name}</span>
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        {/* ACTION SECTION (Far Right) */}
-        <div className={styles.container2}>
-          <div className={styles.searchTriggerUnit}>
-            <input 
-              type="checkbox" 
-              className={styles.searchCheckBox} 
-              checked={isSeachChechBoxChecked}
-              onChange={handleSearchCheckBox} 
-            />
-            <img className={styles.searchButton} src="/searchButtonBlack.svg" alt="search" />
-            <img className={styles.searchCloseButton} src="/closeButtonBlack.svg" alt="close" />
-          </div>
-
-          <div className={styles.authTriggerContainer}>
-            {!isToken ? (
-              <button className={styles.iconButton} onClick={() => dispatch(openModal('login'))} title="Login">
-                <User size={24} color="#000" />
-              </button>
-            ) : (
-              <Link href="/profile" className={styles.avatarLink}>
-                <img 
-                  src={Cookies.get("avatar") || "https://ik.imagekit.io/94nzrpaat/images/resize.jpg"} 
-                  alt="profile" className={styles.navAvatar} 
+    <>
+      <div className={`
+        ${isHome ? styles.navbarSupremeContainer : styles.activeNotHomeNavbarSupremeContainer} 
+        ${isOffset ? styles.activeOffset : ""} 
+        ${atPortfolio ? styles.activeAtPortfolio : ""}
+      `}>
+        <nav className={styles.navbar}>
+          {/* LOGO (LEFT) */}
+          <div className={styles.container1}>
+            <Link href="/">
+              <div className={styles.container1H1}>
+                <Image
+                  src="https://ik.imagekit.io/94nzrpaat/images/gold-logo-with-title-wg_853558-2748-N6dN8fcsA-transformed_1%20(1).png?updatedAt=1708801310085"
+                  alt="logo" width={70} height={35} priority
                 />
-              </Link>
-            )}
+                <span>Web<span>Grasper</span></span>
+              </div>
+            </Link>
           </div>
-        </div>
-      </nav>
 
-      {/* SEARCH OVERLAY (Full Screen Modal) */}
-      <div 
-        className={`${styles.bottomSearchBarContainer} ${isSeachChechBoxChecked ? styles.show : ""}`}
+          {/* MIDDLE SECTION (Links on Desktop) */}
+          <div className={styles.containerButton}>
+            <input type="checkbox" className={styles.checkBox} checked={isMenuOpen} onChange={() => setMenuOpen(!isMenuOpen)} />
+            <img className={styles.closeButton} src="/closeButtonBlack.svg" alt="close" />
+            <img className={styles.menuButton} src="/menuButtonBlack.svg" alt="menu" />
+
+            <div className={styles.container3Navbar}>
+              {categories.map((cat) => (
+                <Link key={cat.slug} href={`/article-page?name=${cat.slug}`} onClick={handleLinkClick}>
+                  <span className={`${styles.link} ${activeModeClass}`}>{cat.name}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* ACTION SECTION (Far Right) */}
+          <div className={styles.container2}>
+            <div className={styles.searchTriggerUnit}>
+              <input
+                type="checkbox"
+                className={styles.searchCheckBox}
+                checked={isSearchOpen}
+                onChange={handleSearchCheckBox}
+              />
+              <img className={styles.searchButton} src="/searchButtonBlack.svg" alt="search" />
+              <img className={styles.searchCloseButton} src="/closeButtonBlack.svg" alt="close" />
+            </div>
+
+            <div className={styles.authTriggerContainer}>
+              {!isToken ? (
+                <button className={styles.iconButton} onClick={() => dispatch(openModal('login'))} title="Login">
+                  <User size={24} color="#000" />
+                </button>
+              ) : (
+                <Link href="/profile" className={styles.avatarLink}>
+                  <img
+                    src={Cookies.get("avatar") || "https://ik.imagekit.io/94nzrpaat/images/resize.jpg"}
+                    alt="profile" className={styles.navAvatar}
+                  />
+                </Link>
+              )}
+            </div>
+          </div>
+        </nav>
+      </div>
+
+      {/* SEARCH OVERLAY (Full Screen Modal) moved outside to ensure blur works */}
+      <div
+        className={`${styles.bottomSearchBarContainer} ${isSearchOpen ? styles.show : ""}`}
+        style={isSearchOpen ? {
+          backdropFilter: "blur(10px)",
+          WebkitBackdropFilter: "blur(10px)",
+          background: "rgba(255, 255, 255, 0.15)"
+        } : {}}
         onClick={closeSearch}
       >
-        <form 
-          className={styles.searchForm} 
-          method="GET" 
-          onSubmit={(e) => { 
-            e.preventDefault(); 
+        <form
+          className={styles.searchForm}
+          method="GET"
+          onSubmit={(e) => {
+            e.preventDefault();
             const value = searchInputRef.current?.value;
-            if (value) handleSearchBlogs(value); 
-            closeSearch(); 
+            if (value) handleSearchBlogs(value);
+            closeSearch();
           }}
           onClick={(e) => e.stopPropagation()}
         >
@@ -171,7 +178,7 @@ function Navbar() {
           />
         </form>
       </div>
-    </div>
+    </>
   );
 }
 
