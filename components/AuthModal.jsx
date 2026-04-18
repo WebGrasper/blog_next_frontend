@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSnackbar } from "notistack";
 import { useCookies } from "react-cookie";
-import { X, LogIn, UserPlus, Key, Mail } from "lucide-react";
+import { X, LogIn, UserPlus, Key, Mail, Eye, EyeOff } from "lucide-react";
 import Spinner from "./spinner";
 import { closeModal, setView, setOTPContext } from "@/store/authUISlice";
 import { login as loginAction, resetLoginState } from "@/store/loginSlice";
@@ -31,9 +31,14 @@ const AuthModal = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
+  const [showPasswords, setShowPasswords] = useState({});
 
 
   // --- Handlers ---
+
+  const togglePasswordVisibility = (field) => {
+    setShowPasswords(prev => ({ ...prev, [field]: !prev[field] }));
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -197,7 +202,22 @@ const AuthModal = () => {
             </div>
             <div className={styles.inputGroup}>
               <label>Password</label>
-              <input type="password" name="password" placeholder="Enter password" required />
+              <div className={styles.passwordWrapper}>
+                <input
+                  type={showPasswords.login ? "text" : "password"}
+                  name="password"
+                  placeholder="Enter password"
+                  required
+                />
+                <button
+                  type="button"
+                  className={styles.passwordToggle}
+                  onClick={() => togglePasswordVisibility('login')}
+                  aria-label={showPasswords.login ? "Hide password" : "Show password"}
+                >
+                  {showPasswords.login ? <Eye size={20} /> : <EyeOff size={20} />}
+                </button>
+              </div>
             </div>
             <button type="submit" className={styles.submitBtn} disabled={isSubmitting}>
               {isSubmitting ? <Spinner /> : "Sign in"}
@@ -225,11 +245,41 @@ const AuthModal = () => {
             </div>
             <div className={styles.inputGroup}>
               <label>Password</label>
-              <input type="password" name="password" placeholder="Min. 8 characters" required />
+              <div className={styles.passwordWrapper}>
+                <input
+                  type={showPasswords.register ? "text" : "password"}
+                  name="password"
+                  placeholder="Min. 8 characters"
+                  required
+                />
+                <button
+                  type="button"
+                  className={styles.passwordToggle}
+                  onClick={() => togglePasswordVisibility('register')}
+                  aria-label={showPasswords.register ? "Hide password" : "Show password"}
+                >
+                  {showPasswords.register ? <Eye size={20} /> : <EyeOff size={20} />}
+                </button>
+              </div>
             </div>
             <div className={styles.inputGroup}>
               <label>Confirm Password</label>
-              <input type="password" name="confirmPassword" placeholder="Match password" required />
+              <div className={styles.passwordWrapper}>
+                <input
+                  type={showPasswords.confirmRegister ? "text" : "password"}
+                  name="confirmPassword"
+                  placeholder="Match password"
+                  required
+                />
+                <button
+                  type="button"
+                  className={styles.passwordToggle}
+                  onClick={() => togglePasswordVisibility('confirmRegister')}
+                  aria-label={showPasswords.confirmRegister ? "Hide password" : "Show password"}
+                >
+                  {showPasswords.confirmRegister ? <Eye size={20} /> : <EyeOff size={20} />}
+                </button>
+              </div>
               {errors.confirmPassword && <span className={styles.errorMsg}>{errors.confirmPassword}</span>}
             </div>
             <button type="submit" className={styles.submitBtn} disabled={isSubmitting}>
@@ -270,11 +320,41 @@ const AuthModal = () => {
               <>
                 <div className={styles.inputGroup}>
                   <label>New Password</label>
-                  <input type="password" name="password" placeholder="New password" required />
+                  <div className={styles.passwordWrapper}>
+                    <input
+                      type={showPasswords.newPass ? "text" : "password"}
+                      name="password"
+                      placeholder="New password"
+                      required
+                    />
+                    <button
+                      type="button"
+                      className={styles.passwordToggle}
+                      onClick={() => togglePasswordVisibility('newPass')}
+                      aria-label={showPasswords.newPass ? "Hide password" : "Show password"}
+                    >
+                      {showPasswords.newPass ? <Eye size={20} /> : <EyeOff size={20} />}
+                    </button>
+                  </div>
                 </div>
                 <div className={styles.inputGroup}>
                   <label>Confirm New Password</label>
-                  <input type="password" name="confirmPassword" placeholder="Match new password" required />
+                  <div className={styles.passwordWrapper}>
+                    <input
+                      type={showPasswords.confirmNewPass ? "text" : "password"}
+                      name="confirmPassword"
+                      placeholder="Match new password"
+                      required
+                    />
+                    <button
+                      type="button"
+                      className={styles.passwordToggle}
+                      onClick={() => togglePasswordVisibility('confirmNewPass')}
+                      aria-label={showPasswords.confirmNewPass ? "Hide password" : "Show password"}
+                    >
+                      {showPasswords.confirmNewPass ? <Eye size={20} /> : <EyeOff size={20} />}
+                    </button>
+                  </div>
                 </div>
               </>
             )}

@@ -110,6 +110,36 @@
   border-color: #1a1a1a;
 }
 
+.passwordWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.passwordWrapper input {
+  width: 100%;
+  padding-right: 2.5rem; /* Make room for the eye icon */
+}
+
+.passwordToggle {
+  position: absolute;
+  right: 0;
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+  border-radius: 50%;
+}
+
+.passwordToggle:hover {
+  color: #1a1a1a;
+}
+
 .submitBtn {
   background: #1a1a1a;
   color: #fff;
