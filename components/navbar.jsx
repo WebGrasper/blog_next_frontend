@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { openModal } from "@/store/authUISlice";
 import { User, X } from "lucide-react";
 
@@ -63,12 +63,15 @@ function Navbar() {
     return () => window.removeEventListener("keydown", handleEsc);
   }, []);
 
+  // --- Redux ---
+  const profileState = useSelector((state) => state.profile);
+
   // --- Effects ---
   useEffect(() => {
     setIsHome(pathname === "/");
     setAtPortfolio(pathname === "/portfolio");
     setToken(!!Cookies.get("token"));
-  }, [pathname]);
+  }, [pathname, profileState.data]); // Added profileState.data to reactive dependencies
 
   useEffect(() => {
     const handleScroll = () => {
@@ -137,7 +140,7 @@ function Navbar() {
               ) : (
                 <Link href="/profile" className={styles.avatarLink}>
                   <img
-                    src={Cookies.get("avatar") || "https://ik.imagekit.io/94nzrpaat/images/resize.jpg"}
+                    src={profileState?.data?.user?.avatar || Cookies.get("avatar") || "https://ik.imagekit.io/94nzrpaat/images/resize.jpg"}
                     alt="profile" className={styles.navAvatar}
                   />
                 </Link>

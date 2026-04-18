@@ -1,19 +1,35 @@
 .loader {
-    width: 16px;
-    height: 16px;
-    border: 2px solid currentColor;
+    width: 28px;
+    height: 28px;
+    border: 3.5px solid #1a1a1a;
     border-bottom-color: transparent;
     border-radius: 50%;
     display: inline-block;
     box-sizing: border-box;
-    animation: rotation 1s linear infinite;
-    }
+    animation: rotation 0.8s cubic-bezier(0.5, 0.1, 0.4, 0.9) infinite,
+        colorChange 1s ease-in-out infinite;
+}
 
-    @keyframes rotation {
+@keyframes rotation {
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
-    } 
+}
+
+@keyframes colorChange {
+
+    0%,
+    100% {
+        border-color: #1a1a1a;
+        border-bottom-color: transparent;
+    }
+
+    50% {
+        border-color: #ffffff;
+        border-bottom-color: transparent;
+    }
+}

@@ -8,7 +8,7 @@ import store from "@/store/store";
 import { SnackbarProvider } from "notistack";
 import { CookiesProvider } from "react-cookie";
 import { useRouter } from "next/router";
-
+import PLSpinner from "@/components/pageLoadingSpinner";
 
 import NProgress from "nprogress"; //nprogress module
 import "../styles/nprogress.css"; //styles of nprogress
@@ -24,6 +24,22 @@ import AuthModal from "@/components/AuthModal";
 function App({ Component, pageProps }) {
   const router = useRouter();
   const [notAtPortfolioPage, setNotAtPortfolioPage] = useState(true);
+  const [pageLoading, setPageLoading] = useState(false);
+
+  useEffect(() => {
+    const handleStart = () => setPageLoading(true);
+    const handleComplete = () => setPageLoading(false);
+
+    router.events.on("routeChangeStart", handleStart);
+    router.events.on("routeChangeComplete", handleComplete);
+    router.events.on("routeChangeError", handleComplete);
+
+    return () => {
+      router.events.off("routeChangeStart", handleStart);
+      router.events.off("routeChangeComplete", handleComplete);
+      router.events.off("routeChangeError", handleComplete);
+    };
+  }, [router]);
 
   useEffect(() => {
     if (router.pathname === '/portfolio') {
@@ -32,6 +48,7 @@ function App({ Component, pageProps }) {
       setNotAtPortfolioPage(true)
     }
   }, [router.pathname])
+
   return (
     <Provider store={store}>
       <CookiesProvider defaultSetOptions={{ path: '/' }}>
@@ -43,6 +60,7 @@ function App({ Component, pageProps }) {
                 content="W-J-mNMNzVPU3Qr3WfClrmnijPs3Ajn-j3pcUgOV16k"
               />
             </Head>
+            {pageLoading && <PLSpinner />}
             {notAtPortfolioPage && <Navbar />}
             <Component {...pageProps} />
             {notAtPortfolioPage && <Footer />}

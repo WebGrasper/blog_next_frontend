@@ -93,7 +93,6 @@ const AuthModal = () => {
       dispatch(closeModal());
       dispatch(resetLoginState());
       setIsSubmitting(false);
-      router.push("/profile");
     }
   }, [loginState]);
 

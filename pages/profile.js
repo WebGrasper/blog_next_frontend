@@ -411,22 +411,6 @@ export default function Profile() {
           </div>
         )}
       </section>
-      {/* Frosted Logout Overlay */}
-      {markDisabled && (
-        <div 
-          className={styles.logoutOverlay}
-          style={{ 
-            backdropFilter: "blur(10px)",
-            WebkitBackdropFilter: "blur(10px)",
-            background: "rgba(255, 255, 255, 0.15)"
-          }}
-        >
-          <div className={styles.logoutOverlayContent}>
-            <Spinner />
-            <h3>Signing you out...</h3>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

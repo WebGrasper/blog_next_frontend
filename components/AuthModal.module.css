@@ -11,7 +11,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  animation: fadeIn 0.4s ease-out forwards;
+  animation: fadeIn 0.2s ease-out forwards;
 }
 
 .modalCard {
@@ -22,7 +22,7 @@
   border-radius: 8px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
   position: relative;
-  animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: slideUp 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   max-height: 90vh;
   /* Ensure it fits on smaller screens */
   overflow-y: auto;

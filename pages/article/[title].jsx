@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import moment from "moment";
 import { v4 as uuidv4 } from "uuid"; // Import uuid to generate unique IDs for comments
+import { openModal } from "@/store/authUISlice";
 import { Send } from "lucide-react";
 
 export const getServerSideProps = async (context) => {
@@ -26,7 +27,7 @@ export const getServerSideProps = async (context) => {
         }
     );
     const data = await response.json();
-    
+
     if (data.success === false || (!data.article && !data.title)) {
         return { notFound: true }; // Display NextJS 404 automatically for broken links/titles
     }
@@ -146,7 +147,7 @@ function Article({ article, final_comments_res, final_article_creator }) {
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (!Cookies.get("token")) {
-            router.push("/login");
+            dispatch(openModal("login"));
         } else {
             const formData = new FormData(event.target); // Get form data
             const { commentBody } = Object.fromEntries(formData.entries()); // Convert FormData to plain object
@@ -209,15 +210,16 @@ function Article({ article, final_comments_res, final_article_creator }) {
         dispatch(resetACState());
     }, [state?.data?.success]);
 
-    //Check for token presence
+    const profileState = useSelector((state) => state.profile);
     const [isToken, setToken] = useState(false);
+
     useEffect(() => {
         if (Cookies.get("token")) {
             setToken(true);
         } else {
             setToken(false);
         }
-    }, []);
+    }, [profileState.data]); // Re-run when profile data changes (login/logout)
 
 
     return (

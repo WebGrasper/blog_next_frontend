@@ -158,7 +158,7 @@
 
 /* Tab Content */
 .tabContent {
-  animation: fadeIn 0.4s ease-out;
+  animation: fadeIn 0.2s ease-out;
 }
 
 @keyframes fadeIn {
@@ -386,7 +386,7 @@
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
-  animation: contentSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: contentSlideUp 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes contentSlideUp {
