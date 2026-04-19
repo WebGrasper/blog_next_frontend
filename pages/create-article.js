@@ -14,7 +14,7 @@ import dynamic from "next/dynamic";
 import { Send } from "lucide-react";
 import SearchSelect from "@/components/SearchSelect";
 
-const MediumEditor = dynamic(() => import("@/components/MediumEditor"), {
+const VellumEditor = dynamic(() => import("@/components/VellumEditor"), {
   ssr: false,
 });
 
@@ -277,7 +277,7 @@ export default function Home() {
                 <div className={styles.descriptionSection}>
                   <span className={styles.sectionLabel}>DESCRIPTION</span>
                   <div className={styles.editorContainerBox}>
-                    <MediumEditor onChange={(html) => setArticleHtml(html)} />
+                    <VellumEditor onChange={(html) => setArticleHtml(html)} />
                   </div>
                   {descriptionWarning && (
                     <p className={styles.warning}>

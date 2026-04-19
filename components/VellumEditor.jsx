@@ -10,11 +10,11 @@ import {
   Bold, Italic, Highlighter, Quote,
   Image as ImageIcon, Code, Plus, Link as LinkIcon
 } from 'lucide-react';
-import styles from './MediumEditor.module.css';
+import styles from './VellumEditor.module.css';
 import { useSnackbar } from 'notistack';
 import Spinner from './spinner';
 
-export default function MediumEditor({ onChange }) {
+export default function VellumEditor({ onChange }) {
   const { enqueueSnackbar } = useSnackbar();
   const fileInputRef = useRef(null);
   const [isFloatingOpen, setIsFloatingOpen] = useState(false);
@@ -124,7 +124,17 @@ export default function MediumEditor({ onChange }) {
         onChange={handleImageUpload}
       />
 
-      {editor && <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }} className={styles.bubbleMenu}>
+      {editor && <BubbleMenu 
+        editor={editor} 
+        tippyOptions={{ 
+          duration: 100, 
+          placement: 'top',
+          zIndex: 9999,
+          // Shift it slightly higher on mobile to avoid selection handles
+          offset: [0, 15] 
+        }} 
+        className={styles.bubbleMenu}
+      >
         <button
           type="button"
           onMouseDown={(e) => { e.preventDefault(); editor.chain().toggleBold().run(); }}
@@ -208,7 +218,15 @@ export default function MediumEditor({ onChange }) {
         </div>
       </FloatingMenu>}
 
-      <div className={styles.editorContainer}>
+      <div 
+        className={styles.editorContainer}
+        onContextMenu={(e) => {
+          // Prevent native context menu on mobile/tablet to allow Vellum's bubble menu to shine
+          if (window.innerWidth <= 1024) {
+            e.preventDefault();
+          }
+        }}
+      >
         {isUploading && (
           <div style={{ 
             position: 'absolute', 
