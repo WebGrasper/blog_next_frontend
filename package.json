@@ -31,7 +31,8 @@
     "react-cookie": "^7.1.4",
     "react-dom": "^19.2.5",
     "react-redux": "^9.1.2",
-    "uuidv4": "^6.2.13"
+    "uuidv4": "^6.2.13",
+    "vellum-editor": "^1.0.0"
   },
   "devDependencies": {
     "@types/react": "^19.2.14",

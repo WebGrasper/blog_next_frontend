@@ -13,10 +13,8 @@ import Spinner from "@/components/spinner";
 import dynamic from "next/dynamic";
 import { Send } from "lucide-react";
 import SearchSelect from "@/components/SearchSelect";
-
-const VellumEditor = dynamic(() => import("@/components/VellumEditor"), {
-  ssr: false,
-});
+import VellumEditor from "vellum-editor";
+import 'vellum-editor/style.css';
 
 export default function Home() {
   const [articleHtml, setArticleHtml] = useState("");
@@ -277,7 +275,36 @@ export default function Home() {
                 <div className={styles.descriptionSection}>
                   <span className={styles.sectionLabel}>DESCRIPTION</span>
                   <div className={styles.editorContainerBox}>
-                    <VellumEditor onChange={(html) => setArticleHtml(html)} />
+                    <VellumEditor 
+                      onChange={(html) => setArticleHtml(html)} 
+                      placeholder={{
+                        text: "Tell your story...",
+                        color: "#94a3b8",
+                        fontSize: "1.2rem",
+                        opacity: 0.8
+                      }}
+                      editorSettings={{
+                        backgroundColor: "transparent"
+                      }}
+                      bubbleMenuSettings={{
+                        backgroundColor: "#1e293b",
+                        iconSize: 18,
+                        border: "1px solid #334155",
+                        hoverBg: "#334155",
+                        hoverColor: "#60a5fa"
+                      }}
+                      // Example icon override (optional)
+                      // iconPack={{ Plus: () => <span>+</span> }}
+                      storage={{
+                        provider: 'imagekit',
+                        config: {
+                          publicKey: process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC,
+                          privateKey: process.env.NEXT_PUBLIC_IMAGEKIT_SECRET,
+                          authenticationEndpoint: process.env.NEXT_PUBLIC_IMAGEKIT_URL,
+                          folder: "blog_articles"
+                        }
+                      }}
+                    />
                   </div>
                   {descriptionWarning && (
                     <p className={styles.warning}>
