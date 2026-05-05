@@ -32,7 +32,7 @@
 }
 
 .subMain {
-  max-width: 70rem;
+  max-width: 82.5rem;
 }
 
 .section1 {
@@ -121,7 +121,7 @@
   animation-range-end: cover 30%;
 }
 
-.section2 > span {
+.section2>span {
   animation-range-start: cover 7.5%;
   animation-range-end: cover 85%;
 }
@@ -236,7 +236,7 @@
   background-color: transparent;
 }
 
-.section3Container > img {
+.section3Container>img {
   width: 80px;
   height: 80px;
 
@@ -247,7 +247,7 @@
   transition: all 0.5s ease;
 }
 
-.section3Container > img:hover {
+.section3Container>img:hover {
   transform: scale(1.25);
   transition: all 0.5s ease;
 }
@@ -307,12 +307,12 @@
   }
 }
 
-.section4ProjectContainer.expanded > * {
+.section4ProjectContainer.expanded>* {
   opacity: 1 !important;
   transition: all 2s ease;
 }
 
-.section4ProjectContainer:not(.expanded) > * {
+.section4ProjectContainer:not(.expanded)>* {
   opacity: 0 !important;
 }
 
@@ -373,9 +373,9 @@
   transition: all 0.3s ease;
 }
 
-.projectLink > img{
-    width: 2rem;
-    height: 2rem;
+.projectLink>img {
+  width: 2rem;
+  height: 2rem;
 }
 
 .projectLink:hover {
@@ -391,6 +391,7 @@
 }
 
 @media only screen and (max-width: 601px) {
+
   /* .section2,
     .section3,
     .section4 {
@@ -410,6 +411,7 @@
 }
 
 @media only screen and (max-width: 426px) {
+
   /* .section2,
     .section3 {
       height: auto;
@@ -449,7 +451,7 @@
     animation-range-end: cover 20%;
   }
 
-  .section2 > span {
+  .section2>span {
     animation-range-start: cover 2.5%;
     animation-range-end: cover 50%;
   }
@@ -470,7 +472,7 @@
     row-gap: 2rem;
   }
 
-  .section3Container > img {
+  .section3Container>img {
     width: 50px;
     height: 50px;
   }
@@ -519,15 +521,17 @@
     width: 100%;
     filter: blur(0);
   }
-  
+
   .section4ProjectContainer:not(.expanded) {
     -webkit-backdrop-filter: blur(0);
     border-radius: 6px;
     border: 1px solid white;
   }
+
   .section4ProjectContainer:not(.expanded) * {
     opacity: 1 !important;
   }
+
   .section4ProjectContainer:not(.expanded) .projectDescription {
     color: rgba(255, 255, 255, 0.8) !important;
   }

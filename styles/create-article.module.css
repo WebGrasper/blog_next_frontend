@@ -308,30 +308,28 @@
 }
 
 .sendPublishButton {
-  background: #4bd11b;
+  background: #1a1a1a;
   color: white;
   border: none;
   border-radius: 99px;
-  padding: 0.75rem 1rem;
+  padding: 0.7rem 1rem;
   font-size: 0.9rem;
-  font-weight: 700;
+  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  letter-spacing: 0.5px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: 0.3px;
 }
 
 @media (max-width: 600px) {
   .sendPublishButton {
-    padding: 0.5rem 1.25rem;
+    padding: 0.5rem 1rem;
     font-size: 0.8rem;
+    min-width: 110px;
+    height: 38px;
   }
-}
-
-.sendPublishButton:hover {
-  background: #41b716;
 }
 
 .sendPublishButton:active {
@@ -339,7 +337,7 @@
 }
 
 .sendPublishButton:disabled {
-  background: #d1d5db;
+  background: #f3f4f6;
   color: #9ca3af;
   cursor: not-allowed;
   transform: none;

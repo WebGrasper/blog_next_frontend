@@ -116,6 +116,11 @@ function Navbar() {
                   <span className={`${styles.link} ${activeModeClass}`}>{cat.name}</span>
                 </Link>
               ))}
+              {isToken && (
+                <Link href="/profile" onClick={handleLinkClick}>
+                  <span className={`${styles.link} ${activeModeClass}`}>My Stories</span>
+                </Link>
+              )}
             </div>
           </div>
 

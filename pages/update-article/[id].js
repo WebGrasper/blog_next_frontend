@@ -1,45 +1,81 @@
 import Head from "next/head";
 import styles from "@/styles/create-article.module.css";
-import { v4 as uuidv4 } from "uuid";
 import { useSnackbar } from "notistack";
-import { profile, resetProfileState } from "@/store/profileSlice";
 import { useCookies } from "react-cookie";
-import { useState, useRef, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/router"; // Import useRouter
-import Cookies from "js-cookie";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import Spinner from "@/components/spinner";
-import dynamic from "next/dynamic";
-import { Send } from "lucide-react";
+import PLSpinner from "@/components/pageLoadingSpinner";
+import { Send, ChevronLeft } from "lucide-react";
 import SearchSelect from "@/components/SearchSelect";
 import VellumEditor from "vellum-editor";
 import 'vellum-editor/style.css';
+import Link from "next/link";
 
-export default function Home() {
+export default function UpdateArticle() {
+  const router = useRouter();
+  const { id } = router.query;
+  
   const [articleHtml, setArticleHtml] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [showWarning, setShowWarning] = useState(false);
   const [showImageWarning, setShowImageWarning] = useState(false);
   const [descriptionWarning, setDescriptionWarning] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [existingImage, setExistingImage] = useState("");
+  const [title, setTitle] = useState("");
   const [titleError, setTitleError] = useState("");
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
   const [markDisabled, setDisabled] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  const router = useRouter();
-  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
-  const state = useSelector((state) => state.profile);
+  const [cookies] = useCookies(["token"]);
 
   useEffect(() => {
     if (cookies.token === undefined) {
       router.push("/");
+      return;
     }
-  }, []);
+    
+    if (id) {
+      fetchArticle();
+    }
+  }, [id]);
+
+  const fetchArticle = async () => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/getArticleById/${id}`);
+      const data = await response.json();
+      if (data.success) {
+        const article = data.article;
+        setTitle(article.title);
+        setSelectedCategory(article.category);
+        setExistingImage(article.articleImage?.[0] || "");
+        
+        // Handle description which might be stringified JSON or raw HTML
+        let desc = article.description;
+        try {
+          const parsed = JSON.parse(desc);
+          if (typeof parsed === 'string') desc = parsed;
+        } catch (e) {
+          // keep as is
+        }
+        setArticleHtml(desc);
+      } else {
+        enqueueSnackbar(data.message || "Failed to fetch article", { variant: "error" });
+        router.push("/profile");
+      }
+    } catch (error) {
+      enqueueSnackbar("Error connecting to server", { variant: "error" });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const calculateTotalWordCount = (html) => {
     if (!html) return 0;
-    // Strip HTML tags for word count
     const text = html.replace(/<[^>]+>/g, ' ');
     const count = text.trim().split(/\s+/).filter(word => word.length > 0).length;
     return count;
@@ -53,130 +89,70 @@ export default function Home() {
   const submitHandle = async (event) => {
     event.preventDefault();
 
-    // Get the form element
-    const form = event.target;
-
-    // Check if the form is valid
-    if (!form.checkValidity()) {
-      form.reportValidity(); // Show validation messages
-      return; // Prevent submission if the form is invalid
-    }
-
-    // Validate title
-    const title = form.title.value.trim();
-    const wordCount = title.split(/\s+/).length;
+    const wordCount = title.trim().split(/\s+/).length;
     if (wordCount <= 9 || wordCount >= 26) {
       setTitleError("Title should be between 10 to 25 words long.");
-      return; // Prevent submission if title validation fails
+      return;
     } else {
       setTitleError("");
     }
 
-    /* category validation */
     if (!selectedCategory) {
       setShowWarning(true);
       return;
-    } else {
-      setShowWarning(false);
     }
 
-    /* image validation */
-    if (!selectedFile) {
-      setShowImageWarning(true);
-      return;
-    } else {
-      setShowImageWarning(false);
-    }
-
-    /* description validation */
     if (!articleHtml || articleHtml.trim() === "") {
       setDescriptionWarning(true);
       return;
     }
 
     const totalWordCount = calculateTotalWordCount(articleHtml);
-
     if (totalWordCount <= 1) {
       setDescriptionWarning(true);
       return;
-    } else {
-      setDescriptionWarning(false);
     }
 
-    let newFormData = new FormData(); // Create a new FormData object
-    newFormData.append("title", event.target.title.value);
-    newFormData.append("description", JSON.stringify(articleHtml)); // Store HTML string as JSON string for safety
+    let newFormData = new FormData();
+    newFormData.append("title", title);
+    newFormData.append("description", JSON.stringify(articleHtml));
     newFormData.append("category", selectedCategory);
     if (selectedFile) {
-      newFormData.append("articleImage", selectedFile); // Append the file
+      newFormData.append("articleImage", selectedFile);
     }
 
     let token = cookies?.token;
-
     setDisabled(true);
 
     try {
       let response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/createArticle?token=${token}`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/updateArticle/${id}?token=${token}`,
         {
-          method: "POST",
+          method: "PUT",
           body: newFormData,
         }
       );
       let data = await response.json();
       if (!data?.success) {
-        enqueueSnackbar(data?.message, {
-          autoHideDuration: 2000,
-          variant: "error",
-        });
+        enqueueSnackbar(data?.message, { variant: "error" });
         setDisabled(false);
         return;
       }
-      enqueueSnackbar(data?.message, {
-        autoHideDuration: 2000,
-        variant: "success",
-      });
+      enqueueSnackbar("Article updated successfully!", { variant: "success" });
       router.push("/profile");
     } catch (error) {
-      console.log(error);
-      enqueueSnackbar(
-        "Failed to connect to the server. Please try again later.",
-        {
-          autoHideDuration: 2000,
-          variant: "error",
-        }
-      );
+      enqueueSnackbar("Failed to update article", { variant: "error" });
     } finally {
       setDisabled(false);
     }
   };
 
+  if (loading) return <PLSpinner />;
+
   return (
     <>
       <Head>
-        <title>Create Articles</title>
-        <meta
-          name="description"
-          content="Create articles and make updated to others with your insights and information."
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-        <meta property="og:title" content="Create Articles" />
-        <meta
-          property="og:description"
-          content="Create articles and make updated to others with your insights and information."
-        />
-        <link
-          rel="canonical"
-          href="https://webgrasper.vercel.app/create-article"
-        />
-
-        <meta
-          property="og:image"
-          content="https://webgrasper.vercel.app/favicon.jpg"
-        />
-        <meta name="twitter:card" content="summary_large_image" />
-        <link rel="icon" href="/favicon.jpg" sizes="any" />
+        <title>Update Article | WebGrasper</title>
       </Head>
       <div className={styles.root}>
         <main className={`${styles.main}`}>
@@ -184,24 +160,27 @@ export default function Home() {
             <div className={styles.mainContainer}>
               {/* LEFT COLUMN (Metadata) */}
               <div className={styles.leftColumn}>
+                <Link href="/profile" style={{display: 'flex', alignItems: 'center', gap: '4px', color: '#666', fontSize: '0.9rem', marginBottom: '1rem', textDecoration: 'none'}}>
+                  <ChevronLeft size={16} /> Back to stories
+                </Link>
+                
                 {/* 2. IMAGE SECTION */}
                 <div className={styles.imageSection}>
                   <span className={styles.sectionLabel}>Hero Image</span>
                   <label className={styles.imageUploadBox}>
                     {selectedFile ? (
-                      <>
-                        <img src={URL.createObjectURL(selectedFile)} alt="Preview" className={styles.imagePreview} />
-                        <div className={styles.imageUploadBtn} style={{backgroundColor: 'rgba(17,17,17,0.8)'}}>Change image</div>
-                      </>
+                      <img src={URL.createObjectURL(selectedFile)} alt="Preview" className={styles.imagePreview} />
+                    ) : existingImage ? (
+                      <img src={existingImage} alt="Existing" className={styles.imagePreview} />
                     ) : (
-                      <>
-                        <svg className={styles.svgIcon} width="80" height="60" viewBox="0 0 100 80" fill="none" stroke="#d5cba8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <circle cx="30" cy="25" r="8" fill="#d5cba8" stroke="none" />
-                          <polyline points="10 65 35 40 55 60 75 40 90 60"></polyline>
-                        </svg>
-                        <div className={styles.imageUploadBtn}>Upload image</div>
-                      </>
+                      <svg className={styles.svgIcon} width="80" height="60" viewBox="0 0 100 80" fill="none" stroke="#d5cba8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="30" cy="25" r="8" fill="#d5cba8" stroke="none" />
+                        <polyline points="10 65 35 40 55 60 75 40 90 60"></polyline>
+                      </svg>
                     )}
+                    <div className={styles.imageUploadBtn} style={{backgroundColor: (selectedFile || existingImage) ? 'rgba(17,17,17,0.8)' : '#111'}}>
+                      {selectedFile || existingImage ? 'Change image' : 'Upload image'}
+                    </div>
                     <input
                       className={styles.customFileInput}
                       name="articleImage"
@@ -210,9 +189,6 @@ export default function Home() {
                       accept="image/*"
                     />
                   </label>
-                  {showImageWarning && (
-                    <p className={styles.warning}>Please upload a hero image.</p>
-                  )}
                 </div>
 
                 {/* 3. CATEGORY SECTION */}
@@ -220,22 +196,9 @@ export default function Home() {
                   <span className={styles.sectionLabel}>Category</span>
                   <SearchSelect
                     options={[
-                      "National",
-                      "World",
-                      "Politics",
-                      "Railway",
-                      "Markets",
-                      "Sports",
-                      "Health",
-                      "Education",
-                      "AI & Machine Learning",
-                      "Crypto & Web3",
-                      "Gadgets & Hardware",
-                      "Startups & VCs",
-                      "Finance",
-                      "Space Exploration",
-                      "Climate Tech",
-                      "EVs & Mobility"
+                      "National", "World", "Politics", "Railway", "Markets", "Sports", "Health", "Education",
+                      "AI & Machine Learning", "Crypto & Web3", "Gadgets & Hardware", "Startups & VCs",
+                      "Finance", "Space Exploration", "Climate Tech", "EVs & Mobility"
                     ]}
                     value={selectedCategory}
                     onChange={(category) => {
@@ -244,9 +207,7 @@ export default function Home() {
                     }}
                     placeholder="Search or select category..."
                   />
-                  {showWarning && (
-                    <p className={styles.warning}>Please select a category.</p>
-                  )}
+                  {showWarning && <p className={styles.warning}>Please select a category.</p>}
                 </div>
               </div>
 
@@ -256,14 +217,14 @@ export default function Home() {
                 <div className={styles.titleSection}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <span className={styles.sectionLabel}>TITLE</span>
-                    <button type="submit" className={styles.sendPublishButton} title="Publish Article" disabled={markDisabled}>
-                      {markDisabled ? <Spinner /> : <><Send size={16} style={{marginRight: '6px'}}/> Publish</>}
+                    <button type="submit" className={styles.sendPublishButton} disabled={markDisabled}>
+                      {markDisabled ? <Spinner /> : <><Send size={16} style={{marginRight: '6px'}}/> Update Story</>}
                     </button>
                   </div>
                   <input
                     type="text"
-                    name="title"
-                    id="title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                     className={styles.mediumTitleInput}
                     placeholder="Write your headline..."
                     required
@@ -276,6 +237,7 @@ export default function Home() {
                   <span className={styles.sectionLabel}>DESCRIPTION</span>
                   <div className={styles.editorContainerBox}>
                     <VellumEditor 
+                      value={articleHtml}
                       onChange={(html) => setArticleHtml(html)} 
                       placeholder={{
                         text: "Tell your story...",
@@ -283,9 +245,7 @@ export default function Home() {
                         fontSize: "1.2rem",
                         opacity: 0.8
                       }}
-                      editorSettings={{
-                        backgroundColor: "transparent"
-                      }}
+                      editorSettings={{ backgroundColor: "transparent" }}
                       bubbleMenuSettings={{
                         backgroundColor: "#1e293b",
                         iconSize: 18,
@@ -293,8 +253,6 @@ export default function Home() {
                         hoverBg: "#334155",
                         hoverColor: "#60a5fa"
                       }}
-                      // Example icon override (optional)
-                      // iconPack={{ Plus: () => <span>+</span> }}
                       storage={{
                         provider: 'imagekit',
                         config: {
@@ -307,9 +265,7 @@ export default function Home() {
                     />
                   </div>
                   {descriptionWarning && (
-                    <p className={styles.warning}>
-                      Please add a description with at least 300 words.
-                    </p>
+                    <p className={styles.warning}>Please add a description.</p>
                   )}
                 </div>
               </div>

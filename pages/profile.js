@@ -23,13 +23,15 @@ import {
   X,
   Save,
   Globe,
-  Briefcase
+  Briefcase,
+  Pencil,
+  Trash2
 } from "lucide-react";
+import ConfirmModal from "@/components/ConfirmModal";
 import { delay } from "lodash";
 
 export default function Profile() {
   const dispatch = useDispatch();
-  const [isAdmin, setAdmin] = useState(false);
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
@@ -42,7 +44,16 @@ export default function Profile() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [isImageUploading, setImageUploading] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState("home"); // "home" or "about"
+  const [activeTab, setActiveTab] = useState("stories"); // "stories" or "about"
+  const [userArticles, setUserArticles] = useState([]);
+  const [articlesLoading, setArticlesLoading] = useState(true);
+  const [deleteLoading, setDeleteLoading] = useState(null);
+  const [confirmModal, setConfirmModal] = useState({
+    isOpen: false,
+    articleId: null,
+    title: "",
+    description: ""
+  });
 
   const state = useSelector((state) => state.profile);
 
@@ -64,14 +75,52 @@ export default function Profile() {
     if(state?.data?.success){
       setProfileData(state?.data);
       setLoading(false);
+      fetchUserArticles();
     }
   }, [state?.data]);
 
-  useEffect(() => {
-    if (state?.data?.user?.role === "admin") {
-      setAdmin(true);
+  const fetchUserArticles = async () => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/getMyArticles?token=${cookies.token}`);
+      const data = await response.json();
+      if (data.success) {
+        setUserArticles(data.articles);
+      }
+    } catch (error) {
+      console.error("Error fetching articles:", error);
+    } finally {
+      setArticlesLoading(false);
     }
-  }, [state]);
+  };
+
+  const handleDeleteArticle = async (id) => {
+    setDeleteLoading(id);
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/deleteArticle/${id}?token=${cookies.token}`, {
+        method: "DELETE",
+      });
+      const data = await response.json();
+      if (data.success) {
+        enqueueSnackbar("Article deleted successfully", { variant: "success" });
+        setUserArticles(userArticles.filter((a) => a._id !== id));
+      } else {
+        enqueueSnackbar(data.message || "Failed to delete article", { variant: "error" });
+      }
+    } catch (error) {
+      enqueueSnackbar("Error connecting to server", { variant: "error" });
+    } finally {
+      setDeleteLoading(null);
+    }
+  };
+
+  const openDeleteConfirm = (article) => {
+    setConfirmModal({
+      isOpen: true,
+      articleId: article._id,
+      title: "Delete Story?",
+      description: `Are you sure you want to delete "${article.title}"? This action cannot be undone.`
+    });
+  };
 
   const handleLogout = async () => {
     setDisabled(true);
@@ -151,7 +200,7 @@ export default function Profile() {
     try {
       setFormSubmit(true);
       const response = await fetch(
-        `https://blog-zo8s.vercel.app/app/v1/updateMyDetails?` +
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v1/updateMyDetails?` +
           new URLSearchParams({
             token: token,
           }),
@@ -194,7 +243,7 @@ export default function Profile() {
     let token = cookies.token;
     setImageUploading(true);
     let response = await fetch(
-      `https://blog-zo8s.vercel.app/app/v1/updateMyAvatar?token=${token}`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v1/updateMyAvatar?token=${token}`,
       {
         method: "PUT",
         body: newFormData,
@@ -261,12 +310,10 @@ export default function Profile() {
               </div>
 
               <div className={styles.headerActions}>
-                {isAdmin && (
-                  <Link href="/create-article" className={styles.actionBtn}>
-                    <PlusCircle size={18} />
-                    <span>Write</span>
-                  </Link>
-                )}
+                <Link href="/create-article" className={styles.actionBtn}>
+                  <PlusCircle size={18} />
+                  <span>Write</span>
+                </Link>
                 <button className={styles.actionBtn} onClick={handleEditableForm}>
                   {isEditableFormOpen ? <X size={18} /> : <Edit3 size={18} />}
                   <span>{isEditableFormOpen ? "Cancel" : "Edit Profile"}</span>
@@ -284,10 +331,10 @@ export default function Profile() {
             {/* Navigation Tabs */}
             <nav className={styles.tabNav}>
               <button 
-                className={activeTab === 'home' ? styles.activeTab : ''} 
-                onClick={() => setActiveTab('home')}
+                className={activeTab === 'stories' ? styles.activeTab : ''} 
+                onClick={() => setActiveTab('stories')}
               >
-                Home
+                My Stories
               </button>
               <button 
                 className={activeTab === 'about' ? styles.activeTab : ''} 
@@ -298,13 +345,58 @@ export default function Profile() {
             </nav>
 
             <div className={styles.tabContent}>
-              {activeTab === 'home' ? (
+              {activeTab === 'stories' ? (
                 <div className={styles.storiesFeed}>
-                   <div className={styles.placeholderContainer}>
-                     <h3>Your story history will appear here.</h3>
-                     <p>Manage your published and draft articles efficiently from this unified feed.</p>
-                     <Link href="/create-article" className={styles.miniCreateBtn}>Start writing</Link>
-                   </div>
+                   {articlesLoading ? (
+                     <div style={{padding: '2rem', textAlign: 'center'}}><Spinner /></div>
+                   ) : userArticles.length === 0 ? (
+                     <div className={styles.placeholderContainer}>
+                       <h3>Manage your stories</h3>
+                       <p>View, edit, and delete your published and draft articles from your dedicated stories dashboard.</p>
+                       <div style={{display: 'flex', gap: '1rem', justifyContent: 'center'}}>
+                         <Link href="/create-article" className={styles.miniCreateBtn}>Start writing</Link>
+                       </div>
+                     </div>
+                   ) : (
+                      <div className={styles.articlesGrid}>
+                        {userArticles.map(article => (
+                          <div key={article._id} className={styles.articleCard}>
+                            <div className={styles.cardImageContainer}>
+                              <img 
+                                src={article.articleImage?.[0] || "https://ik.imagekit.io/94nzrpaat/images/pixelcut-export%20(4).png"} 
+                                alt={article.title}
+                                className={styles.cardImage}
+                              />
+                              <span className={styles.cardCategory}>{article.category}</span>
+                            </div>
+                            
+                            <div className={styles.cardBody}>
+                              <h4 className={styles.cardTitle}>{article.title}</h4>
+                              <div className={styles.cardFooter}>
+                                <div className={styles.cardStats}>
+                                  <span>{new Date(article.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}</span>
+                                  <span className={styles.dot}>•</span>
+                                  <span>{article.impressions || 0} views</span>
+                                </div>
+                                <div className={styles.cardActions}>
+                                  <Link href={`/update-article/${article._id}`} className={styles.iconBtnAction} title="Edit">
+                                    <Pencil size={18} />
+                                  </Link>
+                                  <button 
+                                    onClick={() => openDeleteConfirm(article)} 
+                                    className={styles.iconBtnDelete}
+                                    disabled={deleteLoading === article._id}
+                                    title="Delete"
+                                  >
+                                    {deleteLoading === article._id ? "..." : <Trash2 size={18} />}
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                   )}
                 </div>
               ) : (
                 <div className={styles.aboutPanel}>
@@ -410,6 +502,17 @@ export default function Profile() {
             </div>
           </div>
         )}
+        {/* Confirmation Modal */}
+        <ConfirmModal 
+          isOpen={confirmModal.isOpen}
+          onClose={() => setConfirmModal({...confirmModal, isOpen: false})}
+          onConfirm={() => handleDeleteArticle(confirmModal.articleId)}
+          title={confirmModal.title}
+          description={confirmModal.description}
+          confirmText="Yes, Delete"
+          cancelText="No, Keep it"
+          type="danger"
+        />
       </section>
     </div>
   );

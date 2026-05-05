@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 //Action
 export const profile = createAsyncThunk("profile", async(token) =>{
-    let response = await fetch(`https://blog-zo8s.vercel.app/app/v1/getMyDetails?` + new URLSearchParams({
+    let response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v1/getMyDetails?` + new URLSearchParams({
         token: token
     }),{
         method: 'GET',

@@ -1,6 +1,6 @@
 export async function getServerSideProps(context) {
   let response = await fetch(
-    "https://blog-zo8s.vercel.app/app/v2/getArticles",
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/getArticles`,
     { method: "GET" }
   );
   let data = await response.json();

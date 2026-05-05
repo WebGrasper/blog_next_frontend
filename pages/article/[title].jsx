@@ -18,7 +18,7 @@ import { Send } from "lucide-react";
 export const getServerSideProps = async (context) => {
     const { title } = context.query;
     const response = await fetch(
-        `https://blog-zo8s.vercel.app/app/v2/getSingleArticle/${title}`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/getSingleArticle/${title}`,
         {
             method: "GET",
             headers: {
@@ -43,7 +43,7 @@ export const getServerSideProps = async (context) => {
     }
 
     const article_creator = await fetch(
-        `https://blog-zo8s.vercel.app/app/v1/getSingleUserDetails?` +
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v1/getSingleUserDetails?` +
         new URLSearchParams({
             creatorID: article?.createdBy,
         }),
@@ -60,7 +60,7 @@ export const getServerSideProps = async (context) => {
     let articleID = article?._id;
 
     const comments_res = await fetch(
-        `https://blog-zo8s.vercel.app/app/v2/getComments?` +
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/getComments?` +
         new URLSearchParams({
             articleID: articleID,
         }),
@@ -82,7 +82,7 @@ export const getServerSideProps = async (context) => {
     if (commenterIds.length > 0) {
         // Fetch commenter details only if there are commenters
         const commentersRes = await fetch(
-            `https://blog-zo8s.vercel.app/app/v1/getCommenters`,
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v1/getCommenters`,
             {
                 method: "POST",
                 headers: {
@@ -176,7 +176,7 @@ function Article({ article, final_comments_res, final_article_creator }) {
     useEffect(() => {
         const timeout = setTimeout(async () => {
             const response = await fetch(
-                `https://blog-zo8s.vercel.app/app/v2/viewsIncrementer?` +
+                `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/viewsIncrementer?` +
                 new URLSearchParams({
                     articleID: article?._id,
                 }),

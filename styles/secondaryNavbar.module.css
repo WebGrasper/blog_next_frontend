@@ -17,16 +17,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 70rem;
+    width: 82.5rem;
     overflow: auto;
     white-space: nowrap;
 }
 
-.secondaryNavbarContainer::-webkit-scrollbar{
+.secondaryNavbarContainer::-webkit-scrollbar {
     width: 0px;
 }
 
-.secondaryNavbarContainer::-webkit-scrollbar-thumb{
+.secondaryNavbarContainer::-webkit-scrollbar-thumb {
     background: transparent;
 }
 
@@ -36,8 +36,8 @@
     color: white;
 }
 
-@media only screen and (max-width:350px){
-    .secondaryNavbarContainer{
+@media only screen and (max-width:350px) {
+    .secondaryNavbarContainer {
         justify-content: flex-start;
     }
 }

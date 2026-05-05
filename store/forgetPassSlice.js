@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const forgetPassword = createAsyncThunk("forgetPassword", async (email) => {
-    let response = await fetch("https://blog-zo8s.vercel.app/app/v1/forgetPassword", {
+    let response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v1/forgetPassword`, {
         method: 'POST',
         // mode: 'no-cors', //Disable the cors(Cross-Origin resource sharing)
         headers: {

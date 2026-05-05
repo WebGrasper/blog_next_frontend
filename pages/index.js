@@ -10,7 +10,7 @@ export const getServerSideProps = async (context) => {
   const fetchCreators = async (creators) => {
     try {
       let response = await fetch(
-        `https://blog-zo8s.vercel.app/app/v1/getArticlesCreators`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v1/getArticlesCreators`,
         {
           method: "POST",
           headers: {
@@ -33,11 +33,11 @@ export const getServerSideProps = async (context) => {
 
   let dailyArticlesdata = null;
   let dailyArticles = undefined;
-  let dailyArticlesLimit = 6;
+  let dailyArticlesLimit = 4;
 
   try {
     let response = await fetch(
-      `https://blog-zo8s.vercel.app/app/v2/dailyArticles?` +
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/dailyArticles?` +
         new URLSearchParams({
           limit: dailyArticlesLimit,
         }),
@@ -84,11 +84,11 @@ export const getServerSideProps = async (context) => {
 
   let trendingArticlesData = null;
   let trendingArticles = undefined;
-  let trendingArticlesLimit = 6;
+  let trendingArticlesLimit = 4;
 
   try {
     let response = await fetch(
-      `https://blog-zo8s.vercel.app/app/v2/trendingArticles?` +
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/trendingArticles?` +
         new URLSearchParams({
           limit: trendingArticlesLimit,
         }),

@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 // https://blog-zo8s.vercel.app
 export const confirmRegistration = createAsyncThunk("confirmRegistration", async (otp) => {
-    let response = await fetch("https://blog-zo8s.vercel.app/app/v1/confirmRegistration", {
+    let response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v1/confirmRegistration`, {
         method: 'POST',
         // mode: 'no-cors', //Disable the cors(Cross-Origin resource sharing)
         headers: {

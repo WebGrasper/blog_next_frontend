@@ -13,7 +13,7 @@ export const getServerSideProps = async (context) => {
   const fetchCreators = async (creators) => {
     try {
       let response = await fetch(
-        `https://blog-zo8s.vercel.app/app/v1/getArticlesCreators`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v1/getArticlesCreators`,
         {
           method: "POST",
           headers: {
@@ -40,7 +40,7 @@ export const getServerSideProps = async (context) => {
 
   try {
     const response = await fetch(
-      `https://blog-zo8s.vercel.app/app/v2/search?name=${name}`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/search?name=${name}`,
       {
         method: "GET",
         headers: {

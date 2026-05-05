@@ -1,17 +1,17 @@
-.rootArticlePage{
-  background-color: rgb(250,247,243);
+.rootArticlePage {
+  background-color: rgb(250, 247, 243);
 }
 
 .articlePageMainContainer {
   width: 100%;
-  background-color: rgb(250,247,243);
+  background-color: rgb(250, 247, 243);
   padding-top: 1rem;
 }
 
 .articleMainContainer {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  max-width: 70rem;
+  grid-template-columns: repeat(4, 1fr);
+  max-width: 82.5rem;
   column-gap: 3rem;
   margin-inline: auto;
   padding: 1rem;
@@ -23,13 +23,13 @@
 }
 
 .articleHeadingContainer {
-  max-width: 70rem;
+  max-width: 82.5rem;
   display: flex;
   padding-block: 0.5rem;
   margin-inline: auto;
 }
 
-.articleHeadingContainer > p{
+.articleHeadingContainer>p {
   padding-left: 1rem;
   text-overflow: unset;
   overflow: unset;
@@ -41,7 +41,7 @@
   color: black;
 }
 
-.articleHeadingContainer > h2 {
+.articleHeadingContainer>h2 {
   padding-left: 0.25rem;
   text-overflow: unset;
   overflow: unset;
@@ -54,13 +54,13 @@
   color: black;
 }
 
-.documentNotFoundContainer{
-  max-width: 70rem;
+.documentNotFoundContainer {
+  max-width: 82.5rem;
   margin-inline: auto;
   padding-top: 1rem;
 }
 
-.notFoundImageContainer{
+.notFoundImageContainer {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -70,7 +70,7 @@
   min-height: 400px;
 }
 
-.notFoundContent{
+.notFoundContent {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
@@ -78,10 +78,11 @@
   align-items: center;
 }
 
-.notFoundContent > h2{
+.notFoundContent>h2 {
   color: #242424;
 }
-.notFoundContent > p{
+
+.notFoundContent>p {
   color: #242424;
   opacity: 0.75;
 }
@@ -97,6 +98,7 @@
   color: white;
   transition: background-color 0.2s linear;
 }
+
 .notFoundImageContainer button:hover {
   background-color: #283032;
 }
