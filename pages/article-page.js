@@ -9,6 +9,9 @@ import { useEffect, useState } from "react";
 
 export const getServerSideProps = async (context) => {
   const name = context.query.name;
+  const page = context.query.page || 1;
+  const limit = context.query.limit || 10;
+  const category = context.query.category || "";
 
   const fetchCreators = async (creators) => {
     try {
@@ -16,16 +19,14 @@ export const getServerSideProps = async (context) => {
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v1/getArticlesCreators`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ creators }),
         }
       );
       response = await response.json();
       return response?.creators_data;
     } catch (error) {
-      console.log("Home: Fetch creators: ", error);
+      console.log("ArticlePage: Fetch creators: ", error);
     }
   };
 
@@ -34,50 +35,38 @@ export const getServerSideProps = async (context) => {
     return fetchCreators(creators);
   };
 
-  let articlesData = null;
   let final_articles = [];
-  let final_success = null;
+  let paginationData = { totalCount: 0, totalPages: 0, page: 1, limit: 10, category };
+  let final_success = false;
 
   try {
+    const categoryQuery = category ? `&category=${category}` : "";
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/search?name=${name}`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/search?name=${name}&page=${page}&limit=${limit}${categoryQuery}`,
       {
         method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
       }
     );
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
+    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
-    articlesData = await response.json();
-    let { success, articles } = articlesData;
-    console.log(articles);
+    const articlesData = await response.json();
+    let { success, articles, totalCount, totalPages } = articlesData;
     final_success = success;
+    paginationData = { totalCount, totalPages, page: parseInt(page), limit: parseInt(limit) };
 
-    // Check if article is not undefined and is an array before mapping
     if (articles && Array.isArray(articles)) {
       final_articles = articles.map((art) => ({
         ...art,
-        formattedDate: moment(art.createdAt).fromNow(), // Format the date using moment
+        formattedDate: moment(art.createdAt).fromNow(),
       }));
 
       let creators = await extractCreators(final_articles, fetchCreators);
-      // Map creators to their respective articles
-      final_articles = final_articles.map((article) => {
-        const creator = creators.find(
-          (creator) => creator._id === article.createdBy
-        );
-        return {
-          ...article,
-          creator,
-        };
-      });
-    } else {
-      articles = []; // Set article to an empty array if it's undefined or not an array
+      final_articles = final_articles.map((article) => ({
+        ...article,
+        creator: creators.find((c) => c._id === article.createdBy),
+      }));
     }
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -87,61 +76,92 @@ export const getServerSideProps = async (context) => {
     props: {
       success: final_success,
       articles: final_articles,
+      pagination: paginationData,
       name,
     },
   };
 };
 
-function ArticlePage({ success, articles, name }) {
+import SearchSelect from "@/components/SearchSelect";
+import Pagination from "@/components/Pagination/Pagination";
 
+function ArticlePage({ success, articles, name, pagination }) {
   const [markDisabled, setDisabled] = useState(false);
-
   const router = useRouter();
+
+  // Categories list to check if current 'name' is a category
+  const categories = ["National", "World", "Politics", "Railway", "Markets", "Sports", "Health", "Education", "Technology"];
+  const decodedName = decodeURIComponent(name.replace(/-/g, " "));
+  const isDirectCategory = categories.some(cat => cat.toLowerCase() === decodedName.toLowerCase());
+
+  const handlePageChange = (newPage) => {
+    const catParam = pagination.category ? `&category=${pagination.category}` : "";
+    router.push(`/article-page?name=${name}&page=${newPage}&limit=${pagination.limit}${catParam}`);
+  };
+
+  const handleLimitChange = (newLimit) => {
+    const catParam = pagination.category ? `&category=${pagination.category}` : "";
+    router.push(`/article-page?name=${name}&page=1&limit=${newLimit}${catParam}`);
+  };
 
   return (
     <main className={styles.rootArticlePage}>
       <Head>
-        <title>{`${decodeURIComponent(
-          name.replace(/-/g, " ")
-        )} - WebGrasper`}</title>
-        <meta
-          name="description"
-          content="Explore trending tech insights, programming tips, and top gadgets. Stay informed on comparisons, details, and discover the latest in technology."
-        />
+        <title>{`${decodedName} - WebGrasper`}</title>
+        <meta name="description" content="Explore trending tech insights, programming tips, and top gadgets." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-        <meta
-          property="og:title"
-          content={`${decodeURIComponent(
-            name.replace(/-/g, " ")
-          )} - WebGrasper`}
-        />
-        <meta
-          property="og:description"
-          content="Explore trending tech insights, programming tips, and top gadgets. Stay informed on comparisons, details, and discover the latest in technology."
-        />
-        <link
-          rel="canonical"
-          href={`https://webgrasper.vercel.app/article-page?name=${name}`}
-        />
-
-        <meta
-          property="og:image"
-          content="https://webgrasper.vercel.app/favicon.jpg"
-        />
-        <meta name="twitter:card" content="summary_large_image" />
+        <link rel="canonical" href={`https://webgrasper.vercel.app/article-page?name=${name}`} />
         <link rel="icon" href="/favicon.jpg" sizes="any" />
       </Head>
       {success ? (
         <section className={styles.articlePageMainContainer}>
-          <div className={styles.articleHeadingContainer}>
-            <p>Results for: </p>
-            <h2>{decodeURIComponent(name.replace(/-/g, " "))}</h2>
+          <div 
+            className={styles.headerControls}
+            style={{
+              position: 'sticky',
+              top: '4.25rem',
+              background: 'rgba(255, 255, 255, 0.15',
+              backdropFilter: 'blur(10px)',
+              WebkitBackdropFilter: 'blur(10px)',
+              zIndex: 100,
+              borderBottom: '1px solid rgba(0,0,0,0.05)',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              padding: '1.25rem 0',
+              maxWidth: '82.5rem',
+              marginInline: 'auto',
+              marginBottom: '2rem'
+            }}
+          >
+            <div className={styles.leftControls}>
+              {!isDirectCategory && (
+                <SearchSelect 
+                  options={categories}
+                  value={pagination.category || ""} 
+                  onChange={(val) => {
+                    const catParam = val ? `&category=${val}` : "";
+                    router.push(`/article-page?name=${name}&page=1&limit=${pagination.limit}${catParam}`);
+                  }}
+                  placeholder="All Categories"
+                />
+              )}
+            </div>
+            <div className={styles.rightControls}>
+              <Pagination 
+                currentPage={pagination.page}
+                totalPages={pagination.totalPages}
+                limit={pagination.limit}
+                onPageChange={handlePageChange}
+                onLimitChange={handleLimitChange}
+              />
+            </div>
           </div>
+
           <div className={styles.articleMainContainer}>
             {articles &&
               articles.map((article, index) => (
-                <ArticleCard article={article} key={index} />
+                <ArticleCard article={article} key={`${article._id}-${index}`} />
               ))}
           </div>
         </section>
@@ -153,9 +173,7 @@ function ArticlePage({ success, articles, name }) {
           </div>
           <div className={styles.notFoundImageContainer}>
             <Image
-              src={
-                "https://ik.imagekit.io/94nzrpaat/images/gold-logo-with-title-wg_853558-2748-N6dN8fcsA-transformed_1%20(1).png?updatedAt=1708801314331"
-              }
+              src={"https://ik.imagekit.io/94nzrpaat/images/gold-logo-with-title-wg_853558-2748-N6dN8fcsA-transformed_1%20(1).png?updatedAt=1708801314331"}
               width={100}
               height={50}
               loading="lazy"

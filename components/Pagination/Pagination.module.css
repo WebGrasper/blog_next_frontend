@@ -1,0 +1,142 @@
+.paginationContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0;
+  width: 100%;
+}
+
+.limitSelector {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin-left: auto;
+}
+
+.arrowBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e5e5e5;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #1a1a1a;
+}
+
+.arrowBtn:hover:not(:disabled) {
+  background: #1a1a1a;
+  color: #fff;
+  border-color: #1a1a1a;
+  transform: translateY(-1px);
+}
+
+.arrowBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  background: #f8f9fa;
+}
+
+.pageInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.current {
+  color: #1a1a1a;
+}
+
+.divider {
+  color: #ccc;
+  font-weight: 300;
+}
+
+.total {
+  color: #888;
+}
+
+@media (max-width: 600px) {
+  .paginationContainer {
+    gap: 0.5rem;
+    justify-content: space-between;
+  }
+
+  .controls {
+    margin-left: 0;
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 481px) {
+  .controls {
+    gap: 0.5rem;
+  }
+
+  .arrowBtn {
+    width: 30px;
+    height: 30px;
+  }
+
+  .pageInfo {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 426px) {
+  .controls {
+    gap: 0.4rem;
+  }
+
+  .arrowBtn {
+    width: 28px;
+    height: 28px;
+  }
+
+  .pageInfo {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 401px) {
+  .paginationContainer {
+    justify-content: center;
+  }
+
+  .controls {
+    margin: 0;
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 401px) {
+  .paginationContainer {
+    justify-content: space-between !important;
+    width: 100% !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .limitSelector {
+    flex: 0 0 auto !important;
+  }
+
+  .controls {
+    margin: 0 !important;
+    gap: 0.5rem !important;
+    flex: 0 0 auto !important;
+  }
+}

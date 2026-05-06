@@ -4,7 +4,9 @@ import Image from "next/image";
 import Head from "next/head";
 import ArticleCard from "@/components/articleCard";
 import moment from "moment";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import Spinner from "@/components/spinner";
 
 export const getServerSideProps = async (context) => {
   const fetchCreators = async (creators) => {
@@ -142,11 +144,86 @@ export const getServerSideProps = async (context) => {
   };
 };
 
-export default function Main({ dailyArticles, trendingArticles }) {
+export default function Main({ dailyArticles: initialDaily, trendingArticles: initialTrending }) {
+  const [dailyArticles, setDailyArticles] = useState(initialDaily);
+  const [trendingArticles, setTrendingArticles] = useState(initialTrending);
+  
+  const [dailyPage, setDailyPage] = useState(1);
+  const [trendingPage, setTrendingPage] = useState(1);
+  
+  const [dailyTotalPages, setDailyTotalPages] = useState(1);
+  const [trendingTotalPages, setTrendingTotalPages] = useState(1);
 
-  useEffect(()=>{
-    console.log(dailyArticles, trendingArticles);
-  },[]);
+  const [loadingDaily, setLoadingDaily] = useState(false);
+  const [loadingTrending, setLoadingTrending] = useState(false);
+
+  // Helper to fetch and map articles with creators
+  const fetchArticlesWithCreators = async (url) => {
+    const response = await fetch(url);
+    const data = await response.json();
+    if (!data.success) return { articles: [], totalPages: 1 };
+
+    let articles = data.articles.map((art) => ({
+      ...art,
+      formattedDate: moment(art.createdAt).fromNow(),
+    }));
+
+    const creatorsResponse = await fetch(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v1/getArticlesCreators`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ creators: articles.map(a => a.createdBy) }),
+      }
+    );
+    const creatorsData = await creatorsResponse.json();
+    const creators = creatorsData?.creators_data || [];
+
+    articles = articles.map((article) => ({
+      ...article,
+      creator: creators.find((c) => c._id === article.createdBy),
+    }));
+
+    return { articles, totalPages: data.totalPages };
+  };
+
+  const handleDailyPageChange = async (newPage) => {
+    if (newPage < 1 || newPage > dailyTotalPages || loadingDaily) return;
+    setLoadingDaily(true);
+    const { articles, totalPages } = await fetchArticlesWithCreators(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/dailyArticles?limit=4&page=${newPage}`
+    );
+    setDailyArticles(articles);
+    setDailyTotalPages(totalPages);
+    setDailyPage(newPage);
+    setLoadingDaily(false);
+  };
+
+  const handleTrendingPageChange = async (newPage) => {
+    if (newPage < 1 || newPage > trendingTotalPages || loadingTrending) return;
+    setLoadingTrending(true);
+    const { articles, totalPages } = await fetchArticlesWithCreators(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/trendingArticles?limit=4&page=${newPage}`
+    );
+    setTrendingArticles(articles);
+    setTrendingTotalPages(totalPages);
+    setTrendingPage(newPage);
+    setLoadingTrending(false);
+  };
+
+  // Set initial total pages from SSR (approximate or we could update API to send it in SSR too)
+  useEffect(() => {
+    // Initial fetch to get total pages (or we could have included it in SSR)
+    const init = async () => {
+      const d = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/dailyArticles?limit=4&page=1`);
+      const t = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/trendingArticles?limit=4&page=1`);
+      const dData = await d.json();
+      const tData = await t.json();
+      setDailyTotalPages(dData.totalPages || 1);
+      setTrendingTotalPages(tData.totalPages || 1);
+    };
+    init();
+  }, []);
 
   return (
     <div className={styles.root}>
@@ -204,23 +281,63 @@ export default function Main({ dailyArticles, trendingArticles }) {
       <section className={styles.homePageSupremeContainer}>
         <div className={styles.dailyArticleHeadingContainer}>
           <h1>Daily Picks</h1>
+          <div className={styles.sectionPagination}>
+            <button 
+              onClick={() => handleDailyPageChange(dailyPage - 1)} 
+              disabled={dailyPage <= 1 || loadingDaily}
+              className={styles.miniArrowBtn}
+            >
+              <ChevronLeft size={18} />
+            </button>
+            <span className={styles.pageIndicator}>{dailyPage} / {dailyTotalPages}</span>
+            <button 
+              onClick={() => handleDailyPageChange(dailyPage + 1)} 
+              disabled={dailyPage >= dailyTotalPages || loadingDaily}
+              className={styles.miniArrowBtn}
+            >
+              <ChevronRight size={18} />
+            </button>
+          </div>
         </div>
-        <div className={styles.dailyArticlesMainContainer}>
-          {dailyArticles &&
-            dailyArticles.map((article, index) => (
-              <ArticleCard article={article} key={index} />
-            ))}
+        <div className={`${styles.dailyArticlesMainContainer} ${loadingDaily ? styles.loadingGrid : ''}`}>
+          {loadingDaily ? (
+            <div className={styles.gridLoader}><Spinner /></div>
+          ) : (
+            dailyArticles && dailyArticles.map((article, index) => (
+              <ArticleCard article={article} key={`${article._id}-${index}`} />
+            ))
+          )}
         </div>
       </section>
       <section className={styles.homePageSupremeContainer}>
         <div className={styles.trendingArticleHeadingContainer}>
           <h1>Trending</h1>
+          <div className={styles.sectionPagination}>
+            <button 
+              onClick={() => handleTrendingPageChange(trendingPage - 1)} 
+              disabled={trendingPage <= 1 || loadingTrending}
+              className={styles.miniArrowBtn}
+            >
+              <ChevronLeft size={18} />
+            </button>
+            <span className={styles.pageIndicator}>{trendingPage} / {trendingTotalPages}</span>
+            <button 
+              onClick={() => handleTrendingPageChange(trendingPage + 1)} 
+              disabled={trendingPage >= trendingTotalPages || loadingTrending}
+              className={styles.miniArrowBtn}
+            >
+              <ChevronRight size={18} />
+            </button>
+          </div>
         </div>
-        <div className={styles.trendingArticlesMainContainer}>
-          {trendingArticles &&
-            trendingArticles.map((article, index) => (
-              <ArticleCard article={article} key={index} />
-            ))}
+        <div className={`${styles.trendingArticlesMainContainer} ${loadingTrending ? styles.loadingGrid : ''}`}>
+          {loadingTrending ? (
+            <div className={styles.gridLoader}><Spinner /></div>
+          ) : (
+            trendingArticles && trendingArticles.map((article, index) => (
+              <ArticleCard article={article} key={`${article._id}-${index}`} />
+            ))
+          )}
         </div>
       </section>
       <section className={styles.categoriesMainContainer}>

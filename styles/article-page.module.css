@@ -5,53 +5,74 @@
 .articlePageMainContainer {
   width: 100%;
   background-color: rgb(250, 247, 243);
-  padding-top: 1rem;
+  padding: 0 0 1rem 0;
 }
 
 .articleMainContainer {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   max-width: 82.5rem;
-  column-gap: 3rem;
+  gap: 1rem;
   margin-inline: auto;
   padding: 1rem;
-  background: rgba(255, 255, 255, 0.01);
-  backdrop-filter: blur(1px);
-  -webkit-backdrop-filter: blur(1px);
   border-radius: 10px;
-  row-gap: 2rem;
 }
 
-.articleHeadingContainer {
+.headerControls {
   max-width: 82.5rem;
   display: flex;
-  padding-block: 0.5rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 0;
   margin-inline: auto;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+  position: sticky;
+  top: 4.25rem;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 100;
 }
 
-.articleHeadingContainer>p {
-  padding-left: 1rem;
-  text-overflow: unset;
-  overflow: unset;
-  display: block;
-  -webkit-box-orient: unset;
-  font-size: 1rem;
-  font-weight: 700;
-  color: transparent;
-  color: black;
+.leftControls {
+  flex: 1;
+  max-width: 200px;
 }
 
-.articleHeadingContainer>h2 {
-  padding-left: 0.25rem;
-  text-overflow: unset;
-  overflow: unset;
-  text-transform: capitalize;
-  display: block;
-  -webkit-box-orient: unset;
-  font-size: 1rem;
-  font-weight: 500;
-  color: transparent;
-  color: black;
+.rightControls {
+  display: flex;
+  align-items: center;
+}
+
+.paginationWrapperBottom {
+  max-width: 82.5rem;
+  margin-inline: auto;
+  padding: 2rem 1rem;
+  border-top: 1px solid #eee;
+}
+
+.filterControls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.filterSelect {
+  padding: 0.5rem 1rem;
+  border-radius: 99px;
+  border: 1px solid #ddd;
+  background: #fff;
+  font-size: 0.9rem;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #1a1a1a;
+  min-width: 160px;
+}
+
+.filterSelect:hover {
+  border-color: #1a1a1a;
 }
 
 .documentNotFoundContainer {
@@ -103,8 +124,45 @@
   background-color: #283032;
 }
 
-@media only screen and (max-width: 802px) {
+.paginationWrapper {
+  max-width: 82.5rem;
+  margin-inline: auto;
+  padding: 0 1rem;
+}
+
+@media (max-width: 1024px) {
+  .articleMainContainer {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+
+@media (max-width: 768px) {
+  .articleMainContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 601px) {
   .articleMainContainer {
     grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+  }
+
+  .headerControls {
+    padding: 0.5rem;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .leftControls {
+    width: 100%;
+    max-width: unset;
+  }
+
+  .rightControls {
+    width: 100%;
+    justify-content: space-between;
+    padding-inline: 1rem;
   }
 }

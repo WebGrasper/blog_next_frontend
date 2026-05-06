@@ -30,6 +30,10 @@ import {
 import ConfirmModal from "@/components/ConfirmModal";
 import { delay } from "lodash";
 
+import SearchSelect from "@/components/SearchSelect";
+import { usePagination } from "@/hooks/usePagination";
+import Pagination from "@/components/Pagination/Pagination";
+
 export default function Profile() {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -48,6 +52,13 @@ export default function Profile() {
   const [userArticles, setUserArticles] = useState([]);
   const [articlesLoading, setArticlesLoading] = useState(true);
   const [deleteLoading, setDeleteLoading] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  
+  const { 
+    page, limit, totalPages, totalCount, 
+    handlePageChange, handleLimitChange, updatePaginationData 
+  } = usePagination(1, 10);
+
   const [confirmModal, setConfirmModal] = useState({
     isOpen: false,
     articleId: null,
@@ -75,16 +86,26 @@ export default function Profile() {
     if(state?.data?.success){
       setProfileData(state?.data);
       setLoading(false);
-      fetchUserArticles();
     }
   }, [state?.data]);
 
+  useEffect(() => {
+    if (profileData && activeTab === "stories") {
+      fetchUserArticles();
+    }
+  }, [profileData, page, limit, selectedCategory, activeTab]);
+
   const fetchUserArticles = async () => {
+    setArticlesLoading(true);
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/getMyArticles?token=${cookies.token}`);
+      const categoryParam = selectedCategory !== "all" ? `&category=${selectedCategory}` : "";
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/getMyArticles?token=${cookies.token}&page=${page}&limit=${limit}${categoryParam}`
+      );
       const data = await response.json();
       if (data.success) {
         setUserArticles(data.articles);
+        updatePaginationData(data);
       }
     } catch (error) {
       console.error("Error fetching articles:", error);
@@ -102,7 +123,8 @@ export default function Profile() {
       const data = await response.json();
       if (data.success) {
         enqueueSnackbar("Article deleted successfully", { variant: "success" });
-        setUserArticles(userArticles.filter((a) => a._id !== id));
+        // Instead of local filter, re-fetch to ensure pagination metadata stays correct
+        fetchUserArticles();
       } else {
         enqueueSnackbar(data.message || "Failed to delete article", { variant: "error" });
       }
@@ -347,56 +369,102 @@ export default function Profile() {
             <div className={styles.tabContent}>
               {activeTab === 'stories' ? (
                 <div className={styles.storiesFeed}>
-                   {articlesLoading ? (
-                     <div style={{padding: '2rem', textAlign: 'center'}}><Spinner /></div>
-                   ) : userArticles.length === 0 ? (
-                     <div className={styles.placeholderContainer}>
-                       <h3>Manage your stories</h3>
-                       <p>View, edit, and delete your published and draft articles from your dedicated stories dashboard.</p>
-                       <div style={{display: 'flex', gap: '1rem', justifyContent: 'center'}}>
-                         <Link href="/create-article" className={styles.miniCreateBtn}>Start writing</Link>
-                       </div>
-                     </div>
-                   ) : (
-                      <div className={styles.articlesGrid}>
-                        {userArticles.map(article => (
-                          <div key={article._id} className={styles.articleCard}>
-                            <div className={styles.cardImageContainer}>
-                              <img 
-                                src={article.articleImage?.[0] || "https://ik.imagekit.io/94nzrpaat/images/pixelcut-export%20(4).png"} 
-                                alt={article.title}
-                                className={styles.cardImage}
-                              />
-                              <span className={styles.cardCategory}>{article.category}</span>
-                            </div>
-                            
-                            <div className={styles.cardBody}>
-                              <h4 className={styles.cardTitle}>{article.title}</h4>
-                              <div className={styles.cardFooter}>
-                                <div className={styles.cardStats}>
-                                  <span>{new Date(article.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}</span>
-                                  <span className={styles.dot}>•</span>
-                                  <span>{article.impressions || 0} views</span>
-                                </div>
-                                <div className={styles.cardActions}>
-                                  <Link href={`/update-article/${article._id}`} className={styles.iconBtnAction} title="Edit">
-                                    <Pencil size={18} />
-                                  </Link>
-                                  <button 
-                                    onClick={() => openDeleteConfirm(article)} 
-                                    className={styles.iconBtnDelete}
-                                    disabled={deleteLoading === article._id}
-                                    title="Delete"
-                                  >
-                                    {deleteLoading === article._id ? "..." : <Trash2 size={18} />}
-                                  </button>
-                                </div>
+                  <div 
+                    className={styles.storiesHeader}
+                    style={{
+                      position: 'sticky',
+                      top: '4.25rem',
+                      background: 'rgba(255, 255, 255, 0.15',
+                      backdropFilter: 'blur(10px)',
+                      WebkitBackdropFilter: 'blur(10px)',
+                      zIndex: 100,
+                      borderBottom: '1px solid rgba(0,0,0,0.05)'
+                    }}
+                  >
+                    <div className={styles.headerLeft}>
+                      <div className={styles.filterControls}>
+                        <SearchSelect 
+                          options={[
+                            "National",
+                            "World",
+                            "Politics",
+                            "Railway",
+                            "Markets",
+                            "Sports",
+                            "Health",
+                            "Education",
+                            "Technology"
+                          ]}
+                          value={selectedCategory === "all" ? "" : selectedCategory} 
+                          onChange={(val) => {
+                            setSelectedCategory(val || "all");
+                            handlePageChange(1);
+                          }}
+                          placeholder="All Categories"
+                        />
+                      </div>
+                    </div>
+                    <div className={styles.headerRight}>
+                      <Pagination 
+                        currentPage={page}
+                        totalPages={totalPages}
+                        limit={limit}
+                        onPageChange={handlePageChange}
+                        onLimitChange={handleLimitChange}
+                      />
+                    </div>
+                  </div>
+
+                  {articlesLoading ? (
+                    <div className={styles.articlesLoader}><Spinner /></div>
+                  ) : userArticles.length === 0 ? (
+                    <div className={styles.placeholderContainer}>
+                      <h3>Manage your stories</h3>
+                      <p>View, edit, and delete your published and draft articles from your dedicated stories dashboard.</p>
+                      <div style={{display: 'flex', gap: '1rem', justifyContent: 'center'}}>
+                        <Link href="/create-article" className={styles.miniCreateBtn}>Start writing</Link>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className={styles.articlesGrid}>
+                      {userArticles.map((article) => (
+                        <div key={article._id} className={styles.articleCard}>
+                          <div className={styles.cardImageContainer}>
+                            <img 
+                              src={article.articleImage?.[0] || "https://ik.imagekit.io/94nzrpaat/images/pixelcut-export%20(4).png"} 
+                              alt={article.title}
+                              className={styles.cardImage}
+                            />
+                            <span className={styles.cardCategory}>{article.category}</span>
+                          </div>
+                          
+                          <div className={styles.cardBody}>
+                            <h4 className={styles.cardTitle}>{article.title}</h4>
+                            <div className={styles.cardFooter}>
+                              <div className={styles.cardStats}>
+                                <span>{new Date(article.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}</span>
+                                <span className={styles.dot}>•</span>
+                                <span>{article.impressions || 0} views</span>
+                              </div>
+                              <div className={styles.cardActions}>
+                                <Link href={`/update-article/${article._id}`} className={styles.iconBtnAction} title="Edit">
+                                  <Pencil size={18} />
+                                </Link>
+                                <button 
+                                  onClick={() => openDeleteConfirm(article)} 
+                                  className={styles.iconBtnDelete}
+                                  disabled={deleteLoading === article._id}
+                                  title="Delete"
+                                >
+                                  {deleteLoading === article._id ? "..." : <Trash2 size={18} />}
+                                </button>
                               </div>
                             </div>
                           </div>
-                        ))}
-                      </div>
-                   )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ) : (
                 <div className={styles.aboutPanel}>

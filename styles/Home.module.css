@@ -60,6 +60,21 @@
   gap: 2rem;
   margin-inline: auto;
   padding: 1.5rem 1rem 4rem 1rem;
+  position: relative;
+  min-height: 400px;
+  /* Prevent layout jump */
+}
+
+.loadingGrid {
+  opacity: 0.6;
+}
+
+.gridLoader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
 }
 
 .dailyArticleHeadingContainer,
@@ -67,6 +82,47 @@
   max-width: 82.5rem;
   padding: 3rem 1rem 1rem 1rem;
   margin-inline: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sectionPagination {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.miniArrowBtn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #eee;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #1a1a1a;
+}
+
+.miniArrowBtn:hover:not(:disabled) {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.miniArrowBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.pageIndicator {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #888;
+  min-width: 45px;
+  text-align: center;
 }
 
 .dailyArticleHeadingContainer>h1,
@@ -153,8 +209,14 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-@media only screen and (max-width: 802px) {
+@media only screen and (max-width: 1025px) {
+
   /* Dynamic grid handles this automatically now */
+  .dailyArticlesMainContainer,
+  .trendingArticlesMainContainer {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
 }
 
 @media only screen and (max-width: 766px) {
@@ -179,11 +241,21 @@
 
   .dailyArticlesMainContainer,
   .trendingArticlesMainContainer {
-    gap: 1.5rem;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .dailyArticleHeadingContainer,
   .trendingArticleHeadingContainer {
     padding: 1rem 1rem 1rem 1rem;
+  }
+}
+
+@media only screen and (max-width: 601px) {
+
+  /* Dynamic grid handles this automatically now */
+  .dailyArticlesMainContainer,
+  .trendingArticlesMainContainer {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
   }
 }

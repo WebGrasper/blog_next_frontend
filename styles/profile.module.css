@@ -122,7 +122,6 @@
   display: flex;
   gap: 2rem;
   border-bottom: 1px solid #f0f0f0;
-  margin-bottom: 3rem;
 }
 
 .tabNav button {
@@ -157,19 +156,7 @@
 
 /* Tab Content */
 .tabContent {
-  animation: fadeIn 0.2s ease-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  width: 100%;
 }
 
 /* Stories Feed Placeholder */
@@ -678,5 +665,138 @@
     margin-left: 0;
     width: 100%;
     justify-content: flex-end;
+  }
+}
+
+.storiesHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 4.25rem;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 100;
+  transition: all 0.2s ease;
+  margin-bottom: 2rem;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+}
+
+.filterControls {
+  min-width: 200px;
+}
+
+.paginationWrapperBottom {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 600px) {
+  .storiesHeader {
+    gap: 0.5rem;
+  }
+
+  .headerLeft {
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  .headerRight {
+    width: 100%;
+    flex: 1 1 100%;
+    justify-content: space-between;
+    gap: 0.5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.03);
+  }
+
+  .articleCard {
+    flex-direction: row-reverse;
+    align-items: center;
+    padding: 0.75rem;
+    gap: 1rem;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border-bottom: 1px solid #f0f0f0;
+    background: transparent;
+  }
+
+  .cardImageContainer {
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    aspect-ratio: 1/1;
+  }
+
+  .cardCategory {
+    display: none;
+  }
+
+  .filterControls {
+    min-width: 100px;
+  }
+
+  .cardBody {
+    padding: 0;
+    gap: 0.25rem;
+  }
+
+  .cardTitle {
+    font-size: 0.95rem;
+    margin-bottom: 0.25rem;
+    height: auto;
+    -webkit-line-clamp: 2;
+  }
+
+  .cardFooter {
+    padding-top: 0.25rem;
+    border-top: none;
+    gap: 0.5rem;
+  }
+
+  .cardStats {
+    font-size: 0.7rem;
+  }
+
+  .iconBtnAction,
+  .iconBtnDelete {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+@media (max-width: 401px) {
+  .storiesHeader {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .headerLeft,
+  .headerRight {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .filterControls {
+    width: 100%;
   }
 }

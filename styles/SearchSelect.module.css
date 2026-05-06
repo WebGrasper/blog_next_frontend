@@ -13,6 +13,8 @@
   padding: 0.75rem 1rem;
   border-radius: 12px;
   cursor: pointer;
+  width: max-content;
+  gap: 0.5rem;
   transition: all 0.2s ease;
   min-height: 48px;
 }
@@ -33,7 +35,8 @@
 }
 
 .placeholder {
-  color: #8c8c8c;
+  color: #1a1a1a;
+  font-weight: 500;
   font-size: 0.95rem;
 }
 
@@ -60,8 +63,15 @@
 }
 
 @keyframes slideDown {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .searchWrapper {
@@ -131,6 +141,41 @@
 }
 
 .optionsList::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.1);
+  background: rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+}
+
+@media (max-width: 481px) {
+  .trigger {
+    padding: 0.4rem 0.75rem;
+    min-height: 38px;
+    font-size: 0.85rem;
+    border-radius: 8px;
+  }
+}
+
+@media (max-width: 426px) {
+  .trigger {
+    padding: 0.3rem 0.6rem;
+    min-height: 34px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 401px) {
+  .trigger {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 401px) {
+  .trigger {
+    width: 100% !important;
+    justify-content: space-between !important;
+  }
+
+  .container {
+    width: 100% !important;
+  }
 }
