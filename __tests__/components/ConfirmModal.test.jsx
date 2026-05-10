@@ -2,17 +2,17 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import ConfirmModal from '@/components/ConfirmModal';
 
 // Mock lucide-react icons
-jest.mock('lucide-react', () => ({
+vi.mock('lucide-react', () => ({
   X: () => <div data-testid="x-icon" />,
   AlertTriangle: () => <div data-testid="alert-icon" />,
 }));
 
 describe('ConfirmModal', () => {
-  const mockOnClose = jest.fn();
-  const mockOnConfirm = jest.fn();
+  const mockOnClose = vi.fn();
+  const mockOnConfirm = vi.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders nothing when isOpen is false', () => {

@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import ArticleCard from '@/components/articleCard';
 
 // Mock next/image
-jest.mock('next/image', () => ({
+vi.mock('next/image', () => ({
   __esModule: true,
   default: (props) => {
     // eslint-disable-next-line @next/next/no-img-element
@@ -13,7 +13,7 @@ jest.mock('next/image', () => ({
 }));
 
 // Mock next/link
-jest.mock('next/link', () => ({
+vi.mock('next/link', () => ({
   __esModule: true,
   default: ({ children, href, as, ...rest }) => (
     <a href={as || href} {...rest}>

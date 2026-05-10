@@ -1,11 +1,11 @@
 import { commentService } from '@/services/commentService';
 import { apiClient } from '@/services/apiClient';
 
-jest.mock('@/services/apiClient');
+vi.mock('@/services/apiClient');
 
 describe('commentService', () => {
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('getComments calls apiClient.get with articleID', async () => {

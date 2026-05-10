@@ -3,7 +3,7 @@ import { userService } from '@/services/userService';
 import moment from 'moment';
 
 // Mock userService
-jest.mock('@/services/userService');
+vi.mock('@/services/userService');
 
 describe('articleUtils', () => {
   describe('processArticles', () => {

@@ -1,11 +1,11 @@
 import { userService } from '@/services/userService';
 import { apiClient } from '@/services/apiClient';
 
-jest.mock('@/services/apiClient');
+vi.mock('@/services/apiClient');
 
 describe('userService', () => {
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('getArticlesCreators calls apiClient.post with creators array', async () => {

@@ -2,11 +2,11 @@ import { articleService } from '@/services/articleService';
 import { apiClient } from '@/services/apiClient';
 
 // Mock apiClient
-jest.mock('@/services/apiClient');
+vi.mock('@/services/apiClient');
 
 describe('articleService', () => {
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('searchArticles calls apiClient.get with correct query', async () => {

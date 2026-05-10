@@ -2,18 +2,18 @@ import { apiClient } from '@/services/apiClient';
 
 describe('ApiClient', () => {
   beforeEach(() => {
-    global.fetch = jest.fn();
+    global.fetch = vi.fn();
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('should make a successful GET request', async () => {
     const mockData = { success: true, data: [] };
     global.fetch.mockResolvedValue({
       ok: true,
-      json: jest.fn().mockResolvedValue(mockData),
+      json: vi.fn().mockResolvedValue(mockData),
     });
 
     const result = await apiClient.get('/test');
@@ -29,7 +29,7 @@ describe('ApiClient', () => {
     global.fetch.mockResolvedValue({
       ok: false,
       status: 404,
-      json: jest.fn().mockResolvedValue({ message: 'Not Found' }),
+      json: vi.fn().mockResolvedValue({ message: 'Not Found' }),
     });
 
     await expect(apiClient.get('/not-found')).rejects.toThrow('Not Found');
@@ -41,7 +41,7 @@ describe('ApiClient', () => {
     
     global.fetch.mockResolvedValue({
       ok: true,
-      json: jest.fn().mockResolvedValue({ success: true }),
+      json: vi.fn().mockResolvedValue({ success: true }),
     });
 
     await apiClient.post('/upload', formData);
@@ -55,7 +55,7 @@ describe('ApiClient', () => {
     const body = { name: 'test' };
     global.fetch.mockResolvedValue({
       ok: true,
-      json: jest.fn().mockResolvedValue({ success: true }),
+      json: vi.fn().mockResolvedValue({ success: true }),
     });
 
     await apiClient.post('/test', body);

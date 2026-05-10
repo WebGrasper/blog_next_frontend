@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import SearchSelect from '@/components/SearchSelect';
 
 // Mock lucide-react icons
-jest.mock('lucide-react', () => ({
+vi.mock('lucide-react', () => ({
   Search: () => <div data-testid="search-icon" />,
   ChevronDown: () => <div data-testid="chevron-icon" />,
   Check: () => <div data-testid="check-icon" />,
@@ -10,7 +10,7 @@ jest.mock('lucide-react', () => ({
 
 describe('SearchSelect', () => {
   const mockOptions = ['National', 'World', 'Politics', 'Sports'];
-  const mockOnChange = jest.fn();
+  const mockOnChange = vi.fn();
 
   beforeEach(() => {
     mockOnChange.mockClear();
