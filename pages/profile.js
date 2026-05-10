@@ -33,6 +33,8 @@ import { delay } from "lodash";
 import SearchSelect from "@/components/SearchSelect";
 import { usePagination } from "@/hooks/usePagination";
 import Pagination from "@/components/Pagination/Pagination";
+import { articleService } from "@/services/articleService";
+import { userService } from "@/services/userService";
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -98,11 +100,13 @@ export default function Profile() {
   const fetchUserArticles = async () => {
     setArticlesLoading(true);
     try {
-      const categoryParam = selectedCategory !== "all" ? `&category=${selectedCategory}` : "";
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/getMyArticles?token=${cookies.token}&page=${page}&limit=${limit}${categoryParam}`
-      );
-      const data = await response.json();
+      const data = await articleService.getMyArticlesWithPagination({
+        token: cookies.token,
+        page,
+        limit,
+        category: selectedCategory === "all" ? "" : selectedCategory
+      });
+      
       if (data.success) {
         setUserArticles(data.articles);
         updatePaginationData(data);
@@ -117,19 +121,15 @@ export default function Profile() {
   const handleDeleteArticle = async (id) => {
     setDeleteLoading(id);
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/deleteArticle/${id}?token=${cookies.token}`, {
-        method: "DELETE",
-      });
-      const data = await response.json();
+      const data = await articleService.deleteArticle(id, cookies.token);
       if (data.success) {
         enqueueSnackbar("Article deleted successfully", { variant: "success" });
-        // Instead of local filter, re-fetch to ensure pagination metadata stays correct
         fetchUserArticles();
       } else {
         enqueueSnackbar(data.message || "Failed to delete article", { variant: "error" });
       }
     } catch (error) {
-      enqueueSnackbar("Error connecting to server", { variant: "error" });
+      enqueueSnackbar(error.message || "Error connecting to server", { variant: "error" });
     } finally {
       setDeleteLoading(null);
     }
@@ -221,21 +221,8 @@ export default function Profile() {
 
     try {
       setFormSubmit(true);
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v1/updateMyDetails?` +
-          new URLSearchParams({
-            token: token,
-          }),
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
-
-      const result = await response.json();
+      const result = await userService.updateMyDetails(token, data);
+      
       setFormSubmit(false);
       handleEditableForm();
       dispatch(profile(cookies.token));
@@ -244,10 +231,11 @@ export default function Profile() {
         autoHideDuration: 1000,
       });
     } catch (error) {
-      console.log(error);
-      enqueueSnackbar(result?.message, {
+      console.error("Profile: Update details error:", error);
+      setFormSubmit(false);
+      enqueueSnackbar(error.message || "Failed to update profile", {
         variant: "error",
-        autoHideDuration: 1000,
+        autoHideDuration: 2000,
       });
     }
   };
@@ -258,36 +246,36 @@ export default function Profile() {
 
   const handleImageUpload = async (event) => {
     event.preventDefault();
+    if (!selectedFile) return;
+
     let newFormData = new FormData();
-    if (selectedFile) {
-      newFormData.append("avatar", selectedFile); // Append the file
-    }
+    newFormData.append("avatar", selectedFile);
+    
     let token = cookies.token;
     setImageUploading(true);
-    let response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v1/updateMyAvatar?token=${token}`,
-      {
-        method: "PUT",
-        body: newFormData,
+    
+    try {
+      const data = await userService.updateMyAvatar(token, newFormData);
+      
+      if (!data?.success) {
+        throw new Error(data?.message || "Upload failed");
       }
-    );
-    let data = await response.json();
-    if (!data?.success) {
+
       enqueueSnackbar(data?.message, {
+        autoHideDuration: 2000,
+        variant: "success",
+      });
+      await dispatch(profile(cookies.token));
+    } catch (error) {
+      console.error("Profile: Avatar upload error:", error);
+      enqueueSnackbar(error.message || "Failed to upload image", {
         autoHideDuration: 2000,
         variant: "error",
       });
+    } finally {
       setImageUploading(false);
       handleFormState();
-      return;
     }
-    enqueueSnackbar(data?.message, {
-      autoHideDuration: 2000,
-      variant: "success",
-    });
-    setImageUploading(false);
-    await dispatch(profile(cookies.token));
-    handleFormState();
   };
 
   const handleFormState = () => {

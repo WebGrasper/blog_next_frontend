@@ -8,6 +8,7 @@ import Link from "next/link";
 import { Edit2, Trash2, Plus, Eye } from "lucide-react";
 import PLSpinner from "@/components/pageLoadingSpinner";
 import Spinner from "@/components/spinner";
+import { articleService } from "@/services/articleService";
 
 export default function MyArticles() {
   const [articles, setArticles] = useState([]);
@@ -19,15 +20,14 @@ export default function MyArticles() {
 
   const fetchMyArticles = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/getMyArticles?token=${cookies.token}`);
-      const data = await response.json();
+      const data = await articleService.getMyArticles(cookies.token);
       if (data.success) {
         setArticles(data.articles);
       } else {
         enqueueSnackbar(data.message || "Failed to fetch articles", { variant: "error" });
       }
     } catch (error) {
-      enqueueSnackbar("Error connecting to server", { variant: "error" });
+      enqueueSnackbar(error.message || "Error connecting to server", { variant: "error" });
     } finally {
       setLoading(false);
     }
@@ -46,10 +46,7 @@ export default function MyArticles() {
 
     setDeleteLoading(id);
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/deleteArticle/${id}?token=${cookies.token}`, {
-        method: "DELETE",
-      });
-      const data = await response.json();
+      const data = await articleService.deleteArticle(id, cookies.token);
       if (data.success) {
         enqueueSnackbar("Article deleted successfully", { variant: "success" });
         setArticles(articles.filter((a) => a._id !== id));
@@ -57,7 +54,7 @@ export default function MyArticles() {
         enqueueSnackbar(data.message || "Failed to delete article", { variant: "error" });
       }
     } catch (error) {
-      enqueueSnackbar("Error connecting to server", { variant: "error" });
+      enqueueSnackbar(error.message || "Error connecting to server", { variant: "error" });
     } finally {
       setDeleteLoading(null);
     }

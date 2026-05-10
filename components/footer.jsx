@@ -1,3 +1,4 @@
+import Image from "next/image";
 import styles from "../styles/footer.module.css";
 import Link from "next/link";
 
@@ -8,10 +9,12 @@ function Footer() {
         <div className={styles.container1}>
           <Link href={"/"}>
             <div className={styles.footerLogo}>
-              <img 
+              <Image 
                 src="https://ik.imagekit.io/94nzrpaat/images/gold-logo-with-title-wg_853558-2748-N6dN8fcsA-transformed_1%20(1).png?updatedAt=1708801310085" 
                 alt="WebGrasper logo" 
-                style={{ width: '50px', height: 'auto' }}
+                width={50}
+                height={50}
+                style={{ height: 'auto' }}
               />
               <span>
                 Web<span>Grasper</span>
@@ -76,7 +79,7 @@ function Footer() {
             <Link href={"#"} className={styles.links}>
               Contact us
             </Link>
-            <Link href={"/portfolio"} className={styles.links} target="_blank">
+            <Link href={"/portfolio"} className={styles.links} target="_blank" rel="noopener noreferrer">
               Developer Portfolio
             </Link>
           </div>

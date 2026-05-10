@@ -5,6 +5,7 @@ import Head from "next/head";
 import styles from "@/styles/portfolioHome.module.css";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import data from "../lib/data.json";
 import SecondaryNavbar from "@/components/secondaryNavbar";
 
@@ -15,55 +16,41 @@ export default function Home({ data }) {
     console.log(data);
   }, [data]);
 
-  useEffect(() => {
-    // Define an array of strings to be displayed and erased
-    const textArray = ["Full Stack Developer.", "Make work Easy!"];
+  const [typedText, setTypedText] = useState("");
 
-    // Initialize variables
-    let stringIndex = 0; // Index of the current string in the array
-    let charIndex = 0; // Index of the current character in the current string
-    let isTyping = true; // Whether we are currently typing or erasing
+  useEffect(() => {
+    const textArray = ["Full Stack Developer.", "Make work Easy!"];
+    let stringIndex = 0;
+    let charIndex = 0;
+    let isTyping = true;
 
     function typeJs() {
       if (stringIndex < textArray.length) {
-        // Check if there are more strings to display or erase
         const currentString = textArray[stringIndex];
 
         if (isTyping) {
-          // Typing animation
           if (charIndex < currentString.length) {
-            typeJsTextRef.current.innerHTML += currentString?.charAt(charIndex);
+            setTypedText(prev => prev + currentString.charAt(charIndex));
             charIndex++;
           } else {
-            isTyping = false; // Switch to erasing mode
+            isTyping = false;
           }
         } else {
-          // Erasing animation
           if (charIndex > 0) {
-            typeJsTextRef.current.innerHTML = currentString.substring(
-              0,
-              charIndex - 1
-            );
+            setTypedText(prev => prev.substring(0, charIndex - 1));
             charIndex--;
           } else {
-            isTyping = true; // Switch back to typing mode
-            stringIndex++; // Move to the next string
-
-            if (stringIndex >= textArray.length) {
-              stringIndex = 0; // Reset to the beginning of the array
-            }
-
-            charIndex = 0; // Reset character index
-            typeJsTextRef.current.innerHTML = ""; // Clear the content for the new string
+            isTyping = true;
+            stringIndex = (stringIndex + 1) % textArray.length;
+            charIndex = 0;
+            setTypedText("");
           }
         }
       }
     }
 
-    // Set an interval to call the typeJs function
-    const intervalId = setInterval(typeJs, 100); // You can adjust the animation speed as needed
-
-    return () => clearInterval(intervalId); // Clear the interval on component unmount
+    const intervalId = setInterval(typeJs, 100);
+    return () => clearInterval(intervalId);
   }, []);
 
 
@@ -98,7 +85,7 @@ export default function Home({ data }) {
           <section className={styles.section1}>
             <div className={styles.section1Container1}>
               <p className={styles.name}>Hi, I'm Mohammad Amaan</p>
-              <p className={styles.animatedText} ref={typeJsTextRef}></p>
+              <p className={styles.animatedText}>{typedText}</p>
             </div>
           </section>
           <section className={styles.section2} id="experience">
@@ -127,12 +114,13 @@ export default function Home({ data }) {
             </p>
             <div className={styles.section3Container}>
               {data.technology.map((tech, index) => (
-                <img
+                <Image
                   key={index}
                   src={tech.imgSrc}
-                  alt={tech.alt}
+                  alt={tech.alt || "Technology icon"}
+                  width={40}
+                  height={40}
                   className={styles.techIcon}
-                  fetchpriority="low"
                 />
               ))}
             </div>
@@ -154,8 +142,8 @@ export default function Home({ data }) {
                   <p className={styles.projectDescription}>
                     {project.description}
                   </p>
-                  <Link href={project.link} className={styles.projectLink} target="_blank" passHref>
-                    <img src="/right_arrow.svg" alt="right arrow icon" />
+                  <Link href={project.link} className={styles.projectLink} target="_blank" rel="noopener noreferrer" passHref>
+                    <Image src="/right_arrow.svg" alt="right arrow icon" width={24} height={24} />
                   </Link>
                 </div>
               ))}

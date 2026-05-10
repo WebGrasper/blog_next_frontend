@@ -1,19 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { commentService } from "@/services/commentService";
 
 // https://blog-zo8s.vercel.app
 export const addComment = createAsyncThunk("addComment", async ({articleID, token, commentBody}) => {
-    let response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/addComment?` + new URLSearchParams({
-        articleID: articleID,
-        token: token
-    }),{
-        method: 'POST',
-        // mode: 'no-cors', //Disable the cors(Cross-Origin resource sharing)
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ commentBody }),
-    });
-    return response.json();
+    return commentService.addComment({ articleID, token, commentBody });
 })
 
 const addCommentSlice = createSlice({

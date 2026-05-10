@@ -11,128 +11,64 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import moment from "moment";
-import { v4 as uuidv4 } from "uuid"; // Import uuid to generate unique IDs for comments
+import { v4 as uuidv4 } from "uuid";
 import { openModal } from "@/store/authUISlice";
 import { Send } from "lucide-react";
+import { articleService } from "@/services/articleService";
+import { userService } from "@/services/userService";
+import { commentService } from "@/services/commentService";
+import { articleUtils } from "@/utils/articleUtils";
 
 export const getServerSideProps = async (context) => {
     const { title } = context.query;
-    const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/getSingleArticle/${title}`,
-        {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        }
-    );
-    const data = await response.json();
 
-    if (data.success === false || (!data.article && !data.title)) {
-        return { notFound: true }; // Display NextJS 404 automatically for broken links/titles
-    }
+    try {
+        const data = await articleService.getSingleArticle(title);
 
-    let article = data.article || data;
-    let success = data.success !== false;
-    if (article && article.description) {
-        try {
-            article.description = JSON.parse(article.description);
-        } catch {
-            // Leave it as an HTML string if JSON.parse fails (TipTap format)
-        }
-    }
-
-    const article_creator = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v1/getSingleUserDetails?` +
-        new URLSearchParams({
-            creatorID: article?.createdBy,
-        }),
-        {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        }
-    );
-
-    let final_article_creator = await article_creator.json();
-
-    let articleID = article?._id;
-
-    const comments_res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/getComments?` +
-        new URLSearchParams({
-            articleID: articleID,
-        }),
-        {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        }
-    );
-
-    let final_comments_res = await comments_res.json();
-
-    // Extract commenter IDs safely
-    const commentsArray = final_comments_res?.comments || [];
-    const commenterIds = commentsArray.map((comment) => comment.commenterID);
-
-    let commenters = [];
-    if (commenterIds.length > 0) {
-        // Fetch commenter details only if there are commenters
-        const commentersRes = await fetch(
-            `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v1/getCommenters`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ commenterIds }),
-            }
-        );
-        const commentersData = await commentersRes.json();
-        commenters = commentersData?.commenters || [];
-    }
-
-    // Combine comments with commenter details safely
-    final_comments_res = commentsArray.map((comment) => {
-        const commenter = commenters.find((c) => c._id === comment.commenterID);
-        let commenterName = commenter?.username;
-        let commenterImage = undefined;
-        if (
-            commenter &&
-            typeof commenter.avatar === "string" &&
-            commenter.avatar.startsWith("http")
-        ) {
-            commenterImage = commenter.avatar;
+        if (data.success === false || (!data.article && !data.title)) {
+            return { notFound: true };
         }
 
-        // Calculate human-readable time
-        let timeAgo = moment(comment.commentedAt).fromNow();
+        let article = data.article || data;
+
+        // Handle description parsing
+        if (article && article.description && typeof article.description === "string") {
+            try {
+                article.description = JSON.parse(article.description);
+            } catch { /* Stay as HTML string */ }
+        }
+
+        // Fetch creator, comments, and commenters in parallel
+        const articleID = article?._id;
+        const [final_article_creator, commentsData] = await Promise.all([
+            userService.getSingleUserDetails(article?.createdBy),
+            commentService.getComments(articleID)
+        ]);
+
+        const rawComments = commentsData?.comments || [];
+        const commenterIds = [...new Set(rawComments.map(c => c.commenterID))];
+        
+        let commenters = [];
+        if (commenterIds.length > 0) {
+            commenters = await commentService.getCommenters(commenterIds);
+        }
+
+        const processedComments = articleUtils.processComments(rawComments, commenters);
+
+        // Article formatting
+        article.currentTime = moment().toISOString();
 
         return {
-            ...comment,
-            commenterName,
-            commenterImage,
-            timeAgo,
+            props: {
+                article,
+                final_comments_res: processedComments.reverse(),
+                final_article_creator,
+            },
         };
-    });
-
-    // Calculate human-readable time for the article
-    let articleTimeAgo = moment(article.createdAt).fromNow();
-
-    // Append current time to the JSON response
-    article.currentTime = moment().toISOString();
-    article.timeAgo = articleTimeAgo;
-
-    return {
-        props: {
-            article,
-            final_comments_res: final_comments_res.reverse(),
-            final_article_creator,
-        },
-    };
+    } catch (error) {
+        console.error("ArticleDetail: getServerSideProps error:", error);
+        return { notFound: true };
+    }
 };
 
 function Article({ article, final_comments_res, final_article_creator }) {
@@ -142,7 +78,12 @@ function Article({ article, final_comments_res, final_article_creator }) {
     const [isSubmit, setSubmit] = useState(false);
     const state = useSelector((state) => state.addComment);
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-    const [comments, setComments] = useState(final_comments_res); // Use state to manage comments
+    const [comments, setComments] = useState(final_comments_res);
+    const [timeAgo, setTimeAgo] = useState(null);
+
+    useEffect(() => {
+        setTimeAgo(moment(article.createdAt).fromNow());
+    }, [article.createdAt]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -175,20 +116,12 @@ function Article({ article, final_comments_res, final_article_creator }) {
 
     useEffect(() => {
         const timeout = setTimeout(async () => {
-            const response = await fetch(
-                `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/viewsIncrementer?` +
-                new URLSearchParams({
-                    articleID: article?._id,
-                }),
-                {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }
-            );
-            let FR = await response.json();
-            console.log(FR);
+            try {
+                const response = await commentService.incrementViews(article?._id);
+                console.log("Views incremented:", response);
+            } catch (error) {
+                console.error("Failed to increment views:", error);
+            }
         }, 30000);
 
         return () => clearTimeout(timeout);
@@ -277,7 +210,7 @@ function Article({ article, final_comments_res, final_article_creator }) {
                                         <p>
                                             Published in <span>{article?.category}</span>
                                         </p>
-                                        <p>{article.timeAgo}</p>
+                                        <p>{timeAgo || "..."}</p>
                                     </div>
                                 </div>
                             </div>

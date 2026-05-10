@@ -3,227 +3,92 @@ import styles from "@/styles/Home.module.css";
 import Image from "next/image";
 import Head from "next/head";
 import ArticleCard from "@/components/articleCard";
-import moment from "moment";
 import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Spinner from "@/components/spinner";
+import { articleService } from "@/services/articleService";
+import { articleUtils } from "@/utils/articleUtils";
 
 export const getServerSideProps = async (context) => {
-  const fetchCreators = async (creators) => {
-    try {
-      let response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v1/getArticlesCreators`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ creators }),
-        }
-      );
-      response = await response.json();
-      return response?.creators_data;
-    } catch (error) {
-      console.log("Home: Fetch creators: ", error);
-    }
-  };
-
-  const extractCreators = async (articles, fetchCreators) => {
-    let creators = articles.map((article) => article?.createdBy);
-    return fetchCreators(creators);
-  };
-
-  let dailyArticlesdata = null;
-  let dailyArticles = undefined;
-  let dailyArticlesLimit = 4;
-
   try {
-    let response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/dailyArticles?` +
-        new URLSearchParams({
-          limit: dailyArticlesLimit,
-        }),
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const [dailyData, trendingData] = await Promise.all([
+      articleService.getDailyArticles({ limit: 4 }),
+      articleService.getTrendingArticles({ limit: 4 }),
+    ]);
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
+    const [dailyArticles, trendingArticles] = await Promise.all([
+      articleUtils.processArticles(dailyData.articles),
+      articleUtils.processArticles(trendingData.articles),
+    ]);
 
-    dailyArticlesdata = await response.json();
-
-    let { success, articles } = dailyArticlesdata;
-
-    // Check if article is not undefined and is an array before mapping
-    if (articles && Array.isArray(articles)) {
-      dailyArticles = articles.map((art) => ({
-        ...art,
-        formattedDate: moment(art.createdAt).fromNow(), // Format the date using moment
-      }));
-
-      let creators = await extractCreators(dailyArticles, fetchCreators);
-      // Map creators to their respective articles
-      dailyArticles = dailyArticles.map((article) => {
-        const creator = creators.find(
-          (creator) => creator._id === article.createdBy
-        );
-        return {
-          ...article,
-          creator,
-        };
-      });
-    } else {
-      dailyArticles = []; // Set article to an empty array if it's undefined or not an array
-    }
+    return {
+      props: {
+        dailyArticles,
+        trendingArticles,
+        initialDailyTotal: dailyData.totalPages || 1,
+        initialTrendingTotal: trendingData.totalPages || 1,
+      },
+    };
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error("Home: getServerSideProps error:", error);
+    return {
+      props: {
+        dailyArticles: [],
+        trendingArticles: [],
+      },
+    };
   }
-
-  let trendingArticlesData = null;
-  let trendingArticles = undefined;
-  let trendingArticlesLimit = 4;
-
-  try {
-    let response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/trendingArticles?` +
-        new URLSearchParams({
-          limit: trendingArticlesLimit,
-        }),
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    trendingArticlesData = await response.json();
-
-    let { success, articles } = trendingArticlesData;
-
-    // Check if article is not undefined and is an array before mapping
-    if (articles && Array.isArray(articles)) {
-      trendingArticles = articles.map((art) => ({
-        ...art,
-        formattedDate: moment(art.createdAt).fromNow(), // Format the date using moment
-      }));
-
-      let creators = await extractCreators(trendingArticles, fetchCreators);
-      // Map creators to their respective articles
-      trendingArticles = trendingArticles.map((article) => {
-        const creator = creators.find(
-          (creator) => creator._id === article.createdBy
-        );
-        return {
-          ...article,
-          creator,
-        };
-      });
-
-    } else {
-      trendingArticles = []; // Set article to an empty array if it's undefined or not an array
-    }
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-
-  return {
-    props: {
-      dailyArticles,
-      trendingArticles,
-    },
-  };
 };
 
-export default function Main({ dailyArticles: initialDaily, trendingArticles: initialTrending }) {
+export default function Main({ 
+  dailyArticles: initialDaily, 
+  trendingArticles: initialTrending,
+  initialDailyTotal,
+  initialTrendingTotal
+}) {
   const [dailyArticles, setDailyArticles] = useState(initialDaily);
   const [trendingArticles, setTrendingArticles] = useState(initialTrending);
   
   const [dailyPage, setDailyPage] = useState(1);
   const [trendingPage, setTrendingPage] = useState(1);
   
-  const [dailyTotalPages, setDailyTotalPages] = useState(1);
-  const [trendingTotalPages, setTrendingTotalPages] = useState(1);
+  const [dailyTotalPages, setDailyTotalPages] = useState(initialDailyTotal);
+  const [trendingTotalPages, setTrendingTotalPages] = useState(initialTrendingTotal);
 
   const [loadingDaily, setLoadingDaily] = useState(false);
   const [loadingTrending, setLoadingTrending] = useState(false);
 
-  // Helper to fetch and map articles with creators
-  const fetchArticlesWithCreators = async (url) => {
-    const response = await fetch(url);
-    const data = await response.json();
-    if (!data.success) return { articles: [], totalPages: 1 };
-
-    let articles = data.articles.map((art) => ({
-      ...art,
-      formattedDate: moment(art.createdAt).fromNow(),
-    }));
-
-    const creatorsResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v1/getArticlesCreators`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ creators: articles.map(a => a.createdBy) }),
-      }
-    );
-    const creatorsData = await creatorsResponse.json();
-    const creators = creatorsData?.creators_data || [];
-
-    articles = articles.map((article) => ({
-      ...article,
-      creator: creators.find((c) => c._id === article.createdBy),
-    }));
-
-    return { articles, totalPages: data.totalPages };
-  };
-
   const handleDailyPageChange = async (newPage) => {
     if (newPage < 1 || newPage > dailyTotalPages || loadingDaily) return;
     setLoadingDaily(true);
-    const { articles, totalPages } = await fetchArticlesWithCreators(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/dailyArticles?limit=4&page=${newPage}`
-    );
-    setDailyArticles(articles);
-    setDailyTotalPages(totalPages);
-    setDailyPage(newPage);
-    setLoadingDaily(false);
+    try {
+      const data = await articleService.getDailyArticles({ limit: 4, page: newPage });
+      const articles = await articleUtils.processArticles(data.articles);
+      setDailyArticles(articles);
+      setDailyTotalPages(data.totalPages || 1);
+      setDailyPage(newPage);
+    } catch (error) {
+      console.error("Error fetching daily articles:", error);
+    } finally {
+      setLoadingDaily(false);
+    }
   };
 
   const handleTrendingPageChange = async (newPage) => {
     if (newPage < 1 || newPage > trendingTotalPages || loadingTrending) return;
     setLoadingTrending(true);
-    const { articles, totalPages } = await fetchArticlesWithCreators(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/trendingArticles?limit=4&page=${newPage}`
-    );
-    setTrendingArticles(articles);
-    setTrendingTotalPages(totalPages);
-    setTrendingPage(newPage);
-    setLoadingTrending(false);
+    try {
+      const data = await articleService.getTrendingArticles({ limit: 4, page: newPage });
+      const articles = await articleUtils.processArticles(data.articles);
+      setTrendingArticles(articles);
+      setTrendingTotalPages(data.totalPages || 1);
+      setTrendingPage(newPage);
+    } catch (error) {
+      console.error("Error fetching trending articles:", error);
+    } finally {
+      setLoadingTrending(false);
+    }
   };
-
-  // Set initial total pages from SSR (approximate or we could update API to send it in SSR too)
-  useEffect(() => {
-    // Initial fetch to get total pages (or we could have included it in SSR)
-    const init = async () => {
-      const d = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/dailyArticles?limit=4&page=1`);
-      const t = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/trendingArticles?limit=4&page=1`);
-      const dData = await d.json();
-      const tData = await t.json();
-      setDailyTotalPages(dData.totalPages || 1);
-      setTrendingTotalPages(tData.totalPages || 1);
-    };
-    init();
-  }, []);
 
   return (
     <div className={styles.root}>

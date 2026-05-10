@@ -1,85 +1,48 @@
 import ArticleCard from "@/components/articleCard";
 import Spinner from "@/components/spinner";
 import styles from "@/styles/article-page.module.css";
-import moment from "moment";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { articleService } from "@/services/articleService";
+import { articleUtils } from "@/utils/articleUtils";
 
 export const getServerSideProps = async (context) => {
-  const name = context.query.name;
-  const page = context.query.page || 1;
-  const limit = context.query.limit || 10;
-  const category = context.query.category || "";
-
-  const fetchCreators = async (creators) => {
-    try {
-      let response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v1/getArticlesCreators`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ creators }),
-        }
-      );
-      response = await response.json();
-      return response?.creators_data;
-    } catch (error) {
-      console.log("ArticlePage: Fetch creators: ", error);
-    }
-  };
-
-  const extractCreators = async (articles, fetchCreators) => {
-    let creators = articles.map((article) => article?.createdBy);
-    return fetchCreators(creators);
-  };
-
-  let final_articles = [];
-  let paginationData = { totalCount: 0, totalPages: 0, page: 1, limit: 10, category };
-  let final_success = false;
+  const { name, page = 1, limit = 10, category = "" } = context.query;
 
   try {
-    const categoryQuery = category ? `&category=${category}` : "";
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/app/v2/search?name=${name}&page=${page}&limit=${limit}${categoryQuery}`,
-      {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    const articlesData = await articleService.searchArticles({ name, page, limit, category });
+    const { success, articles, totalCount, totalPages } = articlesData;
 
-    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+    const final_articles = await articleUtils.processArticles(articles);
+    const paginationData = {
+      totalCount,
+      totalPages,
+      page: parseInt(page),
+      limit: parseInt(limit),
+      category,
+    };
 
-    const articlesData = await response.json();
-    let { success, articles, totalCount, totalPages } = articlesData;
-    final_success = success;
-    paginationData = { totalCount, totalPages, page: parseInt(page), limit: parseInt(limit) };
-
-    if (articles && Array.isArray(articles)) {
-      final_articles = articles.map((art) => ({
-        ...art,
-        formattedDate: moment(art.createdAt).fromNow(),
-      }));
-
-      let creators = await extractCreators(final_articles, fetchCreators);
-      final_articles = final_articles.map((article) => ({
-        ...article,
-        creator: creators.find((c) => c._id === article.createdBy),
-      }));
-    }
+    return {
+      props: {
+        success,
+        articles: final_articles,
+        pagination: paginationData,
+        name,
+      },
+    };
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error("ArticlePage: getServerSideProps error:", error);
+    return {
+      props: {
+        success: false,
+        articles: [],
+        pagination: { totalCount: 0, totalPages: 0, page: 1, limit: 10, category },
+        name,
+      },
+    };
   }
-
-  return {
-    props: {
-      success: final_success,
-      articles: final_articles,
-      pagination: paginationData,
-      name,
-    },
-  };
 };
 
 import SearchSelect from "@/components/SearchSelect";
